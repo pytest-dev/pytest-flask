@@ -1,0 +1,46 @@
+
+                             // Py.test Flask //
+
+              A collection of py.test fixtures to test Flask app
+
+
+      ~ Features
+
+        Plugin provides some fixtures to simplify app testing:
+
+        - `client` - an instance of `app.test_client`,
+        - `config` - you application config.
+
+        The following markers registered as well:
+
+        - `pytest.mark.app` - uses to pass options to your application:
+
+              @pytest.mark.app(debug=False)
+              def test_app(app):
+                  assert not app.debug, 'Ensure the app not in debug mode'
+
+        During tests execution the application has pushed context, e.g.
+        `url_for`, `session` and other context bound objects are available
+        without context managers:
+
+            def test_app(client):
+                assert client.get(url_for('myview')).status_code == 200
+
+      ~ Usage
+
+        Install package via pip:
+
+            pip install pytest-flask
+
+        Define you application factory fixture in `conftest.py`:
+
+            from myapp import create_app
+
+            @pytest.fixture
+            def app():
+                app = create_app()
+                return app
+
+        And run the test suite:
+
+            py.test

@@ -8,7 +8,9 @@
 """
 import pytest
 
-from .fixtures import client, config
+from .fixtures import (
+    client, config, accept_json, accept_jsonp
+)
 
 
 @pytest.fixture(autouse=True)

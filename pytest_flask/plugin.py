@@ -9,7 +9,7 @@
 import pytest
 
 from .fixtures import (
-    client, config, accept_json, accept_jsonp
+    client, config, accept_json, accept_jsonp, accept_any
 )
 
 

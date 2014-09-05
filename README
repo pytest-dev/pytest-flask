@@ -9,7 +9,9 @@
         Plugin provides some fixtures to simplify app testing:
 
         - `client` - an instance of `app.test_client`,
-        - `config` - you application config.
+        - `config` - you application config,
+        - `accept_json`, `accept_jsonp`, `accept_any` - accept headers
+          suitable to use as parameters in `client`.
 
         The following markers registered as well:
 

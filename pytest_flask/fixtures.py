@@ -16,3 +16,28 @@ def client(app):
 def config(app):
     """An application config."""
     return app.config
+
+
+@pytest.fixture(params=['application/json', 'text/html'])
+def mimetype(request):
+    return request.param
+
+
+@pytest.fixture
+def accept_mimetype(mimetype):
+    return [('Accept', mimetype)]
+
+
+@pytest.fixture
+def accept_json(request):
+    return accept_mimetype('application/json')
+
+
+@pytest.fixture
+def accept_jsonp():
+    return accept_mimetype('application/json-p')
+
+
+@pytest.fixture(params=['*', '*/*'])
+def accept_any(request):
+    return accept_mimetype(request.param)

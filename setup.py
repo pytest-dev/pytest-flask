@@ -52,6 +52,7 @@ setup(
     install_requires=get_file('requirements.txt'),
     tests_require=[],
 
+    keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 3 - Alpha',

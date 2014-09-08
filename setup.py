@@ -55,7 +55,9 @@ setup(
     keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
+        'Environment :: Plugins',
+        'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
@@ -64,6 +66,8 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Topic :: Software Development :: Testing',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 
     # The following makes a plugin available to pytest

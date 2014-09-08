@@ -25,11 +25,6 @@ def get_file(filename):
     return rv
 
 
-def get_long_description():
-    readme = get_file('README')
-    return ''.join(readme)
-
-
 setup(
     name='pytest-flask',
 
@@ -43,7 +38,7 @@ setup(
 
     url='https://github.com/vitalk/pytest-flask',
     description='A collection of py.test fixtures to test Flask applications.',
-    long_description=get_long_description(),
+    long_description=__doc__,
     license='MIT',
 
     packages=find_packages(exclude=['docs', 'tests']),

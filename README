@@ -28,6 +28,17 @@
             def test_app(client):
                 assert client.get(url_for('myview')).status_code == 200
 
+        Response object has a `json` property to test a view that returns a
+        JSON response:
+
+            @api.route('/ping')
+            def ping():
+                return jsonify(ping='pong')
+
+            def test_api_ping(client):
+                res = client.get(url_for('api.ping'))
+                assert res.json == {'ping': 'pong'}
+
       ~ Usage
 
         Install package via pip:

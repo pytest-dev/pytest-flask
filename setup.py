@@ -83,14 +83,16 @@ from setuptools import find_packages
 version = "0.3.1"
 
 
-def get_file(filename):
-    """Returns file content line by line."""
+def read(filename):
+    """Returns the file content or empty string."""
     try:
         with open(filename, 'r') as f:
-            rv = f.readlines()
+            return f.read()
     except IOError:
-        rv = []
-    return rv
+        return ''
+
+
+requirements = read('requirements.txt').splitlines()
 
 
 setup(
@@ -113,7 +115,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
     zip_safe=False,
     platforms='any',
-    install_requires=get_file('requirements.txt'),
+    install_requires=requirements,
     tests_require=[],
 
     keywords='pytest flask testing',

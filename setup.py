@@ -105,6 +105,7 @@ setup(
     author_email='vital.kudzelka@gmail.com',
 
     url='https://github.com/vitalk/pytest-flask',
+    download_url='https://github.com/vitalk/pytest-flask/tarball/%s' % version,
     description='A collection of py.test fixtures to test Flask applications.',
     long_description=__doc__,
     license='MIT',

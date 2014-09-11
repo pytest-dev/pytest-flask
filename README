@@ -1,7 +1,7 @@
 
                              // Py.test Flask //
 
-         A collection of py.test fixtures to test Flask applications
+             A set of py.test fixtures to test Flask applications
 
 
       ~ What is it?

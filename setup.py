@@ -4,8 +4,8 @@
 pytest-flask
 ============
 
-A collection of `py.test <http://pytest.org>`_ fixtures to test Flask
-applications.
+A set of `py.test <http://pytest.org>`_ fixtures to test Flask
+extensions and applications.
 
 Features
 --------
@@ -109,7 +109,7 @@ setup(
 
     url='https://github.com/vitalk/pytest-flask',
     download_url='https://github.com/vitalk/pytest-flask/tarball/%s' % version,
-    description='A collection of py.test fixtures to test Flask applications.',
+    description='A set of py.test fixtures to test Flask applications.',
     long_description=__doc__,
     license='MIT',
 

@@ -93,7 +93,7 @@ def read(*parts):
         return ''
 
 
-requirements = read('requirements.txt').splitlines()
+requirements = read('requirements', 'main.txt').splitlines()
 
 
 setup(

@@ -1,33 +1,99 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    pytest-flask
-    ~~~~~~~~~~~~
+pytest-flask
+============
 
-    A collection of py.test fixtures to test Flask applications.
+A set of `py.test <http://pytest.org>`_ fixtures to test Flask
+extensions and applications.
 
-    :copyright: (c) by Vital Kudzelka
+Features
+--------
+
+Plugin provides some fixtures to simplify app testing:
+
+- ``client`` - an instance of ``app.test_client``,
+- ``config`` - you application config,
+- ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
+  suitable to use as parameters in ``client``.
+
+To pass options to your application use the ``pytest.mark.app`` marker:
+
+.. code:: python
+
+    @pytest.mark.app(debug=False)
+    def test_app(app):
+      assert not app.debug, 'Ensure the app not in debug mode'
+
+During tests execution the application has pushed context, e.g. ``url_for``,
+``session`` and other context bound objects are available without context
+managers:
+
+.. code:: python
+
+    def test_app(client):
+        assert client.get(url_for('myview')).status_code == 200
+
+Response object has a ``json`` property to test a view that returns
+a JSON response:
+
+.. code:: python
+
+    @api.route('/ping')
+    def ping():
+        return jsonify(ping='pong')
+
+    def test_api_ping(client):
+        res = client.get(url_for('api.ping'))
+        assert res.json == {'ping': 'pong'}
+
+Quick Start
+-----------
+
+To start using a plugin define you application fixture in ``conftest.py``:
+
+.. code:: python
+
+    from myapp import create_app
+
+    @pytest.fixture
+    def app():
+        app = create_app()
+        return app
+
+And run your test suite:
+
+.. code:: bash
+
+    $ pip install pytest-flask
+    $ py.test
+
+Contributing
+------------
+
+Don't hesitate to create a `GitHub issue
+<https://github.com/vitalk/pytest-flask/issues>`_ for any **bug** or
+**suggestion**.
+
 """
+import os
 from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.3.0"
+version = "0.3.1"
 
 
-def get_file(filename):
-    """Returns file content line by line."""
+def read(*parts):
+    """Reads the content of the file located at path created from *parts*."""
     try:
-        with open(filename, 'r') as f:
-            rv = f.readlines()
+        with open(os.path.join(*parts), 'r') as f:
+            return f.read()
     except IOError:
-        rv = []
-    return rv
+        return ''
 
 
-def get_long_description():
-    readme = get_file('README')
-    return ''.join(readme)
+requirements = read('requirements', 'main.txt').splitlines()
 
 
 setup(
@@ -42,19 +108,23 @@ setup(
     author_email='vital.kudzelka@gmail.com',
 
     url='https://github.com/vitalk/pytest-flask',
-    description='A collection of py.test fixtures to test Flask applications.',
-    long_description=get_long_description(),
+    download_url='https://github.com/vitalk/pytest-flask/tarball/%s' % version,
+    description='A set of py.test fixtures to test Flask applications.',
+    long_description=__doc__,
     license='MIT',
 
     packages=find_packages(exclude=['docs', 'tests']),
     zip_safe=False,
     platforms='any',
-    install_requires=get_file('requirements.txt'),
+    install_requires=requirements,
     tests_require=[],
 
+    keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
+        'Environment :: Plugins',
+        'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
@@ -63,6 +133,8 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Topic :: Software Development :: Testing',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 
     # The following makes a plugin available to pytest

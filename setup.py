@@ -76,6 +76,7 @@ Don't hesitate to create a `GitHub issue
 **suggestion**.
 
 """
+import os
 from setuptools import setup
 from setuptools import find_packages
 
@@ -83,10 +84,10 @@ from setuptools import find_packages
 version = "0.3.1"
 
 
-def read(filename):
-    """Returns the file content or empty string."""
+def read(*parts):
+    """Reads the content of the file located at path created from *parts*."""
     try:
-        with open(filename, 'r') as f:
+        with open(os.path.join(*parts), 'r') as f:
             return f.read()
     except IOError:
         return ''

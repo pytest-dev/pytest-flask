@@ -77,18 +77,18 @@ Don't hesitate to create a `GitHub issue
 
 """
 import os
+import codecs
 from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.3.1"
+version = "0.3.2"
 
 
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        with open(os.path.join(*parts), 'r') as f:
-            return f.read()
+        return codecs.open(os.path.join(*parts), 'r', encoding='utf-8').read()
     except IOError:
         return ''
 

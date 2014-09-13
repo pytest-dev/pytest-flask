@@ -113,6 +113,12 @@ def read(*parts):
 
 
 requirements = read('requirements', 'main.txt').splitlines()
+tests_require = []
+
+extras_require = {
+    'docs': read('requirements', 'docs.txt').splitlines(),
+    'tests': tests_require
+}
 
 
 setup(
@@ -136,7 +142,8 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=requirements,
-    tests_require=[],
+    tests_require=tests_require,
+    extras_require=extras_require,
 
     keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers

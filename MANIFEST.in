@@ -1,1 +1,1 @@
-include requirements/main.txt
+recursive-include requirements *.txt

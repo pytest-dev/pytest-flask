@@ -13,6 +13,22 @@ def client(app):
 
 
 @pytest.fixture
+def client_class(request, client):
+    """Uses to set a ``client`` class attribute to current Flask test client::
+
+        @pytest.mark.usefixtures('client_class')
+        class TestView:
+
+            def login(self, email, password):
+                credentials = {'email': email, 'password': password}
+                self.client.post(url_for('login'), data=credentials)
+
+    """
+    if request.cls is not None:
+        request.cls.client = client
+
+
+@pytest.fixture
 def config(app):
     """An application config."""
     return app.config

@@ -21,7 +21,10 @@ def client_class(request, client):
 
             def login(self, email, password):
                 credentials = {'email': email, 'password': password}
-                self.client.post(url_for('login'), data=credentials)
+                return self.client.post(url_for('login'), data=credentials)
+
+            def test_login(self):
+                assert self.login('vital@example.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:

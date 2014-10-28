@@ -13,6 +13,7 @@ Features
 Plugin provides some fixtures to simplify app testing:
 
 - ``client`` - an instance of ``app.test_client``,
+- ``client_class`` - ``client`` fixture for class-based tests,
 - ``config`` - you application config,
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
@@ -82,7 +83,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.3.4"
+version = "0.4.0"
 
 
 def read(*parts):

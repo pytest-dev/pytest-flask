@@ -22,3 +22,7 @@ class TestLiveServer:
         res = urlopen('%s/ping' % live_server.url)
         assert res.code == 200
         assert b'pong' in res.read()
+
+    @pytest.mark.app(liveserver_port=5042)
+    def test_custom_server_port(self, live_server):
+        assert live_server.url == 'http://localhost:5042'

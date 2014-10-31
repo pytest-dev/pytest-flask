@@ -88,7 +88,9 @@ class LiveServer(object):
 @pytest.fixture(scope='session')
 def live_server(request, app):
     """Run application in a separate process."""
-    port = app.config.get('LIVESERVER_PORT', 5001)
+    port = request.config.getoption('--liveserver-port')
+    port = port or app.config.get('LIVESERVER_PORT', 5001)
+
     server = LiveServer(app, port)
     request.addfinalizer(server.stop)
     return server

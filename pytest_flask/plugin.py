@@ -17,6 +17,15 @@ from .fixtures import (
 )
 
 
+def pytest_addoption(parser):
+    group = parser.getgroup('flask')
+    group.addoption('--liveserver-port',
+        type=int, metavar='port', default=None,
+        help="port uses to run live server when 'live_server' fixture "
+             "is applyed."
+    )
+
+
 class JSONResponse(object):
     """Mixin with testing helper methods for JSON responses."""
 

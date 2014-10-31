@@ -16,13 +16,14 @@ class TestLiveServer:
         assert live_server._process.is_alive()
 
     def test_server_url(self, live_server):
-        assert live_server.url == 'http://localhost:5001'
+        assert live_server.url() == 'http://localhost:5001'
+        assert live_server.url('/ping') == 'http://localhost:5001/ping'
 
     def test_server_listening(self, live_server):
-        res = urlopen('%s/ping' % live_server.url)
+        res = urlopen(live_server.url('/ping'))
         assert res.code == 200
         assert b'pong' in res.read()
 
     @pytest.mark.app(liveserver_port=5042)
     def test_custom_server_port(self, live_server):
-        assert live_server.url == 'http://localhost:5042'
+        assert live_server.url() == 'http://localhost:5042'

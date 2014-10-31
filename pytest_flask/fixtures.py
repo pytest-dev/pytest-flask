@@ -66,15 +66,14 @@ class LiveServer(object):
         while timeout > 0:
             time.sleep(1)
             try:
-                urlopen(self.url)
+                urlopen(self.url())
                 timeout = 0
             except:
                 timeout -= 1
 
-    @property
-    def url(self):
-        """Returns the url of the test server."""
-        return 'http://localhost:%s' % self.port
+    def url(self, url=''):
+        """Returns the complete url based on server options."""
+        return 'http://localhost:%d%s' % (self.port, url)
 
     def stop(self):
         """Stop application process."""
@@ -82,7 +81,7 @@ class LiveServer(object):
             self._process.terminate()
 
     def __repr__(self):
-        return '<LiveServer listening at %s>' % self.url
+        return '<LiveServer listening at %s>' % self.url()
 
 
 @pytest.fixture(scope='session')

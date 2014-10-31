@@ -9,6 +9,10 @@ from flask import Flask, jsonify
 def app():
     app = Flask(__name__)
 
+    @app.route('/')
+    def index():
+        return app.response_class('OK')
+
     @app.route('/ping')
     def ping():
         return jsonify(ping='pong')

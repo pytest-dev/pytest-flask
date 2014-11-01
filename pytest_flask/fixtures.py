@@ -90,8 +90,25 @@ def live_server(request, app):
     port = request.config.getoption('--liveserver-port')
     port = port or app.config.get('LIVESERVER_PORT', 5001)
 
+    def rewrite_server_name(server_name, new_port):
+        """Rewrite server port in ``server_name`` with ``new_port`` value."""
+        sep = ':'
+        if sep in server_name:
+            server_name, port = server_name.split(sep, 1)
+        return sep.join((server_name, new_port))
+
+    # Explicitly set application ``SERVER_NAME`` for test suite
+    # and restore original value on test teardown.
+    original_server_name = app.config['SERVER_NAME']
+    server_name = original_server_name or 'localhost'
+    app.config['SERVER_NAME'] = rewrite_server_name(server_name, str(port))
+
+    def restore_server_name():
+        app.config['SERVER_NAME'] = original_server_name
+
     server = LiveServer(app, port)
     request.addfinalizer(server.stop)
+    request.addfinalizer(restore_server_name)
     return server
 
 

@@ -27,3 +27,7 @@ class TestLiveServer:
     @pytest.mark.app(liveserver_port=5042)
     def test_custom_server_port(self, live_server):
         assert live_server.url() == 'http://localhost:5042'
+        assert url_for('index', _external=True) == 'http://localhost:5042/'
+
+    def test_url_for(self, live_server):
+        assert url_for('ping', _external=True) == 'http://localhost:5001/ping'

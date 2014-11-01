@@ -85,6 +85,14 @@ def _push_application_context(request):
         return
 
     app = request.getfuncargvalue('app')
+
+    # Get application bound to the live server if ``live_server`` fixture
+    # is applyed. Live server application has an explicit ``SERVER_NAME``,
+    # so ``url_for`` function generates a complete URL for endpoint which
+    # includes application port as well.
+    if 'live_server' in request.fixturenames:
+        app = request.getfuncargvalue('live_server').app
+
     ctx = app.test_request_context()
     ctx.push()
 

@@ -90,21 +90,21 @@ def live_server(request, app):
 
     The port of the server to start is taken from the ``--liveserver-port``
     command line option or if it is not provided from the ``LIVESERVER_PORT``
-    application config. If neither is set the ``5001`` port is used.
+    application config. If neither is set the ``5000`` port is used.
 
     When the ``live_server`` fixture is applyed, the ``url_for`` function
     works as expected::
 
         def test_server_is_up_and_running(live_server):
             index_url = url_for('index', _external=True)
-            assert index_url == 'http://localhost:5001/'
+            assert index_url == 'http://localhost:5000/'
 
             res = urllib2.urlopen(index_url)
             assert res.code == 200
 
     """
     port = request.config.getoption('--liveserver-port')
-    port = port or app.config.get('LIVESERVER_PORT', 5001)
+    port = port or app.config.get('LIVESERVER_PORT', 5000)
 
     def rewrite_server_name(server_name, new_port):
         """Rewrite server port in ``server_name`` with ``new_port`` value."""

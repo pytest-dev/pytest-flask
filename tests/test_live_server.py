@@ -16,8 +16,8 @@ class TestLiveServer:
         assert live_server._process.is_alive()
 
     def test_server_url(self, live_server):
-        assert live_server.url() == 'http://localhost:5001'
-        assert live_server.url('/ping') == 'http://localhost:5001/ping'
+        assert live_server.url() == 'http://localhost:5000'
+        assert live_server.url('/ping') == 'http://localhost:5000/ping'
 
     def test_server_listening(self, live_server):
         res = urlopen(live_server.url('/ping'))
@@ -30,4 +30,4 @@ class TestLiveServer:
         assert url_for('index', _external=True) == 'http://localhost:5042/'
 
     def test_url_for(self, live_server):
-        assert url_for('ping', _external=True) == 'http://localhost:5001/ping'
+        assert url_for('ping', _external=True) == 'http://localhost:5000/ping'

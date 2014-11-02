@@ -31,3 +31,11 @@ class TestLiveServer:
 
     def test_url_for(self, live_server):
         assert url_for('ping', _external=True) == 'http://localhost:5000/ping'
+
+    def test_set_application_server_name(self, live_server):
+        assert live_server.app.config['SERVER_NAME'] == 'localhost:5000'
+
+    @pytest.mark.app(liveserver_port=5042)
+    @pytest.mark.app(server_name='example.com:5000')
+    def test_rewrite_application_server_name(self, live_server):
+        assert live_server.app.config['SERVER_NAME'] == 'example.com:5042'

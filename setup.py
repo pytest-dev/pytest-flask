@@ -16,7 +16,7 @@ Plugin provides some fixtures to simplify app testing:
 - ``client_class`` - ``client`` fixture for class-based tests,
 - ``config`` - you application config,
 - ``live_server`` - runs an application in the background (useful for tests
-  with `Selenium <http://www.seleniumhq.org>` and other headless browsers),
+  with `Selenium <http://www.seleniumhq.org>`_ and other headless browsers),
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
 

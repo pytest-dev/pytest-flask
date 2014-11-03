@@ -13,8 +13,17 @@ from werkzeug import cached_property
 
 from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class
+    client_class, live_server
 )
+
+
+def pytest_addoption(parser):
+    group = parser.getgroup('flask')
+    group.addoption('--liveserver-port',
+        type=int, metavar='port', default=None,
+        help="port uses to run live server when 'live_server' fixture "
+             "is applyed."
+    )
 
 
 class JSONResponse(object):
@@ -76,6 +85,14 @@ def _push_application_context(request):
         return
 
     app = request.getfuncargvalue('app')
+
+    # Get application bound to the live server if ``live_server`` fixture
+    # is applyed. Live server application has an explicit ``SERVER_NAME``,
+    # so ``url_for`` function generates a complete URL for endpoint which
+    # includes application port as well.
+    if 'live_server' in request.fixturenames:
+        app = request.getfuncargvalue('live_server').app
+
     ctx = app.test_request_context()
     ctx.push()
 

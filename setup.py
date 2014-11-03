@@ -15,6 +15,8 @@ Plugin provides some fixtures to simplify app testing:
 - ``client`` - an instance of ``app.test_client``,
 - ``client_class`` - ``client`` fixture for class-based tests,
 - ``config`` - you application config,
+- ``live_server`` - runs an application in the background (useful for tests
+  with `Selenium <http://www.seleniumhq.org>`_ and other headless browsers),
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
 
@@ -47,6 +49,20 @@ a JSON response:
     def test_api_ping(client):
         res = client.get(url_for('api.ping'))
         assert res.json == {'ping': 'pong'}
+
+If you want your tests done via Selenium or other headless browser use
+the ``live_server`` fixture. The server's URL can be retrieved using
+the ``url_for`` function:
+
+.. code:: python
+
+    @pytest.mark.usefixtures('live_server')
+    class TestLiveServer:
+
+        def test_server_is_up_and_running(self):
+            res = urllib2.urlopen(url_for('index', _external=True))
+            assert b'OK' in res.read()
+            assert res.code == 200
 
 Quick Start
 -----------
@@ -83,7 +99,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.4.0"
+version = "0.5.0"
 
 
 def read(*parts):

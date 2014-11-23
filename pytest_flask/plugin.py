@@ -22,7 +22,7 @@ def pytest_addoption(parser):
     group.addoption('--liveserver-port',
         type=int, metavar='port', default=None,
         help="port uses to run live server when 'live_server' fixture "
-             "is applyed."
+             "is applied."
     )
 
 

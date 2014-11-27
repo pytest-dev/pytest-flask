@@ -8,6 +8,7 @@ from flask import Flask, jsonify
 @pytest.fixture
 def app():
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = '42'
 
     @app.route('/')
     def index():

@@ -56,6 +56,8 @@ the ``url_for`` function:
 
 .. code:: python
 
+    from flask import url_for
+
     @pytest.mark.usefixtures('live_server')
     class TestLiveServer:
 

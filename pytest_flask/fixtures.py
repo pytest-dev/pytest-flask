@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import time
-import pytest
 import multiprocessing
+import pytest
+import socket
+
 try:
     from urllib2 import urlopen
 except ImportError:
@@ -88,10 +90,6 @@ class LiveServer(object):
 def live_server(request, app):
     """Run application in a separate process.
 
-    The port of the server to start is taken from the ``--liveserver-port``
-    command line option or if it is not provided from the ``LIVESERVER_PORT``
-    application config. If neither is set the ``5000`` port is used.
-
     When the ``live_server`` fixture is applyed, the ``url_for`` function
     works as expected::
 
@@ -103,8 +101,11 @@ def live_server(request, app):
             assert res.code == 200
 
     """
-    port = request.config.getoption('--liveserver-port')
-    port = port or app.config.get('LIVESERVER_PORT', 5000)
+    # Bind to an open port
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('', 0))
+    s.listen(1)
+    port = s.getsockname()[1]
 
     def rewrite_server_name(server_name, new_port):
         """Rewrite server port in ``server_name`` with ``new_port`` value."""
@@ -124,6 +125,7 @@ def live_server(request, app):
 
     server = LiveServer(app, port)
     request.addfinalizer(server.stop)
+    request.addfinalizer(s.close)
     request.addfinalizer(restore_server_name)
     return server
 

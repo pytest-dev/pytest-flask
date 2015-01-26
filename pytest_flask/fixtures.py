@@ -86,7 +86,7 @@ class LiveServer(object):
         return '<LiveServer listening at %s>' % self.url()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def live_server(request, app):
     """Run application in a separate process.
 

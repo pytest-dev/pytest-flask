@@ -101,7 +101,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.6.1"
+version = "0.6.2"
 
 
 def read(*parts):

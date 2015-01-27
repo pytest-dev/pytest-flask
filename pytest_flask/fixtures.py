@@ -104,8 +104,8 @@ def live_server(request, app):
     # Bind to an open port
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('', 0))
-    s.listen(1)
     port = s.getsockname()[1]
+    s.close()
 
     def rewrite_server_name(server_name, new_port):
         """Rewrite server port in ``server_name`` with ``new_port`` value."""
@@ -125,7 +125,6 @@ def live_server(request, app):
 
     server = LiveServer(app, port)
     request.addfinalizer(server.stop)
-    request.addfinalizer(s.close)
     request.addfinalizer(restore_server_name)
     return server
 

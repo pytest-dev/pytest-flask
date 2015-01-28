@@ -33,7 +33,8 @@ Install the extension with dependencies and go::
     $ pip install pytest-flask
     $ py.test
 
-***Found a bug? Have an issue?***
+Found a bug? Have an issue?
+---------------------------
 
 Don't hesitate to create a `GitHub issue <https://github.com/vitalk/pytest-flask/issues>`__ for any bug or
 suggestion.

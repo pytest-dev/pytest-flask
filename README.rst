@@ -3,7 +3,7 @@
 pytest-flask
 ============
 
-A set of pytest fixtures to test Flask applications
+A set of pytest fixtures to test Flask applications.
 
 
 What is it?

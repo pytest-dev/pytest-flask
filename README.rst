@@ -13,13 +13,13 @@ An extension of `pytest <http://pytest.org/>`__ test runner which
 provides a set of useful tools to simplify testing and development
 of the Flask extensions and applications.
 
-To view more detailed list of extension features and examples go to
+To view a more detailed list of extension features and examples go to
 the PyPI overview `page <https://pypi.python.org/pypi/pytest-flask>`__.
 
 How to start?
 -------------
 
-Define you application fixture in `conftest.py`::
+Define your application fixture in `conftest.py`::
 
     from myapp import create_app
 

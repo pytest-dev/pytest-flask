@@ -69,7 +69,7 @@ the ``url_for`` function:
 Quick Start
 -----------
 
-To start using a plugin define you application fixture in ``conftest.py``:
+To start using a plugin define your application fixture in ``conftest.py``:
 
 .. code:: python
 

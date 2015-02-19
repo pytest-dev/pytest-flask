@@ -1,6 +1,8 @@
 Getting started
 ===============
 
+py.test is capable to pick up and run existing tests without any or little
+configuration. This section describes how to get started quickly.
 
 Step 1. Install
 ---------------

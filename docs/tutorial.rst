@@ -41,3 +41,13 @@ Use the ``py.test`` command to run your test suite::
     and has a built-in integration with other testing tools (such as ``nose``,
     ``unittest`` and ``doctest``). More comprehensive examples and use cases
     can be found in the `official documentation <http://pytest.org/latest/usage.html>`_.
+
+
+What's next?
+------------
+
+The :ref:`features` section gives a more detailed view of available features, as
+well as test fixtures and markers.
+
+Consult the `py.test documentation <http://pytest.org/latest>`_ for more
+information about py.test itself.

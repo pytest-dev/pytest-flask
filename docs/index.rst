@@ -7,6 +7,8 @@ A set of `py.test <http://pytest.org>`_ fixtures to test `Flask
 .. toctree::
    :maxdepth: 2
 
+   tutorial
+
 
 Quickstart
 ==========

@@ -5,7 +5,7 @@ A set of `py.test <http://pytest.org>`_ fixtures to test `Flask
 <http://flask.pocoo.org>`_ extensions and applications.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    tutorial
    features

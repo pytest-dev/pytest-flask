@@ -8,6 +8,7 @@ A set of `py.test <http://pytest.org>`_ fixtures to test `Flask
    :maxdepth: 2
 
    tutorial
+   fixtures
    markers
 
 

@@ -9,6 +9,7 @@ A set of `py.test <http://pytest.org>`_ fixtures to test `Flask
 
    tutorial
    features
+   contributing
 
 
 Quickstart

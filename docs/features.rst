@@ -3,6 +3,72 @@
 Feature reference
 =================
 
+Extension provides some sugar for your tests, such as:
+
+* Access to context bound objects (``url_for``, ``request``, ``session``)
+  without context managers:
+
+  .. code:: python
+
+    def test_app(client):
+        assert client.get(url_for('myview')).status_code == 200
+
+* Easy access to ``JSON`` data in response:
+
+  .. code:: python
+
+    @api.route('/ping')
+    def ping():
+        return jsonify(ping='pong')
+
+    def test_api_ping(client):
+        res = client.get(url_for('api.ping'))
+        assert res.json == {'ping': 'pong'}
+
+  .. note::
+
+    User-defined ``json`` attribute/method in application response class does
+    not overrides. So you can define your own response deserialization method:
+
+    .. code:: python
+
+        from flask import Response
+        from myapp import create_app
+
+        class MyResponse(Response):
+            '''Implements custom deserialization method for response objects.'''
+            @property
+            def json(self):
+                '''What is the meaning of life, the universe and everything?'''
+                return 42
+
+        @pytest.fixture
+        def app():
+            app = create_app()
+            app.response_class = MyResponse
+            return app
+
+        def test_my_json_response(client):
+            res = client.get(url_for('api.ping'))
+            assert res.json == 42
+
+* Running tests in parallel with `pytest-xdist <https://pypi.python.org/pypi/pytest-xdist>`_.
+  This can lead to significant speed improvements on multi core/multi CPU
+  machines.
+
+  This requires the ``pytest-xdist`` plugin to be available, it can usually be
+  installed with::
+
+    pip install pytest-xdist
+
+  You can then run the tests by running::
+
+    py.test -n <number of processes>
+
+**Not enough pros?** See the full list of available fixtures and markers
+below.
+
+
 Fixtures
 --------
 

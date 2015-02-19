@@ -7,8 +7,8 @@ configuration. This section describes how to get started quickly.
 Step 1. Install
 ---------------
 
-pytest-flask is available on `PyPi <https://pypi.python.org/pypi/pytest-flask>`_,
-and can be easily installed via ``pip``::
+pytest-flask is available on `PyPi`_, and can be easily installed via
+``pip``::
 
     pip install pytest-flask
 
@@ -37,10 +37,10 @@ Use the ``py.test`` command to run your test suite::
 
 .. note:: Test discovery.
 
-    py.test `discovers your tests <http://pytest.org/latest/goodpractises.html#python-test-discovery>`_
-    and has a built-in integration with other testing tools (such as ``nose``,
-    ``unittest`` and ``doctest``). More comprehensive examples and use cases
-    can be found in the `official documentation <http://pytest.org/latest/usage.html>`_.
+    py.test `discovers your tests`_ and has a built-in integration with other
+    testing tools (such as ``nose``, ``unittest`` and ``doctest``). More
+    comprehensive examples and use cases can be found in the `official
+    documentation`_.
 
 
 What's next?
@@ -51,3 +51,8 @@ well as test fixtures and markers.
 
 Consult the `py.test documentation <http://pytest.org/latest>`_ for more
 information about py.test itself.
+
+
+.. _PyPi: https://pypi.python.org/pypi/pytest-flask
+.. _discovers your tests: http://pytest.org/latest/goodpractises.html#python-test-discovery
+.. _official documentation: http://pytest.org/latest/usage.html

@@ -1,5 +1,9 @@
+# Python bytecode / optimized files
 *.py[co]
 *.egg-info
 build
 dist
 venv
+
+# Sphinx documentation
+docs/_build

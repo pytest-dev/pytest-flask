@@ -1,4 +1,4 @@
-|PyPI version|
+|PyPI version| |Documentation status|
 
 pytest-flask
 ============
@@ -41,3 +41,7 @@ suggestion.
 
 .. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.png
    :target: http://badge.fury.io/py/pytest-flask
+
+.. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
+   :target: https://readthedocs.org/projects/pytest-flask/?badge=latest
+   :alt: Documentation status

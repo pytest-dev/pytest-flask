@@ -113,7 +113,7 @@ Example:
 ``config`` - application config
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An instance of ``app.config``. Typically refers to `flask.Flask.Config`_.
+An instance of ``app.config``. Typically refers to `flask.Config`_.
 
 
 ``live_server`` - application live server
@@ -212,8 +212,8 @@ documentation_ on what marks are and for notes on using_ them.
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
 .. _py.test documentation: http://pytest.org/latest/fixture.html
-.. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client>
-.. _flask.Flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Flask.config
+.. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
+.. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org
 .. _documentation: http://pytest.org/latest/mark.html
 .. _using: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules

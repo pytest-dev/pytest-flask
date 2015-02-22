@@ -1,8 +1,9 @@
 Welcome to pytest-flask's documentation!
 ========================================
 
-A set of `py.test <http://pytest.org>`_ fixtures to test `Flask
-<http://flask.pocoo.org>`_ extensions and applications.
+Pytest-flask is a plugin for `py.test <http://pytest.org>`_ that provides
+a set of useful tools to test `Flask <http://flask.pocoo.org>`_ applications
+and extensions.
 
 .. toctree::
    :maxdepth: 4

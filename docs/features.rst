@@ -82,7 +82,7 @@ testing. More information on fixtures and their usage is available in the
 An instance of ``app.test_client``. Typically refers to
 `flask.Flask.test_client`_.
 
-.. note::
+.. hint::
 
     During tests execution the application has pushed context, e.g.
     ``url_for``, ``session`` and other context bound objects are available
@@ -124,7 +124,7 @@ An instance of ``app.config``. Typically refers to `flask.Flask.Config`_.
 Run application in a separate process (useful for tests with Selenium_ and
 other headless browsers).
 
-.. note::
+.. hint::
 
     The server's URL can be retrieved using the ``url_for`` function.
 

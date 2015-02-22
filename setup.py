@@ -80,12 +80,18 @@ To start using a plugin define your application fixture in ``conftest.py``:
         app = create_app()
         return app
 
-And run your test suite:
+Install the extension with dependencies and run your test suite:
 
 .. code:: bash
 
     $ pip install pytest-flask
     $ py.test
+
+Documentation
+-------------
+
+The latest documentation is available at
+http://pytest-flask.readthedocs.org/en/latest/.
 
 Contributing
 ------------

@@ -139,8 +139,8 @@ other headless browsers).
             assert res.code == 200
 
 
-Content negotiation.
-~~~~~~~~~~~~~~~~~~~~
+Content negotiation
+~~~~~~~~~~~~~~~~~~~
 
 An important part of any :abbr:`REST (REpresentational State Transfer)`
 service is content negotiation. It allows you to implement behaviour such as

@@ -11,7 +11,7 @@ issue`_ or catch me on `Twitter`_.
 Code syntax and conventions
 ---------------------------
 
-We try to conform to `PEP8`_ as much as possible. Make sure that your code as
+We try to conform to :pep:`8` as much as possible. Make sure that your code as
 well.
 
 
@@ -28,4 +28,3 @@ Ensure the all tests are passed before submit a pull request.
 
 .. _GitHub issue: https://github.com/vitalk/pytest-flask/issues
 .. _Twitter: https://twitter.com/elephantscanfly
-.. _PEP8: http://www.python.org/dev/peps/pep-0008/

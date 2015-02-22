@@ -141,6 +141,50 @@ other headless browsers).
             assert res.code == 200
 
 
+Content negotiation.
+~~~~~~~~~~~~~~~~~~~~
+
+An important part of any :abbr:`REST (REpresentational State Transfer)`
+service is content negotiation. It allows you to implement behaviour such as
+selecting a different serialization schemes for different media types.
+
+    HTTP has provisions for several mechanisms for "content negotiation" - the
+    process of selecting the best representation for a given response
+    when there are multiple representations available.
+
+    -- :rfc:`2616#section-12`. Fielding, et al.
+
+The most common way to select one of the multiple possible representation is
+via ``Accept`` request header. The following series of ``accept_*`` fixtures
+provides an easy way to test content negotiation in your application:
+
+.. code:: python
+
+    def test_api_endpoint(accept_json, client):
+        res = client.get(url_for('api.endpoint'), headers=accept_json)
+        assert res.mimetype == 'application/json'
+
+
+``accept_any`` - :mimetype:`*/*` accept header
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:mimetype:`*/*` accept header suitable to use as parameter in ``client``.
+
+
+``accept_json`` - :mimetype:`application/json` accept header
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:mimetype:`application/json` accept header suitable to use as parameter in
+``client``.
+
+
+``accept_jsonp`` - :mimetype:`application/json-p` accept header
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:mimetype:`application/json-p` accept header suitable to use as parameter in
+``client``.
+
+
 Markers
 -------
 

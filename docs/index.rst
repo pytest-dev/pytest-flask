@@ -42,10 +42,3 @@ Contributing
 Don't hesitate to create a `GitHub issue
 <https://github.com/vitalk/pytest-flask/issues>`_ for any **bug** or
 **suggestion**.
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`

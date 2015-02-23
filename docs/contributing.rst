@@ -23,7 +23,7 @@ directory. Makefile defines a target to run them::
 
     make test
 
-Ensure the all tests are passed before submit a pull request.
+Ensure the all tests are passed before submitting a pull request.
 
 
 .. _GitHub issue: https://github.com/vitalk/pytest-flask/issues

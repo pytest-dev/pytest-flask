@@ -186,8 +186,8 @@ provides an easy way to test content negotiation in your application:
 Markers
 -------
 
-``pytest-flask`` registers the following markers. See the pytest
-documentation_ on what marks are and for notes on using_ them.
+``pytest-flask`` registers the following markers. See the pytest documentation
+on `what markers are`_ and for notes on `using them`_.
 
 
 ``pytest.mark.app`` - pass options to your application config
@@ -215,5 +215,5 @@ documentation_ on what marks are and for notes on using_ them.
 .. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
 .. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org
-.. _documentation: http://pytest.org/latest/mark.html
-.. _using: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules
+.. _what markers are: http://pytest.org/latest/mark.html
+.. _using them: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules

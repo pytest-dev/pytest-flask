@@ -14,7 +14,7 @@ and extensions.
 
 
 Quickstart
-==========
+----------
 
 Install plugin via ``pip``::
 
@@ -37,7 +37,7 @@ And run your test suite::
 
 
 Contributing
-============
+------------
 
 Don't hesitate to create a `GitHub issue
 <https://github.com/vitalk/pytest-flask/issues>`_ for any **bug** or

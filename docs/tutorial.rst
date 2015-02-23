@@ -1,13 +1,13 @@
 Getting started
 ===============
 
-py.test is capable to pick up and run existing tests without any or little
+Pytest is capable to pick up and run existing tests without any or little
 configuration. This section describes how to get started quickly.
 
 Step 1. Install
 ---------------
 
-pytest-flask is available on `PyPi`_, and can be easily installed via
+``pytest-flask`` is available on `PyPi`_, and can be easily installed via
 ``pip``::
 
     pip install pytest-flask
@@ -37,7 +37,7 @@ Use the ``py.test`` command to run your test suite::
 
 .. note:: Test discovery.
 
-    py.test `discovers your tests`_ and has a built-in integration with other
+    Pytest `discovers your tests`_ and has a built-in integration with other
     testing tools (such as ``nose``, ``unittest`` and ``doctest``). More
     comprehensive examples and use cases can be found in the `official
     documentation`_.
@@ -49,8 +49,8 @@ What's next?
 The :ref:`features` section gives a more detailed view of available features, as
 well as test fixtures and markers.
 
-Consult the `py.test documentation <http://pytest.org/latest>`_ for more
-information about py.test itself.
+Consult the `pytest documentation <http://pytest.org/latest>`_ for more
+information about pytest itself.
 
 If you want to contribute to the project, see the :ref:`contributing` section.
 

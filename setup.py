@@ -4,7 +4,7 @@
 pytest-flask
 ============
 
-A set of `py.test <http://pytest.org>`_ fixtures to test Flask
+A set of `pytest <http://pytest.org>`_ fixtures to test Flask
 extensions and applications.
 
 Features

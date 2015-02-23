@@ -73,7 +73,7 @@ Fixtures
 
 ``pytest-flask`` provides a list of useful fixtures to simplify application
 testing. More information on fixtures and their usage is available in the
-`py.test documentation`_.
+`pytest documentation`_.
 
 
 ``client`` - application test client
@@ -186,7 +186,7 @@ provides an easy way to test content negotiation in your application:
 Markers
 -------
 
-``pytest-flask`` registers the following markers. See the py.test
+``pytest-flask`` registers the following markers. See the pytest
 documentation_ on what marks are and for notes on using_ them.
 
 
@@ -211,7 +211,7 @@ documentation_ on what marks are and for notes on using_ them.
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
-.. _py.test documentation: http://pytest.org/latest/fixture.html
+.. _pytest documentation: http://pytest.org/latest/fixture.html
 .. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
 .. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org

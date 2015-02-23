@@ -52,6 +52,8 @@ well as test fixtures and markers.
 Consult the `py.test documentation <http://pytest.org/latest>`_ for more
 information about py.test itself.
 
+If you want to contribute to the project, see the :ref:`contributing` section.
+
 
 .. _PyPi: https://pypi.python.org/pypi/pytest-flask
 .. _discovers your tests: http://pytest.org/latest/goodpractises.html#python-test-discovery

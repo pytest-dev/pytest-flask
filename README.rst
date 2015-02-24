@@ -40,7 +40,7 @@ Contributing
 Don't hesitate to create a `GitHub issue <https://github.com/vitalk/pytest-flask/issues>`__ for any bug or
 suggestion.
 
-.. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.png
+.. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.svg
    :target: http://badge.fury.io/py/pytest-flask
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest

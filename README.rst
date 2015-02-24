@@ -1,4 +1,4 @@
-|PyPI version|
+|PyPI version| |Documentation status|
 
 pytest-flask
 ============
@@ -14,12 +14,13 @@ provides a set of useful tools to simplify testing and development
 of the Flask extensions and applications.
 
 To view a more detailed list of extension features and examples go to
-the PyPI overview `page <https://pypi.python.org/pypi/pytest-flask>`__.
+the `PyPI <https://pypi.python.org/pypi/pytest-flask>`__ overview page or
+`package documentation <http://pytest-flask.readthedocs.org/en/latest/>`_.
 
 How to start?
 -------------
 
-Define your application fixture in `conftest.py`::
+Define your application fixture in ``conftest.py``::
 
     from myapp import create_app
 
@@ -41,3 +42,7 @@ suggestion.
 
 .. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.png
    :target: http://badge.fury.io/py/pytest-flask
+
+.. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
+   :target: https://readthedocs.org/projects/pytest-flask/?badge=latest
+   :alt: Documentation status

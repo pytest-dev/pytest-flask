@@ -1,3 +1,6 @@
+.PHONY: test clean docs publish
+
+
 test:
 	@py.test tests
 
@@ -5,6 +8,10 @@ test:
 clean:
 	@rm -rf build dist *.egg-info
 	@find . -name '*.py?' -delete
+
+
+docs:
+	sphinx-build docs docs/_build
 
 
 publish:

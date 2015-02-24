@@ -4,7 +4,7 @@
 pytest-flask
 ============
 
-A set of `py.test <http://pytest.org>`_ fixtures to test Flask
+A set of `pytest <http://pytest.org>`_ fixtures to test Flask
 extensions and applications.
 
 Features
@@ -80,12 +80,18 @@ To start using a plugin define your application fixture in ``conftest.py``:
         app = create_app()
         return app
 
-And run your test suite:
+Install the extension with dependencies and run your test suite:
 
 .. code:: bash
 
     $ pip install pytest-flask
     $ py.test
+
+Documentation
+-------------
+
+The latest documentation is available at
+http://pytest-flask.readthedocs.org/en/latest/.
 
 Contributing
 ------------
@@ -101,7 +107,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-version = "0.6.3"
+version = "0.7.0"
 
 
 def read(*parts):
@@ -113,6 +119,12 @@ def read(*parts):
 
 
 requirements = read('requirements', 'main.txt').splitlines()
+tests_require = []
+
+extras_require = {
+    'docs': read('requirements', 'docs.txt').splitlines(),
+    'tests': tests_require
+}
 
 
 setup(
@@ -136,7 +148,8 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=requirements,
-    tests_require=[],
+    tests_require=tests_require,
+    extras_require=extras_require,
 
     keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers

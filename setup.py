@@ -101,9 +101,9 @@ Don't hesitate to create a `GitHub issue
 **suggestion**.
 
 """
+import io
 import os
 import re
-import codecs
 from setuptools import setup
 from setuptools import find_packages
 
@@ -111,7 +111,7 @@ from setuptools import find_packages
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        return codecs.open(os.path.join(*parts), 'r', encoding='utf-8').read()
+        return io.open(os.path.join(*parts), 'r', encoding='utf-8').read()
     except IOError:
         return ''
 

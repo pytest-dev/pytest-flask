@@ -42,6 +42,7 @@ suggestion.
 
 .. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.svg
    :target: http://badge.fury.io/py/pytest-flask
+   :alt: PyPi version
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
    :target: https://readthedocs.org/projects/pytest-flask/?badge=latest

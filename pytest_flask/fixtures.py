@@ -86,6 +86,14 @@ class LiveServer(object):
         return '<LiveServer listening at %s>' % self.url()
 
 
+def _rewrite_server_name(server_name, new_port):
+    """Rewrite server port in ``server_name`` with ``new_port`` value."""
+    sep = ':'
+    if sep in server_name:
+        server_name, port = server_name.split(sep, 1)
+    return sep.join((server_name, new_port))
+
+
 @pytest.fixture(scope='function')
 def live_server(request, app, monkeypatch):
     """Run application in a separate process.
@@ -107,18 +115,11 @@ def live_server(request, app, monkeypatch):
     port = s.getsockname()[1]
     s.close()
 
-    def rewrite_server_name(server_name, new_port):
-        """Rewrite server port in ``server_name`` with ``new_port`` value."""
-        sep = ':'
-        if sep in server_name:
-            server_name, port = server_name.split(sep, 1)
-        return sep.join((server_name, new_port))
-
     # Explicitly set application ``SERVER_NAME`` for test suite
     # and restore original value on test teardown.
     server_name = app.config['SERVER_NAME'] or 'localhost'
     monkeypatch.setitem(app.config, 'SERVER_NAME',
-                        rewrite_server_name(server_name, str(port)))
+                        _rewrite_server_name(server_name, str(port)))
 
     server = LiveServer(app, port)
     request.addfinalizer(server.stop)

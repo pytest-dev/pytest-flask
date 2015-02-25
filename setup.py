@@ -101,23 +101,31 @@ Don't hesitate to create a `GitHub issue
 **suggestion**.
 
 """
+import io
 import os
-import codecs
+import re
 from setuptools import setup
 from setuptools import find_packages
-
-
-version = "0.7.0"
 
 
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        return codecs.open(os.path.join(*parts), 'r', encoding='utf-8').read()
+        return io.open(os.path.join(*parts), 'r', encoding='utf-8').read()
     except IOError:
         return ''
 
 
+def get_version():
+    version_file = read('pytest_flask', '__init__.py')
+    version_match = re.search(r'^__version__ = [\'"]([^\'"]*)[\'"]',
+                              version_file, re.MULTILINE)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError('Unable to find version string.')
+
+
+version = get_version()
 requirements = read('requirements', 'main.txt').splitlines()
 tests_require = []
 

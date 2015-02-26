@@ -1,7 +1,7 @@
-|PyPI version| |Documentation status|
-
 pytest-flask
 ============
+
+|PyPI version| |Documentation status|
 
 A set of pytest fixtures to test Flask applications.
 

@@ -1,7 +1,7 @@
 pytest-flask
 ============
 
-|PyPI version| |Documentation status|
+|PyPI version| |PyPI downloads| |Documentation status|
 
 A set of pytest fixtures to test Flask applications.
 
@@ -43,6 +43,10 @@ suggestion.
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pytest-flask.svg
    :target: https://pypi.python.org/pypi/pytest-flask
    :alt: PyPi version
+
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pytest-flask.svg
+   :target: https://pypi.python.org/pypi/pytest-flask
+   :alt: PyPi downloads
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
    :target: https://readthedocs.org/projects/pytest-flask/?badge=latest

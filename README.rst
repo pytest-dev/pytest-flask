@@ -3,12 +3,6 @@ pytest-flask
 
 |PyPI version| |PyPI downloads| |Documentation status|
 
-A set of pytest fixtures to test Flask applications.
-
-
-What is it?
------------
-
 An extension of `pytest <http://pytest.org/>`__ test runner which
 provides a set of useful tools to simplify testing and development
 of the Flask extensions and applications.

@@ -1,13 +1,7 @@
-|PyPI version| |Documentation status|
-
 pytest-flask
 ============
 
-A set of pytest fixtures to test Flask applications.
-
-
-What is it?
------------
+|PyPI version| |PyPI downloads| |Documentation status|
 
 An extension of `pytest <http://pytest.org/>`__ test runner which
 provides a set of useful tools to simplify testing and development
@@ -40,8 +34,13 @@ Contributing
 Don't hesitate to create a `GitHub issue <https://github.com/vitalk/pytest-flask/issues>`__ for any bug or
 suggestion.
 
-.. |PyPI version| image:: https://badge.fury.io/py/pytest-flask.png
-   :target: http://badge.fury.io/py/pytest-flask
+.. |PyPI version| image:: https://img.shields.io/pypi/v/pytest-flask.svg
+   :target: https://pypi.python.org/pypi/pytest-flask
+   :alt: PyPi version
+
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pytest-flask.svg
+   :target: https://pypi.python.org/pypi/pytest-flask
+   :alt: PyPi downloads
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
    :target: https://readthedocs.org/projects/pytest-flask/?badge=latest

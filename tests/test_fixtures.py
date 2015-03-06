@@ -23,17 +23,6 @@ class TestFixtures:
         assert accept_jsonp == [('Accept', 'application/json-p')]
 
 
-class TestAppMarker:
-
-    @pytest.mark.app(debug=False)
-    def test_not_debug_app(self, app):
-        assert not app.debug, 'Ensure the app not in debug mode'
-
-    @pytest.mark.app(foo=42)
-    def test_update_application_config(self, config):
-        assert config['FOO'] == 42
-
-
 class TestJSONResponse:
 
     def test_json_response(self, client, accept_json):

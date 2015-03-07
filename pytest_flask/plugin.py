@@ -94,7 +94,7 @@ def _push_application_context(request):
 
 
 @pytest.fixture(autouse=True)
-def _configure_application(request):
+def _configure_application(request, monkeypatch):
     """Use `pytest.mark.app` decorator to pass options to your application
     factory::
 
@@ -110,7 +110,7 @@ def _configure_application(request):
     options = request.keywords.get('app', None)
     if options:
         for key, value in options.kwargs.items():
-            app.config[key.upper()] = value
+            monkeypatch.setitem(app.config, key.upper(), value)
 
 
 def pytest_configure(config):

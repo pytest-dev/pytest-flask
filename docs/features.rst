@@ -84,7 +84,7 @@ An instance of ``app.test_client``. Typically refers to
 
 .. hint::
 
-    During tests execution the application has pushed context, e.g.
+    During tests execution the request context has been pushed, e.g.
     ``url_for``, ``session`` and other context bound objects are available
     without context managers.
 

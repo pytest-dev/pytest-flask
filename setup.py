@@ -28,7 +28,7 @@ To pass options to your application use the ``pytest.mark.app`` marker:
     def test_app(app):
       assert not app.debug, 'Ensure the app not in debug mode'
 
-During tests execution the application has pushed context, e.g. ``url_for``,
+During tests execution the request context has been pushed, e.g. ``url_for``,
 ``session`` and other context bound objects are available without context
 managers:
 

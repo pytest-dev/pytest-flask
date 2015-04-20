@@ -17,6 +17,7 @@ Plugin provides some fixtures to simplify app testing:
 - ``config`` - you application config,
 - ``live_server`` - runs an application in the background (useful for tests
   with `Selenium <http://www.seleniumhq.org>`_ and other headless browsers),
+- ``request_ctx`` - the request context,
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
 

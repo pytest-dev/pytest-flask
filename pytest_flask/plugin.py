@@ -13,7 +13,7 @@ from werkzeug import cached_property
 
 from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class, live_server
+    client_class, live_server, request_ctx
 )
 
 

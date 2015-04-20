@@ -2,16 +2,13 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from flask import url_for
+from flask import request, url_for
 
 
 class TestFixtures:
 
     def test_config_access(self, config):
         assert config['SECRET_KEY'] == '42'
-
-    def test_application_has_pushed_context(self, app):
-        assert url_for('ping') == '/ping'
 
     def test_client(self, client):
         assert client.get(url_for('ping')).status == b'200 OK'
@@ -21,6 +18,13 @@ class TestFixtures:
 
     def test_accept_jsonp(self, accept_jsonp):
         assert accept_jsonp == [('Accept', 'application/json-p')]
+
+    def test_request_ctx(self, app, request_ctx):
+        assert request_ctx.app is app
+
+    def test_request_ctx_is_kept_around(self, client):
+        res = client.get(url_for('index'), headers=[('X-Something', '42')])
+        assert request.headers['X-Something'] == '42'
 
 
 class TestJSONResponse:

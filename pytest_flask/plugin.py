@@ -13,7 +13,7 @@ from werkzeug import cached_property
 
 from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class, live_server
+    client_class, live_server, request_ctx
 )
 
 
@@ -64,8 +64,8 @@ def _monkeypatch_response_class(request, monkeypatch):
 
 
 @pytest.fixture(autouse=True)
-def _push_application_context(request):
-    """During tests execution application has pushed context, e.g. `url_for`,
+def _push_request_context(request):
+    """During tests execution request context has been pushed, e.g. `url_for`,
     `session`, etc. can be used in tests as is::
 
         def test_app(app, client):

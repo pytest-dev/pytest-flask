@@ -17,6 +17,7 @@ Plugin provides some fixtures to simplify app testing:
 - ``config`` - you application config,
 - ``live_server`` - runs an application in the background (useful for tests
   with `Selenium <http://www.seleniumhq.org>`_ and other headless browsers),
+- ``request_ctx`` - the request context,
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
 
@@ -28,7 +29,7 @@ To pass options to your application use the ``pytest.mark.app`` marker:
     def test_app(app):
       assert not app.debug, 'Ensure the app not in debug mode'
 
-During tests execution the application has pushed context, e.g. ``url_for``,
+During tests execution the request context has been pushed, e.g. ``url_for``,
 ``session`` and other context bound objects are available without context
 managers:
 

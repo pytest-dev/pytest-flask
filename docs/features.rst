@@ -84,7 +84,7 @@ An instance of ``app.test_client``. Typically refers to
 
 .. hint::
 
-    During tests execution the application has pushed context, e.g.
+    During tests execution the request context has been pushed, e.g.
     ``url_for``, ``session`` and other context bound objects are available
     without context managers.
 
@@ -137,6 +137,26 @@ other headless browsers).
             res = urllib2.urlopen(url_for('index', _external=True))
             assert b'OK' in res.read()
             assert res.code == 200
+
+
+``request_ctx`` - request context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The request context which contains all request relevant information.
+
+.. hint::
+
+    The request context has been pushed implicitly any time the ``app``
+    fixture is applied and is kept around during test execution, so it's easy
+    to introspect the data:
+
+    .. code:: python
+
+        from flask import request, url_for
+
+        def test_request_headers(client):
+            res = client.get(url_for('ping'), headers=[('X-Something', '42')])
+            assert request.headers['X-Something'] == '42'
 
 
 Content negotiation

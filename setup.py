@@ -14,7 +14,7 @@ Plugin provides some fixtures to simplify app testing:
 
 - ``client`` - an instance of ``app.test_client``,
 - ``client_class`` - ``client`` fixture for class-based tests,
-- ``config`` - you application config,
+- ``config`` - the application config,
 - ``live_server`` - runs an application in the background (useful for tests
   with `Selenium <http://www.seleniumhq.org>`_ and other headless browsers),
 - ``request_ctx`` - the request context,

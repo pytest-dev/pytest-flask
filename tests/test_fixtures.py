@@ -11,7 +11,7 @@ class TestFixtures:
         assert config['SECRET_KEY'] == '42'
 
     def test_client(self, client):
-        assert client.get(url_for('ping')).status == b'200 OK'
+        assert client.get(url_for('ping')).status == '200 OK'
 
     def test_accept_json(self, accept_json):
         assert accept_json == [('Accept', 'application/json')]

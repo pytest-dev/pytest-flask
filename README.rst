@@ -43,5 +43,5 @@ suggestion.
    :alt: PyPi downloads
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest
-   :target: https://readthedocs.org/projects/pytest-flask/?badge=latest
+   :target: https://pytest-flask.readthedocs.org/en/latest/
    :alt: Documentation status

@@ -53,7 +53,6 @@ class LiveServer(object):
         self.app = app
         self.port = port
         self._process = None
-        self.start()
 
     def start(self):
         """Start application in a separate process."""

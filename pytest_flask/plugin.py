@@ -107,7 +107,7 @@ def _configure_application(request, monkeypatch):
         return
 
     app = request.getfuncargvalue('app')
-    options = request.keywords.get('app', None)
+    options = request.keywords.get('options')
     if options:
         for key, value in options.kwargs.items():
             monkeypatch.setitem(app.config, key.upper(), value)

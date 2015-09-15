@@ -95,10 +95,10 @@ def _push_request_context(request):
 
 @pytest.fixture(autouse=True)
 def _configure_application(request, monkeypatch):
-    """Use `pytest.mark.app` decorator to pass options to your application
+    """Use `pytest.mark.options` decorator to pass options to your application
     factory::
 
-        @pytest.mark.app(debug=False)
+        @pytest.mark.options(debug=False)
         def test_something(app):
             assert not app.debug, 'the application works not in debug mode!'
 
@@ -107,8 +107,8 @@ def _configure_application(request, monkeypatch):
         return
 
     app = request.getfuncargvalue('app')
-    options = request.keywords.get('app', None)
-    if options:
+    options = request.keywords.get('options')
+    if options is not None:
         for key, value in options.kwargs.items():
             monkeypatch.setitem(app.config, key.upper(), value)
 

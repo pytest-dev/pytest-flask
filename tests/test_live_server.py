@@ -30,6 +30,6 @@ class TestLiveServer:
     def test_set_application_server_name(self, live_server):
         assert live_server.app.config['SERVER_NAME'] == 'localhost:%d' % live_server.port
 
-    @pytest.mark.app(server_name='example.com:5000')
+    @pytest.mark.options(server_name='example.com:5000')
     def test_rewrite_application_server_name(self, live_server):
         assert live_server.app.config['SERVER_NAME'] == 'example.com:%d' % live_server.port

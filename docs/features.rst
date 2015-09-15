@@ -210,10 +210,10 @@ Markers
 on `what markers are`_ and for notes on `using them`_.
 
 
-``pytest.mark.app`` - pass options to your application config
+``pytest.mark.options`` - pass options to your application config
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. py:function:: pytest.mark.app(**kwargs)
+.. py:function:: pytest.mark.options(**kwargs)
 
    The mark uses to pass options to your application config.
 
@@ -225,7 +225,7 @@ on `what markers are`_ and for notes on `using them`_.
 
    .. code:: python
 
-       @pytest.mark.app(debug=False)
+       @pytest.mark.options(debug=False)
        def test_app(app):
            assert not app.debug, 'Ensure the app not in debug mode'
 

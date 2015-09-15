@@ -211,7 +211,7 @@ on `what markers are`_ and for notes on `using them`_.
 
 
 ``pytest.mark.options`` - pass options to your application config
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. py:function:: pytest.mark.options(**kwargs)
 

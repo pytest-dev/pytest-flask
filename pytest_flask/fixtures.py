@@ -53,7 +53,6 @@ class LiveServer(object):
         self.app = app
         self.port = port
         self._process = None
-        self.start()
 
     def start(self):
         """Start application in a separate process."""
@@ -124,6 +123,9 @@ def live_server(request, app, monkeypatch):
                         _rewrite_server_name(server_name, str(port)))
 
     server = LiveServer(app, port)
+    if request.config.getvalue('start_live_server'):
+        server.start()
+
     request.addfinalizer(server.stop)
     return server
 

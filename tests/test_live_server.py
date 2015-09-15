@@ -12,6 +12,8 @@ from flask import url_for
 class TestLiveServer:
 
     def test_server_is_alive(self, live_server):
+        assert live_server._process is None
+        live_server.start()
         assert live_server._process
         assert live_server._process.is_alive()
 
@@ -20,6 +22,7 @@ class TestLiveServer:
         assert live_server.url('/ping') == 'http://localhost:%d/ping' % live_server.port
 
     def test_server_listening(self, live_server):
+        live_server.start()
         res = urlopen(live_server.url('/ping'))
         assert res.code == 200
         assert b'pong' in res.read()
@@ -33,3 +36,13 @@ class TestLiveServer:
     @pytest.mark.options(server_name='example.com:5000')
     def test_rewrite_application_server_name(self, live_server):
         assert live_server.app.config['SERVER_NAME'] == 'example.com:%d' % live_server.port
+
+    def test_live_server_can_add_endpoints(self, live_server):
+        @live_server.app.route("/new-endpoint/")
+        def _new_endpoint():
+            return "got it", 200
+        live_server.start()
+        res = urlopen(live_server.url('/new-endpoint/'))
+        assert res.code == 200
+        assert b'got it' in res.read()
+

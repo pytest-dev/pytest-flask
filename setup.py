@@ -21,11 +21,11 @@ Plugin provides some fixtures to simplify app testing:
 - ``accept_json``, ``accept_jsonp``, ``accept_any`` - accept headers
   suitable to use as parameters in ``client``.
 
-To pass options to your application use the ``pytest.mark.app`` marker:
+To pass options to your application use the ``pytest.mark.options`` marker:
 
 .. code:: python
 
-    @pytest.mark.app(debug=False)
+    @pytest.mark.options(debug=False)
     def test_app(app):
       assert not app.debug, 'Ensure the app not in debug mode'
 

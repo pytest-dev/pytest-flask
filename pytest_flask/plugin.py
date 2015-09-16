@@ -113,6 +113,18 @@ def _configure_application(request, monkeypatch):
             monkeypatch.setitem(app.config, key.upper(), value)
 
 
+def pytest_addoption(parser):
+    group = parser.getgroup('flask')
+    group.addoption('--start-live-server',
+                    action="store_true", dest="start_live_server", default=True,
+                    help="start server automatically when live_server "
+                         "fixture is applyed (enabled by default).")
+    group.addoption('--no-start-live-server',
+                    action="store_false", dest="start_live_server",
+                    help="don't start server automatically when live_server "
+                         "fixture is applyed.")
+
+
 def pytest_configure(config):
     config.addinivalue_line(
         'markers',

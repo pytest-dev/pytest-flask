@@ -139,6 +139,41 @@ other headless browsers).
             assert res.code == 200
 
 
+``--start-live-server`` - start live server automatically (default)
+```````````````````````````````````````````````````````````````````
+
+
+``--no-start-live-server`` - don't start live server automatically
+``````````````````````````````````````````````````````````````````
+
+By default the server is starting automatically whenever you reference
+``live_server`` fixture in your tests. But starting live server imposes some
+high costs on tests that need it when they may not be ready yet. To prevent
+that behaviour pass ``--no-start-live-server`` into your default options (for
+example, in your project's ``pytest.ini`` file)::
+
+    [pytest]
+    addopts = --no-start-live-server
+
+.. note::
+
+    Your **should manually start** live server after you finish your application
+    configuration and define all required routes:
+
+    .. code:: python
+
+        def test_add_endpoint_to_live_server(live_server):
+            @live_server.app.route('/test-endpoint')
+            def test_endpoint():
+                return 'got it', 200
+
+            live_server.start()
+
+            res = urlopen(url_for('test_endpoint', _external=True))
+            assert res.code == 200
+            assert b'got it' in res.read()
+
+
 ``request_ctx`` - request context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

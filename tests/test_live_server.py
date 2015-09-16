@@ -33,3 +33,52 @@ class TestLiveServer:
     @pytest.mark.options(server_name='example.com:5000')
     def test_rewrite_application_server_name(self, live_server):
         assert live_server.app.config['SERVER_NAME'] == 'example.com:%d' % live_server.port
+
+    def test_prevent_starting_live_server(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+
+            def test_a(live_server):
+                assert live_server._process is None
+        ''')
+
+        result = appdir.runpytest('-v', '--no-start-live-server')
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0
+
+    def test_start_live_server(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+
+            def test_a(live_server):
+                assert live_server._process
+                assert live_server._process.is_alive()
+        ''')
+        result = appdir.runpytest('-v', '--start-live-server')
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0
+
+    def test_add_endpoint_to_live_server(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+            try:
+                from urllib2 import urlopen
+            except ImportError:
+                from urllib.request import urlopen
+
+            from flask import url_for
+
+            def test_a(live_server):
+                @live_server.app.route('/new-endpoint')
+                def new_endpoint():
+                    return 'got it', 200
+
+                live_server.start()
+
+                res = urlopen(url_for('new_endpoint', _external=True))
+                assert res.code == 200
+                assert b'got it' in res.read()
+        ''')
+        result = appdir.runpytest('-v', '--no-start-live-server')
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0

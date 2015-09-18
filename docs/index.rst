@@ -18,6 +18,7 @@ pytest-flask with your application.
    tutorial
    features
    contributing
+   changelog
 
 
 Quickstart

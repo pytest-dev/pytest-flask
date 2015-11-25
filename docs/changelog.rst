@@ -7,6 +7,9 @@ Upcomming release
 -----------------
 
 - Add changelog to documentation.
+- Fix issue, when request teardown happened during test teardown instead of
+  test run. As a result "keeping context around" feature has gone, as well
+  as ``request_ctx`` fixture.
 
 0.10.0 (compared to 0.9.0)
 --------------------------

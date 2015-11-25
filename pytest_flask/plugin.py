@@ -13,7 +13,7 @@ from werkzeug import cached_property
 
 from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class, live_server, request_ctx
+    client_class, live_server
 )
 
 
@@ -62,35 +62,6 @@ def _monkeypatch_response_class(request, monkeypatch):
     monkeypatch.setattr(app, 'response_class',
                         _make_test_response_class(app.response_class))
 
-
-@pytest.fixture(autouse=True)
-def _push_request_context(request):
-    """During tests execution request context has been pushed, e.g. `url_for`,
-    `session`, etc. can be used in tests as is::
-
-        def test_app(app, client):
-            assert client.get(url_for('myview')).status_code == 200
-
-    """
-    if 'app' not in request.fixturenames:
-        return
-
-    app = request.getfuncargvalue('app')
-
-    # Get application bound to the live server if ``live_server`` fixture
-    # is applyed. Live server application has an explicit ``SERVER_NAME``,
-    # so ``url_for`` function generates a complete URL for endpoint which
-    # includes application port as well.
-    if 'live_server' in request.fixturenames:
-        app = request.getfuncargvalue('live_server').app
-
-    ctx = app.test_request_context()
-    ctx.push()
-
-    def teardown():
-        ctx.pop()
-
-    request.addfinalizer(teardown)
 
 
 @pytest.fixture(autouse=True)

@@ -10,16 +10,13 @@ try:
 except ImportError:
     from urllib.request import urlopen
 
-from flask import _request_ctx_stack
 
-
-@pytest.yield_fixture
+@pytest.fixture
 def client(app):
     """A Flask test client. An instance of :class:`flask.testing.TestClient`
     by default.
     """
-    with app.test_client() as client:
-        yield client
+    return app.test_client()
 
 
 @pytest.fixture
@@ -134,14 +131,6 @@ def live_server(request, app, monkeypatch):
 def config(app):
     """An application config."""
     return app.config
-
-
-@pytest.fixture
-def request_ctx(app):
-    """The request context which contains all request relevant information,
-    e.g. `session`, `g`, `flashes`, etc.
-    """
-    return _request_ctx_stack.top
 
 
 @pytest.fixture(params=['application/json', 'text/html'])

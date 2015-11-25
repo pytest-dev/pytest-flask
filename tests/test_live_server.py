@@ -24,8 +24,10 @@ class TestLiveServer:
         assert res.code == 200
         assert b'pong' in res.read()
 
-    def test_url_for(self, live_server):
-        assert url_for('ping', _external=True) == 'http://localhost:%s/ping' % live_server.port
+    def test_url_for(self, app, live_server):
+        expected_url = 'http://localhost:%s/ping' % live_server.port
+        with app.test_request_context():
+            assert url_for('ping', _external=True) == expected_url
 
     def test_set_application_server_name(self, live_server):
         assert live_server.app.config['SERVER_NAME'] == 'localhost:%d' % live_server.port
@@ -68,14 +70,15 @@ class TestLiveServer:
 
             from flask import url_for
 
-            def test_a(live_server):
+            def test_a(live_server, app):
                 @live_server.app.route('/new-endpoint')
                 def new_endpoint():
                     return 'got it', 200
 
                 live_server.start()
 
-                res = urlopen(url_for('new_endpoint', _external=True))
+                with app.test_request_context():
+                    res = urlopen(url_for('new_endpoint', _external=True))
                 assert res.code == 200
                 assert b'got it' in res.read()
         ''')

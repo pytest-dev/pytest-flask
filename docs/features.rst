@@ -5,14 +5,6 @@ Feature reference
 
 Extension provides some sugar for your tests, such as:
 
-* Access to context bound objects (``url_for``, ``request``, ``session``)
-  without context managers:
-
-  .. code:: python
-
-    def test_app(client):
-        assert client.get(url_for('myview')).status_code == 200
-
 * Easy access to ``JSON`` data in response:
 
   .. code:: python
@@ -81,12 +73,6 @@ testing. More information on fixtures and their usage is available in the
 
 An instance of ``app.test_client``. Typically refers to
 `flask.Flask.test_client`_.
-
-.. hint::
-
-    During tests execution the request context has been pushed, e.g.
-    ``url_for``, ``session`` and other context bound objects are available
-    without context managers.
 
 Example:
 
@@ -172,26 +158,6 @@ example, in your project's ``pytest.ini`` file)::
             res = urlopen(url_for('test_endpoint', _external=True))
             assert res.code == 200
             assert b'got it' in res.read()
-
-
-``request_ctx`` - request context
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The request context which contains all request relevant information.
-
-.. hint::
-
-    The request context has been pushed implicitly any time the ``app``
-    fixture is applied and is kept around during test execution, so it's easy
-    to introspect the data:
-
-    .. code:: python
-
-        from flask import request, url_for
-
-        def test_request_headers(client):
-            res = client.get(url_for('ping'), headers=[('X-Something', '42')])
-            assert request.headers['X-Something'] == '42'
 
 
 Content negotiation

@@ -3,7 +3,7 @@
 Changelog
 =========
 
-Upcomming release
+Upcoming release
 -----------------
 
 - Add changelog to documentation.

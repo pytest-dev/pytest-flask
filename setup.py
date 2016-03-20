@@ -52,7 +52,7 @@ a JSON response:
         assert res.json == {'ping': 'pong'}
 
 If you want your tests done via Selenium or other headless browser use
-the ``live_server`` fixture. The server's URL can be retrieved using
+the ``live_server`` fixture. The server’s URL can be retrieved using
 the ``url_for`` function:
 
 .. code:: python
@@ -97,7 +97,7 @@ http://pytest-flask.readthedocs.org/en/latest/.
 Contributing
 ------------
 
-Don't hesitate to create a `GitHub issue
+Don’t hesitate to create a `GitHub issue
 <https://github.com/vitalk/pytest-flask/issues>`_ for any **bug** or
 **suggestion**.
 

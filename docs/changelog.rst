@@ -6,6 +6,8 @@ Changelog
 Upcoming release
 -----------------
 
+- Minor typography improvements in documentation.
+
 - Add changelog to documentation.
 
 0.10.0 (compared to 0.9.0)
@@ -84,7 +86,7 @@ Upcoming release
 -----
 
 - Bind live server to a random port instead of 5000 or whatever is passed on
-  the command line, so it's possible to execute tests in parallel via
+  the command line, so it’s possible to execute tests in parallel via
   pytest-dev/pytest-xdist (#15). Thanks to @davehunt.
 
 - Remove ``--liveserver-port`` option.

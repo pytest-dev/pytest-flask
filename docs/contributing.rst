@@ -20,7 +20,7 @@ well.
 Where are the tests?
 --------------------
 
-Good that you're asking. The repository test suite is located in ``tests``
+Good that you’re asking. The repository test suite is located in ``tests``
 directory. Makefile defines a target to run them::
 
     make test

@@ -31,7 +31,7 @@ Install the extension with dependencies and go::
 Contributing
 ------------
 
-Don't hesitate to create a `GitHub issue <https://github.com/vitalk/pytest-flask/issues>`__ for any bug or
+Don’t hesitate to create a `GitHub issue <https://github.com/vitalk/pytest-flask/issues>`__ for any bug or
 suggestion.
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pytest-flask.svg

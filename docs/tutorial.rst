@@ -43,7 +43,7 @@ Use the ``py.test`` command to run your test suite::
     documentation`_.
 
 
-What's next?
+What’s next?
 ------------
 
 The :ref:`features` section gives a more detailed view of available features, as

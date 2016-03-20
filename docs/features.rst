@@ -124,7 +124,7 @@ other headless browsers).
 
 .. hint::
 
-    The server's URL can be retrieved using the ``url_for`` function.
+    The server’s URL can be retrieved using the ``url_for`` function.
 
 .. code:: python
 
@@ -143,14 +143,14 @@ other headless browsers).
 ```````````````````````````````````````````````````````````````````
 
 
-``--no-start-live-server`` - don't start live server automatically
+``--no-start-live-server`` - don’t start live server automatically
 ``````````````````````````````````````````````````````````````````
 
 By default the server is starting automatically whenever you reference
 ``live_server`` fixture in your tests. But starting live server imposes some
 high costs on tests that need it when they may not be ready yet. To prevent
 that behaviour pass ``--no-start-live-server`` into your default options (for
-example, in your project's ``pytest.ini`` file)::
+example, in your project’s ``pytest.ini`` file)::
 
     [pytest]
     addopts = --no-start-live-server
@@ -182,7 +182,7 @@ The request context which contains all request relevant information.
 .. hint::
 
     The request context has been pushed implicitly any time the ``app``
-    fixture is applied and is kept around during test execution, so it's easy
+    fixture is applied and is kept around during test execution, so it’s easy
     to introspect the data:
 
     .. code:: python

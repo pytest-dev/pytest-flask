@@ -6,9 +6,16 @@ Changelog
 Upcoming release
 -----------------
 
+- Add ``LICENSE`` into distribution (`#43`_), thanks to `@danstender`_.
+
 - Minor typography improvements in documentation.
 
 - Add changelog to documentation.
+
+
+.. _#43: https://github.com/vitalk/pytest-flask/issues/43
+.. _@danstender: https://github.com/danstender
+
 
 0.10.0 (compared to 0.9.0)
 --------------------------

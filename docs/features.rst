@@ -250,11 +250,11 @@ on `what markers are`_ and for notes on `using them`_.
 
 .. py:function:: pytest.mark.options(**kwargs)
 
-   The mark uses to pass options to your application config.
+   The mark used to pass options to your application config.
 
    :type kwargs: dict
    :param kwargs:
-     The dictionary uses to extend application config.
+     The dictionary used to extend application config.
 
    Example usage:
 

@@ -215,7 +215,7 @@ Example:
         res = client.post(
             get_endpoint(),
             headers={'Content-Type': 'application/json'},
-            data={'key1': 'value1', 'key2': 'value2'}
+            data={}
         )
 
         assert res.status_code == 200

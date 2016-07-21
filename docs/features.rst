@@ -255,13 +255,9 @@ Example:
 
             @blueprint.route('/load-data', methods=['POST'], endpoint='load')
             def load_data():
-
                 if request.method == 'POST':
-
-                    # get data
                     if request.get_json():
-
-                        ...
+                        pass
 
 Alternatively, the route function can be referenced directly from the
 ``live_server`` implementation, rather than implementing an ``endpoint``:

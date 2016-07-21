@@ -194,6 +194,74 @@ The request context which contains all request relevant information.
             assert request.headers['X-Something'] == '42'
 
 
+HTTP Request
+~~~~~~~~~~~~~~~~~~~
+
+Common request methods are available through the internals of the `Flask API`_.
+Specifically, the API creates the default `flask.Flask.test_client`_ instance,
+which works like a regular `Werkzeug test client`_.
+
+Example:
+
+.. code:: python
+
+    def test_post_request(client, live_server):
+        @live_server.app.route('/load-data')
+        def get_endpoint():
+            return url_for('name.load', _external=True)
+
+        live_server.start()
+
+        res = client.post(
+            get_endpoint(),
+            headers={'Content-Type': 'application/json'},
+            data={'key1': 'value1', 'key2': 'value2'}
+        )
+
+        assert res.status_code == 200
+
+Example:
+
+.. code:: python
+
+    def test_get_request(client, live_server):
+        @live_server.app.route('/load-data')
+        def get_endpoint():
+            return url_for('name.load', _external=True)
+
+        live_server.start()
+
+        res = client.get(get_endpoint())
+
+        assert res.status_code == 200
+
+.. note::
+
+    The notation ``name.load_data``, should correspond to a ``endpoint='load'``
+    attribute, within a route decorator. The following is a route decorator
+    using the `blueprint`_ implementation:
+
+        .. code:: python
+            from flask import Blueprint, request
+
+            # local variables
+            blueprint = Blueprint(
+                'name',
+                __name__,
+                template_folder='interface/templates',
+                static_folder='interface/static'
+            )
+
+            @blueprint.route('/load-data', methods=['POST'], endpoint='load')
+            def load_data():
+
+                if request.method == 'POST':
+
+                    # get data
+                    if request.get_json():
+
+                        ...
+
 Content negotiation
 ~~~~~~~~~~~~~~~~~~~
 
@@ -272,3 +340,6 @@ on `what markers are`_ and for notes on `using them`_.
 .. _Selenium: http://www.seleniumhq.org
 .. _what markers are: http://pytest.org/latest/mark.html
 .. _using them: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules
+.. _Flask API: https://pytest-flask.readthedocs.io/en/latest/features.html#client-application-test-client
+.. _Werkzeug test client: http://werkzeug.pocoo.org/docs/0.11/test/#werkzeug.test.Client
+.. _blueprint: http://flask.pocoo.org/docs/0.11/blueprints/

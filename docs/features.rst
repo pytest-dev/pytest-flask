@@ -237,7 +237,7 @@ Example:
 
 .. note::
 
-    The notation ``name.load_data``, should correspond to a ``endpoint='load'``
+    The notation ``name.load_data``, corresponds to a ``endpoint='load'``
     attribute, within a route decorator. The following is a route decorator
     using the `blueprint`_ implementation:
 
@@ -261,6 +261,25 @@ Example:
                     if request.get_json():
 
                         ...
+
+Alternatively, the route function can be referenced directly from the
+``live_server`` implementation, rather than implementing an ``endpoint``:
+
+    .. code:: python
+        def test_load_data(live_server, client):
+            @live_server.app.route('/load-data', methods=['POST'])
+            def load_data():
+                pass
+
+            live_server.start()
+
+            res = client.post(url_for('load_data'), data={})
+            assert res.status_code == 200
+
+.. note::
+
+    Remember to explicitly define which ``methods`` are supported when
+    registering the above route function.
 
 Content negotiation
 ~~~~~~~~~~~~~~~~~~~

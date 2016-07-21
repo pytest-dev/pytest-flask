@@ -242,6 +242,7 @@ Example:
     using the `blueprint`_ implementation:
 
         .. code:: python
+
             from flask import Blueprint, request
 
             # local variables
@@ -266,6 +267,7 @@ Alternatively, the route function can be referenced directly from the
 ``live_server`` implementation, rather than implementing an ``endpoint``:
 
     .. code:: python
+
         def test_load_data(live_server, client):
             @live_server.app.route('/load-data', methods=['POST'])
             def load_data():

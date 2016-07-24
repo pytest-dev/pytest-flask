@@ -6,9 +6,9 @@ import pytest
 import socket
 
 try:
-    from urllib2 import urlopen
-except ImportError:
     from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
 
 from flask import _request_ctx_stack
 
@@ -34,11 +34,19 @@ def client_class(request, client):
                 return self.client.post(url_for('login'), data=credentials)
 
             def test_login(self):
-                assert self.login('vital@example.com', 'pass').status_code == 200
+                assert self.login('vital@foo.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:
         request.cls.client = client
+
+
+def _find_unused_port():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('', 0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
 
 
 class LiveServer(object):
@@ -56,7 +64,9 @@ class LiveServer(object):
 
     def start(self):
         """Start application in a separate process."""
-        worker = lambda app, port: app.run(port=port, use_reloader=False)
+        def worker(app, port):
+            return app.run(port=port, use_reloader=False)
+
         self._process = multiprocessing.Process(
             target=worker,
             args=(self.app, self.port)
@@ -76,7 +86,7 @@ class LiveServer(object):
 
     def url(self, url=''):
         """Returns the complete url based on server options."""
-        return 'http://localhost:%d%s' % (self.port, url)
+        return 'http://127.0.0.1:%d%s' % (self.port, url)
 
     def stop(self):
         """Stop application process."""
@@ -95,7 +105,7 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-@pytest.fixture(scope='function')
+@pytest.yield_fixture(scope='function')
 def live_server(request, app, monkeypatch):
     """Run application in a separate process.
 
@@ -104,21 +114,17 @@ def live_server(request, app, monkeypatch):
 
         def test_server_is_up_and_running(live_server):
             index_url = url_for('index', _external=True)
-            assert index_url == 'http://localhost:5000/'
+            assert index_url == 'http://127.0.0.1:5000/'
 
             res = urllib2.urlopen(index_url)
             assert res.code == 200
 
     """
-    # Bind to an open port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 0))
-    port = s.getsockname()[1]
-    s.close()
+    port = _find_unused_port()
 
     # Explicitly set application ``SERVER_NAME`` for test suite
     # and restore original value on test teardown.
-    server_name = app.config['SERVER_NAME'] or 'localhost'
+    server_name = app.config['SERVER_NAME'] or '127.0.0.1'
     monkeypatch.setitem(app.config, 'SERVER_NAME',
                         _rewrite_server_name(server_name, str(port)))
 
@@ -126,8 +132,8 @@ def live_server(request, app, monkeypatch):
     if request.config.getvalue('start_live_server'):
         server.start()
 
-    request.addfinalizer(server.stop)
-    return server
+    yield server
+    server.stop()
 
 
 @pytest.fixture

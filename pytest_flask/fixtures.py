@@ -6,9 +6,11 @@ import pytest
 import socket
 
 try:
-    from urllib2 import urlopen
-except ImportError:
     from urllib.request import urlopen
+    from shutil import which
+except ImportError:
+    from urllib2 import urlopen
+    from distutils.spawn import find_executable as which
 
 from flask import _request_ctx_stack
 
@@ -34,35 +36,38 @@ def client_class(request, client):
                 return self.client.post(url_for('login'), data=credentials)
 
             def test_login(self):
-                assert self.login('vital@example.com', 'pass').status_code == 200
+                assert self.login('vital@foo.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:
         request.cls.client = client
 
 
-class LiveServer(object):
-    """The helper class uses to manage live server. Handles creation and
-    stopping application in a separate process.
+def _find_unused_port():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('', 0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
 
-    :param app: The application to run.
-    :param port: The port to run application.
-    """
 
-    def __init__(self, app, port):
+class LiveServerBase(object):
+
+    def __init__(self, app, monkeypatch, port=None):
         self.app = app
-        self.port = port
+        self.port = port or _find_unused_port()
         self._process = None
+        self.monkeypatch = monkeypatch
 
     def start(self):
-        """Start application in a separate process."""
-        worker = lambda app, port: app.run(port=port, use_reloader=False)
-        self._process = multiprocessing.Process(
-            target=worker,
-            args=(self.app, self.port)
-        )
-        self._process.start()
+        # Explicitly set application ``SERVER_NAME`` for test suite
+        # and restore original value on test teardown.
+        server_name = self.app.config['SERVER_NAME'] or '127.0.0.1'
+        self.monkeypatch.setitem(
+            self.app.config, 'SERVER_NAME',
+            _rewrite_server_name(server_name, str(self.port)))
 
+    def _wait_for_server(self):
         # We must wait for the server to start listening with a maximum
         # timeout of 5 seconds.
         timeout = 5
@@ -76,15 +81,109 @@ class LiveServer(object):
 
     def url(self, url=''):
         """Returns the complete url based on server options."""
-        return 'http://localhost:%d%s' % (self.port, url)
+        return 'http://127.0.0.1:%d%s' % (self.port, url)
+
+    def __repr__(self):
+        return '<%s listening at %s>' % (
+            self.__class__.__name,
+            self.url(),
+        )
+
+
+class LiveServerMultiprocess(LiveServerBase):
+    """The helper class uses this to manage live server.
+    Handles creation and stopping application in a separate process.
+
+    :param app: The application to run.
+    :param port: The port to run application.
+    """
+
+    def start(self):
+        """Start application in a separate process."""
+        def worker(app, port):
+            return app.run(port=port, use_reloader=False)
+        super(LiveServerMultiprocess, self).start()
+
+        self._process = multiprocessing.Process(
+            target=worker,
+            args=(self.app, self.port)
+        )
+        self._process.start()
+        self._wait_for_server()
 
     def stop(self):
         """Stop application process."""
         if self._process:
             self._process.terminate()
 
-    def __repr__(self):
-        return '<LiveServer listening at %s>' % self.url()
+try:
+    import pytest_services  # noqa
+
+    class LiveServerSubprocess(LiveServerBase):
+        """The helper class uses this to manage live server.
+        Handles creation and stopping application in a subprocess
+        using Popen. Use this if you need more explicit separation
+        between processes.
+
+        :param app: The application to run.
+        :param port: The port to run application.
+        """
+        def __init__(self, app, monkeypatch, watcher_getter, port=None):
+            self.app = app
+            self.port = port or _find_unused_port()
+            self._process = None
+            self.monkeypatch = monkeypatch
+            self.watcher_getter = watcher_getter
+
+        def start(self, **kwargs):
+            """
+            Start application in a separate process.
+
+            To add environment variables to the process, simply do:
+            live_server_subprocess.start(
+                watcher_getter_kwargs={'env': {'MYENV': '1'}})
+            """
+            def worker(app, port):
+                return app.run(port=port, use_reloader=False)
+            super(LiveServerSubprocess, self).start()
+
+            self._process = self.watcher_getter(
+                name='flask',
+                arguments=['run', '--port', str(self.port)],
+                checker=lambda: which('flask'),
+                kwargs=kwargs.get('watcher_getter_kwargs', {}))
+            self._wait_for_server()
+
+        def stop(self):
+            """Stop application process."""
+            if self._process:
+                self._process.terminate()
+
+    @pytest.yield_fixture(scope='function')
+    def live_server_subprocess(request, app, monkeypatch, watcher_getter):
+        """Run application in a subprocess. Use this if you need more explicit
+        separation of processes. Uses os.fork().
+        Requires flask >= 0.11 and the pytest-services plugin.
+
+        When the ``live_server_subprocess`` fixture is applyed,
+        the ``url_for`` function works as expected::
+
+            def test_server_is_up_and_running(live_server_subprocess):
+                index_url = url_for('index', _external=True)
+                assert index_url == 'http://127.0.0.1:5000/'
+
+                res = urllib2.urlopen(index_url)
+                assert res.code == 200
+        """
+
+        server = LiveServerSubprocess(app, monkeypatch=monkeypatch)
+        if request.config.getvalue('start_live_server'):
+            server.start()
+        yield server
+        server.stop()
+
+except ImportError:
+    pass
 
 
 def _rewrite_server_name(server_name, new_port):
@@ -95,7 +194,7 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-@pytest.fixture(scope='function')
+@pytest.yield_fixture(scope='function')
 def live_server(request, app, monkeypatch):
     """Run application in a separate process.
 
@@ -104,30 +203,18 @@ def live_server(request, app, monkeypatch):
 
         def test_server_is_up_and_running(live_server):
             index_url = url_for('index', _external=True)
-            assert index_url == 'http://localhost:5000/'
+            assert index_url == 'http://127.0.0.1:5000/'
 
             res = urllib2.urlopen(index_url)
             assert res.code == 200
 
     """
-    # Bind to an open port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 0))
-    port = s.getsockname()[1]
-    s.close()
 
-    # Explicitly set application ``SERVER_NAME`` for test suite
-    # and restore original value on test teardown.
-    server_name = app.config['SERVER_NAME'] or 'localhost'
-    monkeypatch.setitem(app.config, 'SERVER_NAME',
-                        _rewrite_server_name(server_name, str(port)))
-
-    server = LiveServer(app, port)
+    server = LiveServerMultiprocess(app, monkeypatch=monkeypatch)
     if request.config.getvalue('start_live_server'):
         server.start()
-
-    request.addfinalizer(server.stop)
-    return server
+    yield server
+    server.stop()
 
 
 @pytest.fixture

@@ -132,7 +132,8 @@ tests_require = []
 
 extras_require = {
     'docs': read('requirements', 'docs.txt').splitlines(),
-    'tests': tests_require
+    'tests': tests_require,
+    'services': ['pytest-services'],
 }
 
 

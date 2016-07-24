@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 import pytest
 try:
-    from urllib2 import urlopen
-except ImportError:
     from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
 
 from flask import url_for
 
@@ -62,9 +62,9 @@ class TestLiveServer:
         appdir.create_test_module('''
             import pytest
             try:
-                from urllib2 import urlopen
-            except ImportError:
                 from urllib.request import urlopen
+            except ImportError:
+                from urllib2 import urlopen
 
             from flask import url_for
 

@@ -29,3 +29,5 @@ install:
 
 script:
   - tox
+  - "find ${TRAVIS_BUILD_DIR}/.tox -name log -type d | xargs -I {} rm -rf {}"
+

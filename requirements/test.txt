@@ -1,0 +1,5 @@
+mock
+pylint
+pytest-cov
+pytest-pep8
+pytest-xdist

@@ -127,7 +127,7 @@ def get_version():
 
 
 version = get_version()
-requirements = read('requirements', 'main.txt').splitlines()
+requirements = read('requirements', 'main.txt').splitlines() + ['pytest']
 tests_require = []
 
 extras_require = {
@@ -179,7 +179,7 @@ setup(
     ],
 
     # The following makes a plugin available to pytest
-    entry_points = {
+    entry_points={
         'pytest11': [
             'flask = pytest_flask.plugin',
         ]

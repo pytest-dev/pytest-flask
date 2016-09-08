@@ -1,27 +1,31 @@
 language: python
 
+branches:
+  except:
+    - gh-pages
+
+cache:
+  directories:
+    - "${HOME}/virtualenv"
+    - "${TRAVIS_BUILD_DIR}/.tox"
+
 python:
   - 2.6
   - 2.7
   - 3.3
   - 3.4
+  - 3.5
+  - 3.6
   - pypy
 
-env:
-  - PYTEST=2.3.5
-  - PYTEST=2.4.2
-  - PYTEST=2.5.2
-  - PYTEST=2.6.4
-  - PYTEST=2.7.0
-  - PYTEST=2.7.1
-  - PYTEST=2.7.2
-  - PYTEST=2.7.3
-  - PYTEST=2.8.0
+matrix:
+  fast_finish: true
+  allow_failures:
+    - python: 3.6
 
 install:
-  - pip install -q pytest==$PYTEST
-  - pip install -q -r requirements/main.txt
-  - pip install -q -e .
+  - pip install tox
+  - pip install tox-travis
 
 script:
-  - py.test
+  - tox

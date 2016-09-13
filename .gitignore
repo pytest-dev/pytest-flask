@@ -2,8 +2,21 @@
 *.py[co]
 *.egg-info
 build
-dist
-venv
+sdist
+
+__pycache__/
+
+# virtualenv
+venv/
 
 # Sphinx documentation
 docs/_build
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+tests/junit.xml

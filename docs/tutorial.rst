@@ -56,5 +56,5 @@ If you want to contribute to the project, see the :ref:`contributing` section.
 
 
 .. _PyPi: https://pypi.python.org/pypi/pytest-flask
-.. _discovers your tests: http://pytest.org/latest/goodpractises.html#python-test-discovery
+.. _discovers your tests: http://docs.pytest.org/en/latest/goodpractices.html#test-discovery
 .. _official documentation: http://pytest.org/latest/usage.html

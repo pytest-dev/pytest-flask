@@ -6,6 +6,11 @@ Changelog
 Upcoming release
 -----------------
 
+- Fix broken link to pytest documentation (`#50`_), thanks to
+  `@jineshpaloor`_ for the PR.
+
+- Tox support (`#48`_), thanks to `@steenzout`_ for the PR.
+
 - Add ``LICENSE`` into distribution (`#43`_), thanks to `@danstender`_.
 
 - Minor typography improvements in documentation.
@@ -14,7 +19,11 @@ Upcoming release
 
 
 .. _#43: https://github.com/vitalk/pytest-flask/issues/43
+.. _#48: https://github.com/pytest-dev/pytest-flask/pull/48
+.. _#50: https://github.com/pytest-dev/pytest-flask/pull/50
 .. _@danstender: https://github.com/danstender
+.. _@jineshpaloor: https://github.com/jineshpaloor
+.. _@steenzout: https://github.com/steenzout
 
 
 0.10.0 (compared to 0.9.0)

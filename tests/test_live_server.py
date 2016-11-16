@@ -81,15 +81,15 @@ class TestLiveServer:
                 assert b'got it' in res.read()
         ''')
         result_with = appdir.runpytest('-v',
-                               '--no-start-live-server',
-                               '--live-server-clean-stop',
-                               '--cov=%s' % str(appdir.tmpdir),
-                               '--cov-report=term-missing')
+                                       '--no-start-live-server',
+                                       '--live-server-clean-stop',
+                                       '--cov=%s' % str(appdir.tmpdir),
+                                       '--cov-report=term-missing')
         result_without = appdir.runpytest('-v',
-                               '--no-start-live-server',
-                               '--no-live-server-clean-stop',
-                               '--cov=%s' % str(appdir.tmpdir),
-                               '--cov-report=term-missing')
+                                          '--no-start-live-server',
+                                          '--no-live-server-clean-stop',
+                                          '--cov=%s' % str(appdir.tmpdir),
+                                          '--cov-report=term-missing')
 
         def _get_missing(r):
             for line in r.outlines:

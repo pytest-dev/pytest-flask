@@ -41,6 +41,10 @@ def client_class(request, client):
         request.cls.client = client
 
 
+def _app_worker(app, port):
+    app.run(port=port, use_reloader=False)
+
+
 class LiveServer(object):
     """The helper class uses to manage live server. Handles creation and
     stopping application in a separate process.
@@ -56,10 +60,8 @@ class LiveServer(object):
 
     def start(self):
         """Start application in a separate process."""
-        def worker(app, port):
-            app.run(port=port, use_reloader=False)
         self._process = multiprocessing.Process(
-            target=worker,
+            target=_app_worker,
             args=(self.app, self.port)
         )
         self._process.start()

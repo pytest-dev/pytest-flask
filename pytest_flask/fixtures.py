@@ -6,6 +6,18 @@ import pytest
 import socket
 import logging
 
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
+
+try:
+    # Python 2
+    from Queue import Empty
+except ImportError:
+    # Python 3
+    from queue import Empty
+
 from flask import _request_ctx_stack
 
 
@@ -91,7 +103,17 @@ class LiveServer(object):
         # We must wait for the server to start listening with a maximum
         # timeout of 5 seconds.
         timeout = 5
-        self._queue.get(True, timeout)
+        while timeout > 0:
+            try:
+                # It will return 1 in less than a second or wait 1 second
+                self._queue.get(True, 1)
+            except Empty:
+                pass  # Ignore that exception
+            try:
+                urlopen(self.url())
+                timeout = 0
+            except:
+                timeout -= 1
 
     def url(self, url=''):
         """Returns the complete url based on server options."""

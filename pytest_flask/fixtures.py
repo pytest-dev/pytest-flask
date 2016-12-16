@@ -4,11 +4,7 @@ import time
 import multiprocessing
 import pytest
 import socket
-
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
+import logging
 
 from flask import _request_ctx_stack
 
@@ -41,6 +37,31 @@ def client_class(request, client):
         request.cls.client = client
 
 
+class LogCapture(logging.Handler):
+    """
+    Helper class to capture logs of werkzeug and wait for a specific
+    log message to confirm the server was started.
+    """
+
+    def __init__(self, logger, wait_for, queue, level=logging.NOTSET):
+        super(LogCapture, self).__init__(level=level)
+        self.logger_name = logger
+        self.logger = logging.getLogger(self.logger_name)
+        self.level = level
+        self.wait_for = wait_for
+        self.queue = queue
+
+    def emit(self, record):
+        if self.wait_for in record.getMessage():
+            self.queue.put(1)
+
+    def __enter__(self):
+        self.logger.addHandler(self)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.logger.removeHandler(self)
+
+
 class LiveServer(object):
     """The helper class uses to manage live server. Handles creation and
     stopping application in a separate process.
@@ -53,27 +74,24 @@ class LiveServer(object):
         self.app = app
         self.port = port
         self._process = None
+        self._queue = None
 
     def start(self):
         """Start application in a separate process."""
-        def worker(app, port):
-            app.run(port=port, use_reloader=False)
+        def worker(app, port, queue):
+            with LogCapture('werkzeug', ' * Running on ', queue, logging.INFO):
+                app.run(port=port, use_reloader=False)
+        self._queue = multiprocessing.Queue()
         self._process = multiprocessing.Process(
             target=worker,
-            args=(self.app, self.port)
+            args=(self.app, self.port, self._queue)
         )
         self._process.start()
 
         # We must wait for the server to start listening with a maximum
         # timeout of 5 seconds.
         timeout = 5
-        while timeout > 0:
-            time.sleep(1)
-            try:
-                urlopen(self.url())
-                timeout = 0
-            except:
-                timeout -= 1
+        self._queue.get(True, timeout)
 
     def url(self, url=''):
         """Returns the complete url based on server options."""

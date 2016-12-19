@@ -82,3 +82,33 @@ class TestLiveServer:
         result = appdir.runpytest('-v', '--no-start-live-server')
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
+
+    def test_concurrent_requests_to_live_server(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+            try:
+                from urllib2 import urlopen
+            except ImportError:
+                from urllib.request import urlopen
+
+            from flask import url_for
+
+            def test_concurrent_requests(live_server):
+                @live_server.app.route('/one')
+                def one():
+                    res = urlopen(url_for('two', _external=True))
+                    return res.read()
+
+                @live_server.app.route('/two')
+                def two():
+                    return '42'
+
+                live_server.start()
+
+                res = urlopen(url_for('one', _external=True))
+                assert res.code == 200
+                assert b'42' in res.read()
+        ''')
+        result = appdir.runpytest('-v', '--no-start-live-server')
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0

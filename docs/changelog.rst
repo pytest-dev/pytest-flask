@@ -6,6 +6,9 @@ Changelog
 Upcoming release
 -----------------
 
+- Allow live server to handle concurrent requests (`#56`_), thanks to
+  `@mattwbarry`_ for the PR.
+
 - Fix broken link to pytest documentation (`#50`_), thanks to
   `@jineshpaloor`_ for the PR.
 
@@ -21,8 +24,10 @@ Upcoming release
 .. _#43: https://github.com/vitalk/pytest-flask/issues/43
 .. _#48: https://github.com/pytest-dev/pytest-flask/pull/48
 .. _#50: https://github.com/pytest-dev/pytest-flask/pull/50
+.. _#56: https://github.com/pytest-dev/pytest-flask/pull/56
 .. _@danstender: https://github.com/danstender
 .. _@jineshpaloor: https://github.com/jineshpaloor
+.. _@mattwbarry: https://github.com/mattwbarry
 .. _@steenzout: https://github.com/steenzout
 
 

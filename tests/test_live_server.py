@@ -124,6 +124,6 @@ class TestLiveServer:
             def test_should_fail(live_server):
                 assert live_server._process.is_alive()
         ''')
-        result = appdir.runpytest('-v', '--live-server-wait=0.00001')
+        result = appdir.runpytest('-v', '--live-server-wait=0.00000001')
         result.stdout.fnmatch_lines(['**ERROR**'])
         assert result.ret == 1

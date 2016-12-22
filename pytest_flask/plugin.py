@@ -123,6 +123,10 @@ def pytest_addoption(parser):
                     action="store_false", dest="start_live_server",
                     help="don't start server automatically when live_server "
                          "fixture is applyed.")
+    group.addoption('--live-server-wait',
+                    action="store", dest="live_server_wait", default=5, type=float,
+                    help="the timeout after which test case is aborted if "
+                         "live server is not started.")
 
 
 def pytest_configure(config):

@@ -47,11 +47,15 @@ class LiveServer(object):
 
     :param app: The application to run.
     :param port: The port to run application.
+    :param wait: The timeout after which test case is aborted if
+                 application is not started.
     """
 
-    def __init__(self, app, port):
+    def __init__(self, app, port, wait):
         self.app = app
+        self.host = 'localhost'
         self.port = port
+        self.wait = wait
         self._process = None
 
     def start(self):
@@ -64,20 +68,35 @@ class LiveServer(object):
         )
         self._process.start()
 
-        # We must wait for the server to start listening with a maximum
-        # timeout of 5 seconds.
-        timeout = 5
-        while timeout > 0:
-            time.sleep(1)
-            try:
-                urlopen(self.url())
-                timeout = 0
-            except:
-                timeout -= 1
+        keep_trying = True
+        start_time = time.time()
+        while keep_trying:
+            elapsed_time = (time.time() - start_time)
+            if elapsed_time > self.wait:
+                pytest.fail(
+                    "Failed to start the server after {!s} "
+                    "seconds.".format(self.wait)
+                )
+            if self._is_ready():
+                keep_trying = False
+
+    def _is_ready(self):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            sock.connect((self.host, self.port))
+        except socket.error:
+            ret = False
+        else:
+            ret = True
+        finally:
+            sock.close()
+        return ret
 
     def url(self, url=''):
         """Returns the complete url based on server options."""
-        return 'http://localhost:%d%s' % (self.port, url)
+        return 'http://{host!s}:{port!s}{url!s}'.format(
+            host=self.host, port=self.port, url=url
+        )
 
     def stop(self):
         """Stop application process."""
@@ -123,7 +142,8 @@ def live_server(request, app, monkeypatch):
     monkeypatch.setitem(app.config, 'SERVER_NAME',
                         _rewrite_server_name(server_name, str(port)))
 
-    server = LiveServer(app, port)
+    wait = request.config.getvalue('live_server_wait')
+    server = LiveServer(app, port, wait)
     if request.config.getvalue('start_live_server'):
         server.start()
 

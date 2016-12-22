@@ -11,6 +11,10 @@ from flask import url_for
 
 class TestLiveServer:
 
+    def test_init(self, live_server):
+        assert live_server.port
+        assert live_server.host == 'localhost'
+
     def test_server_is_alive(self, live_server):
         assert live_server._process
         assert live_server._process.is_alive()

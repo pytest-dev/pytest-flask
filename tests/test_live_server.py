@@ -116,3 +116,14 @@ class TestLiveServer:
         result = appdir.runpytest('-v', '--no-start-live-server')
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
+
+    def test_respect_wait_timeout(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+
+            def test_should_fail(live_server):
+                assert live_server._process.is_alive()
+        ''')
+        result = appdir.runpytest('-v', '--live-server-wait=0.00001')
+        result.stdout.fnmatch_lines(['**ERROR**'])
+        assert result.ret == 1

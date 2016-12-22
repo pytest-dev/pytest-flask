@@ -66,6 +66,7 @@ class LiveServer(object):
             target=worker,
             args=(self.app, self.port)
         )
+        self._process.daemon = True
         self._process.start()
 
         keep_trying = True

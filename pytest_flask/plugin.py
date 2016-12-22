@@ -29,6 +29,29 @@ class JSONResponse(object):
         """
         return json.loads(self.data)
 
+    def __eq__(self, other):
+        try:
+            status_code = int(other)
+            return self.status_code == status_code
+        except:
+            return super(JSONResponse, self).__eq__(other)
+
+
+def pytest_assertrepr_compare(op, left, right):
+    if isinstance(left, JSONResponse) and op == '==':
+        try:
+            right = int(right)
+            return [
+                'Mismatch in status code for response: {} != {}'.format(
+                    left.status_code,
+                    right,
+                ),
+                'Response status: {}'.format(left.status),
+            ]
+        except:
+            pass
+    return None
+
 
 def _make_test_response_class(response_class):
     """Extends the response class with special attribute to test JSON

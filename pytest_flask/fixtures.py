@@ -53,10 +53,14 @@ class LiveServer(object):
 
     def __init__(self, app, port, wait):
         self.app = app
-        self.host = 'localhost'
         self.port = port
         self.wait = wait
         self._process = None
+
+    @property
+    def host(self):
+        """Returns the host to run application, e.g. 'localhost'."""
+        return 'localhost'
 
     def start(self):
         """Start application in a separate process."""

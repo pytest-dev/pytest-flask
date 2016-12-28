@@ -33,7 +33,13 @@ class JSONResponse(object):
             status_code = int(other)
             return self.status_code == status_code
         except:
-            return super(JSONResponse, self).__eq__(other)
+            super_class = super(JSONResponse, self)
+            try:
+                super_eq = getattr(super_class, '__eq__')
+            except AttributeError:
+                super_eq = object.__eq__
+            finally:
+                return super_eq(other)
 
 
 def pytest_assertrepr_compare(op, left, right):

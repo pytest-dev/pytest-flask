@@ -37,8 +37,8 @@ class JSONResponse(object):
             try:
                 super_eq = getattr(super_class, '__eq__')
             except AttributeError:
-                super_eq = object.__eq__
-            finally:
+                return self is other
+            else:
                 return super_eq(other)
 
 

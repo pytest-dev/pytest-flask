@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time
+import functools
 import multiprocessing
 import pytest
 import socket
+import time
+import warnings
 
 try:
     from urllib2 import urlopen
@@ -11,6 +13,21 @@ except ImportError:
     from urllib.request import urlopen
 
 from flask import _request_ctx_stack
+
+
+def deprecated(reason):
+    """Decorator which can be used to mark function or method as deprecated.
+    It will result a warning being emmitted when the function is called.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def deprecated_call(*args, **kwargs):
+            warnings.simplefilter('always', DeprecationWarning)
+            warnings.warn(reason, DeprecationWarning, stacklevel=2)
+            warnings.simplefilter('default', DeprecationWarning)
+            return func(*args, **kwargs)
+        return deprecated_call
+    return decorator
 
 
 @pytest.yield_fixture
@@ -97,6 +114,11 @@ class LiveServer(object):
             sock.close()
         return ret
 
+    @deprecated(reason=(
+        'The "live_server.url" method is deprecated and scheduled '
+        'to be removed in pytest-flask 1.0.0. Please use '
+        'the "flask.url_for" function instead.',
+    ))
     def url(self, url=''):
         """Returns the complete url based on server options."""
         return 'http://{host!s}:{port!s}{url!s}'.format(

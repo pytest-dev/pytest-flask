@@ -27,8 +27,11 @@ class TestLiveServer:
         assert live_server.url() == 'http://localhost:%d' % live_server.port
         assert live_server.url('/ping') == 'http://localhost:%d/ping' % live_server.port
 
+    def test_server_url_is_deprecated(self, live_server):
+        assert pytest.deprecated_call(live_server.url)
+
     def test_server_listening(self, live_server):
-        res = urlopen(live_server.url('/ping'))
+        res = urlopen(url_for('ping', _external=True))
         assert res.code == 200
         assert b'pong' in res.read()
 

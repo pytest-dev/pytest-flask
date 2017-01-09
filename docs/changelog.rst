@@ -6,6 +6,9 @@ Changelog
 Upcoming release
 -----------------
 
+- Speedup live server start time. Use `socket` instead of server
+  pulling (`#58`_) to check server availability. Thanks to `@jadkik`_.
+
 - Allow live server to handle concurrent requests (`#56`_), thanks to
   `@mattwbarry`_ for the PR.
 
@@ -25,7 +28,9 @@ Upcoming release
 .. _#48: https://github.com/pytest-dev/pytest-flask/pull/48
 .. _#50: https://github.com/pytest-dev/pytest-flask/pull/50
 .. _#56: https://github.com/pytest-dev/pytest-flask/pull/56
+.. _#58: steenzouthttps://github.com/pytest-dev/pytest-flask/pull/58
 .. _@danstender: https://github.com/danstender
+.. _@jadkik: https://github.com/jadkik
 .. _@jineshpaloor: https://github.com/jineshpaloor
 .. _@mattwbarry: https://github.com/mattwbarry
 .. _@steenzout: https://github.com/steenzout

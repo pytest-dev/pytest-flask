@@ -6,8 +6,9 @@ import pytest
 import socket
 
 try:
-    from urllib2 import urlopen
+    from urllib2 import URLError, urlopen
 except ImportError:
+    from urllib.error import URLError
     from urllib.request import urlopen
 
 from flask import _request_ctx_stack
@@ -72,7 +73,7 @@ class LiveServer(object):
             try:
                 urlopen(self.url())
                 timeout = 0
-            except:
+            except URLError:
                 timeout -= 1
 
     def url(self, url=''):

@@ -100,7 +100,7 @@ def _rewrite_server_name(server_name, new_port):
 def live_server(request, app, monkeypatch):
     """Run application in a separate process.
 
-    When the ``live_server`` fixture is applyed, the ``url_for`` function
+    When the ``live_server`` fixture is applied, the ``url_for`` function
     works as expected::
 
         def test_server_is_up_and_running(live_server):

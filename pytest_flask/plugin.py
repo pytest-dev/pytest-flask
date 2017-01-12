@@ -78,7 +78,7 @@ def _push_request_context(request):
     app = request.getfuncargvalue('app')
 
     # Get application bound to the live server if ``live_server`` fixture
-    # is applyed. Live server application has an explicit ``SERVER_NAME``,
+    # is applied. Live server application has an explicit ``SERVER_NAME``,
     # so ``url_for`` function generates a complete URL for endpoint which
     # includes application port as well.
     if 'live_server' in request.fixturenames:
@@ -118,11 +118,11 @@ def pytest_addoption(parser):
     group.addoption('--start-live-server',
                     action="store_true", dest="start_live_server", default=True,
                     help="start server automatically when live_server "
-                         "fixture is applyed (enabled by default).")
+                         "fixture is applied (enabled by default).")
     group.addoption('--no-start-live-server',
                     action="store_false", dest="start_live_server",
                     help="don't start server automatically when live_server "
-                         "fixture is applyed.")
+                         "fixture is applied.")
 
 
 def pytest_configure(config):

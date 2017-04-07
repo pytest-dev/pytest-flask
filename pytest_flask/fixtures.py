@@ -96,8 +96,8 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-@pytest.fixture(scope='function')
-def live_server(request, app, monkeypatch):
+@pytest.fixture(scope='session')
+def live_server(request, app):
     """Run application in a separate process.
 
     When the ``live_server`` fixture is applyed, the ``url_for`` function
@@ -111,17 +111,19 @@ def live_server(request, app, monkeypatch):
             assert res.code == 200
 
     """
-    # Bind to an open port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 0))
-    port = s.getsockname()[1]
-    s.close()
+    # Set or get a port
+    port = app.config.get('LIVESERVER_PORT', None)
+    if not port:
+        # Bind to an open port
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('', 0))
+        port = s.getsockname()[1]
+        s.close()
 
     # Explicitly set application ``SERVER_NAME`` for test suite
-    # and restore original value on test teardown.
     server_name = app.config['SERVER_NAME'] or 'localhost'
-    monkeypatch.setitem(app.config, 'SERVER_NAME',
-                        _rewrite_server_name(server_name, str(port)))
+    final_server_name = _rewrite_server_name(server_name, str(port))
+    app.config['SERVER_NAME'] = final_server_name
 
     server = LiveServer(app, port)
     if request.config.getvalue('start_live_server'):

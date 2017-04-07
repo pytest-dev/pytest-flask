@@ -9,7 +9,7 @@ from flask import Flask, jsonify
 pytest_plugins = 'pytester'
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = '42'

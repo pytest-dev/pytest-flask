@@ -15,6 +15,7 @@ from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
     client_class, live_server, request_ctx
 )
+from .pytest_compat import getfixturevalue
 
 
 class JSONResponse(object):
@@ -58,7 +59,7 @@ def _monkeypatch_response_class(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
     monkeypatch.setattr(app, 'response_class',
                         _make_test_response_class(app.response_class))
 
@@ -75,14 +76,14 @@ def _push_request_context(request):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
 
     # Get application bound to the live server if ``live_server`` fixture
     # is applyed. Live server application has an explicit ``SERVER_NAME``,
     # so ``url_for`` function generates a complete URL for endpoint which
     # includes application port as well.
     if 'live_server' in request.fixturenames:
-        app = request.getfuncargvalue('live_server').app
+        app = getfixturevalue(request, 'live_server').app
 
     ctx = app.test_request_context()
     ctx.push()
@@ -106,7 +107,7 @@ def _configure_application(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
     options = request.keywords.get('options')
     if options is not None:
         for key, value in options.kwargs.items():

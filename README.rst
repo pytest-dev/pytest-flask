@@ -1,6 +1,10 @@
 pytest-flask
 ============
 
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/vitalk/pytest-flask
+   :target: https://gitter.im/vitalk/pytest-flask?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
 |PyPI version| |PyPI downloads| |Documentation status|
 
 An extension of `pytest <http://pytest.org/>`__ test runner which

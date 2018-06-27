@@ -157,7 +157,7 @@ example, in your project’s ``pytest.ini`` file)::
 
 .. note::
 
-    Your **should manually start** live server after you finish your application
+    You **should manually start** live server after you finish your application
     configuration and define all required routes:
 
     .. code:: python

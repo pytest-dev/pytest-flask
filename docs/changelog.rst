@@ -6,6 +6,8 @@ Changelog
 Upcoming release
 -----------------
 
+- Implement deployment using Travis, following in line with many other pytest plugins.
+
 - Allow live server to handle concurrent requests (`#56`_), thanks to
   `@mattwbarry`_ for the PR.
 

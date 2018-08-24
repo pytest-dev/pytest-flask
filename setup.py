@@ -4,7 +4,7 @@
 pytest-flask
 ============
 
-A set of `pytest <http://pytest.org>`_ fixtures to test Flask
+A set of `pytest <https://docs.pytest.org>`_ fixtures to test Flask
 extensions and applications.
 
 Features
@@ -117,16 +117,6 @@ def read(*parts):
         return ''
 
 
-def get_version():
-    version_file = read('pytest_flask', '__init__.py')
-    version_match = re.search(r'^__version__ = [\'"]([^\'"]*)[\'"]',
-                              version_file, re.MULTILINE)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError('Unable to find version string.')
-
-
-version = get_version()
 requirements = read('requirements', 'main.txt').splitlines() + ['pytest']
 tests_require = []
 
@@ -139,16 +129,19 @@ extras_require = {
 setup(
     name='pytest-flask',
 
-    # Versions should comply with PEP440. For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # http://packaging.python.org/en/latest/tutorial.html#version
-    version=version,
+    # Versions should comply with PEP440, and automatically obtained from tags
+    # thanks to setuptools_scm
+    use_scm_version={"write_to": "pytest_flask/_version.py"},
+    setup_requires=["setuptools-scm"],
 
     author='Vital Kudzelka',
     author_email='vital.kudzelka@gmail.com',
 
     url='https://github.com/vitalk/pytest-flask',
-    download_url='https://github.com/vitalk/pytest-flask/tarball/%s' % version,
+    project_urls={
+        "Source": "https://github.com/pytest-dev/pytest-flask",
+        "Tracker": "https://github.com/pytest-dev/pytest-flask/issues",
+    },
     description='A set of py.test fixtures to test Flask applications.',
     long_description=__doc__,
     license='MIT',
@@ -173,7 +166,10 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Testing',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],

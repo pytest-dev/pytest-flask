@@ -1,8 +1,0 @@
-include README.rst
-include LICENSE
-include tox.ini
-
-recursive-include requirements *.txt
-recursive-include docs *
-recursive-exclude docs *.py[cod]
-prune docs/_build

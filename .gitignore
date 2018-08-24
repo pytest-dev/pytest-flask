@@ -17,7 +17,8 @@ htmlcov/
 .tox/
 .coverage
 .coverage.*
-.cache
+.pytest_cache/
+.eggs/
 coverage.xml
 tests/junit.xml
 

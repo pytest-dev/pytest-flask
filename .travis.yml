@@ -1,34 +1,48 @@
 language: python
 
-branches:
-  except:
-    - gh-pages
-
-cache:
-  directories:
-    - "${HOME}/virtualenv"
-    - "${TRAVIS_BUILD_DIR}/.tox"
-
 python:
-  - 2.6
-  - 2.7
-  - 3.3
-  - 3.4
-  - 3.5
-  - 3.6
-  - pypy
+  - "3.6"
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - python: 3.6
-    - python: 3.5
+stages:
+- test
+- name: deploy
+  if: repo = pytest-dev/pytest-flask AND tag IS present
+  
+jobs:
+  include:
+    - env: TOXENV=py27
+      python: '2.7'
+    - env: TOXENV=py34
+      python: '3.4'
+    - env: TOXENV=py35
+      python: '3.5'
+    - env: TOXENV=py36
+      python: '3.6'
+    - env: TOXENV=py37
+      python: '3.7'
+      sudo: required
+      dist: xenial
+
+    - stage: deploy
+      python: '3.6'
+      env:
+      install: pip install -U setuptools setuptools_scm
+      script: skip
+      deploy:
+        provider: pypi
+        user: nicoddemus
+        distributions: sdist bdist_wheel
+        skip_upload_docs: true
+        password:
+          secure: xanTgTUu6XDQVqB/0bwJQXoDMnU5tkwZc5koz6mBkkqZhKdNOi2CLoC1XhiSZ+ah24l4V1E0GAqY5kBBcy9d7NVe4WNg4tD095LsHw+CRU6/HCVIFfyk2IZ+FPAlguesCcUiJSXOrlBF+Wj68wEvLoK7EoRFbJeiZ/f91Ww1sbtDlqXABWGHrmhPJL5Wva7o7+wG7JwJowqdZg1pbQExsCc7b53w4v2RBu3D6TJaTAzHiVsW+nUSI67vKI/uf+cR/OixsTfy37wlHgSwihYmrYLFls3V0bSpahCim3bCgMaFZx8S8xrdgJ++PzBCof2HeflFKvW+VCkoYzGEG4NrTWJoNz6ni4red9GdvfjGH3YCjAKS56h9x58zp2E5rpsb/kVq5/45xzV+dq6JRuhQ1nJWjBC6fSKAc/bfwnuFK3EBxNLkvBssLHvsNjj5XG++cB8DdS9wVGUqjpoK4puaXUWFqy4q3S9F86HEsKNgExtieA9qNx+pCIZVs6JCXZNjr0I5eVNzqJIyggNgJG6RyravsU35t9Zd9doL5g4Y7UKmAGTn1Sz24HQ4sMQgXdm2SyD8gEK5je4tlhUvfGtDvMSlstq71kIn9nRpFnqB6MFlbYSEAZmo8dGbCquoUc++6Rum208wcVbrzzVtGlXB/Ow9AbFMYeAGA0+N/K1e59c=
+        on:
+          tags: true
+          repo: pytest-dev/pytest-flask
 
 install:
-  - pip install tox
-  - pip install tox-travis
+  - pip install -U pip
+  - pip install -U tox setuptools
 
 script:
   - tox
-  - "find ${TRAVIS_BUILD_DIR}/.tox -name log -o -name __pycache__ -type d | xargs -I {} rm -rf {}"
 

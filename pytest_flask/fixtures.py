@@ -6,8 +6,9 @@ import pytest
 import socket
 
 try:
-    from urllib2 import urlopen
+    from urllib2 import URLError, urlopen
 except ImportError:
+    from urllib.error import URLError
     from urllib.request import urlopen
 
 from flask import _request_ctx_stack
@@ -34,7 +35,7 @@ def client_class(request, client):
                 return self.client.post(url_for('login'), data=credentials)
 
             def test_login(self):
-                assert self.login('vital@example.com', 'pass').status_code == 200
+                assert self.login('foo@example.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:
@@ -72,7 +73,7 @@ class LiveServer(object):
             try:
                 urlopen(self.url())
                 timeout = 0
-            except:
+            except URLError:
                 timeout -= 1
 
     def url(self, url=''):
@@ -100,7 +101,7 @@ def _rewrite_server_name(server_name, new_port):
 def live_server(request, app, monkeypatch):
     """Run application in a separate process.
 
-    When the ``live_server`` fixture is applyed, the ``url_for`` function
+    When the ``live_server`` fixture is applied, the ``url_for`` function
     works as expected::
 
         def test_server_is_up_and_running(live_server):

@@ -17,7 +17,8 @@ class TestLiveServer:
 
     def test_server_url(self, live_server):
         assert live_server.url() == 'http://localhost:%d' % live_server.port
-        assert live_server.url('/ping') == 'http://localhost:%d/ping' % live_server.port
+        assert live_server.url('/ping') == \
+            'http://localhost:%d/ping' % live_server.port
 
     def test_server_listening(self, live_server):
         res = urlopen(live_server.url('/ping'))
@@ -25,14 +26,17 @@ class TestLiveServer:
         assert b'pong' in res.read()
 
     def test_url_for(self, live_server):
-        assert url_for('ping', _external=True) == 'http://localhost:%s/ping' % live_server.port
+        assert url_for('ping', _external=True) == \
+            'http://localhost:%s/ping' % live_server.port
 
     def test_set_application_server_name(self, live_server):
-        assert live_server.app.config['SERVER_NAME'] == 'localhost:%d' % live_server.port
+        assert live_server.app.config['SERVER_NAME'] == \
+            'localhost:%d' % live_server.port
 
     @pytest.mark.options(server_name='example.com:5000')
     def test_rewrite_application_server_name(self, live_server):
-        assert live_server.app.config['SERVER_NAME'] == 'example.com:%d' % live_server.port
+        assert live_server.app.config['SERVER_NAME'] == \
+            'example.com:%d' % live_server.port
 
     def test_prevent_starting_live_server(self, appdir):
         appdir.create_test_module('''

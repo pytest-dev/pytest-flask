@@ -98,7 +98,7 @@ def _rewrite_server_name(server_name, new_port):
 
 
 @pytest.fixture(scope='function')
-def live_server(request, app, monkeypatch):
+def live_server(request, app, monkeypatch, pytestconfig):
     """Run application in a separate process.
 
     When the ``live_server`` fixture is applied, the ``url_for`` function
@@ -112,11 +112,14 @@ def live_server(request, app, monkeypatch):
             assert res.code == 200
 
     """
-    # Bind to an open port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 0))
-    port = s.getsockname()[1]
-    s.close()
+    port = pytestconfig.getvalue('live_server_port')
+
+    if port == 0:
+        # Bind to an open port
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('', 0))
+        port = s.getsockname()[1]
+        s.close()
 
     # Explicitly set application ``SERVER_NAME`` for test suite
     # and restore original value on test teardown.

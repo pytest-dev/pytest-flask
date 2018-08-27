@@ -3,8 +3,10 @@
 Changelog
 =========
 
-Upcoming release
------------------
+0.11.0 (compared to 0.10.0)
+---------------------------
+
+- Implement deployment using Travis, following in line with many other pytest plugins.
 
 - Allow live server to handle concurrent requests (`#56`_), thanks to
   `@mattwbarry`_ for the PR.

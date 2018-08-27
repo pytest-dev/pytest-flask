@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
+
 import pytest
 try:
     from urllib2 import urlopen
@@ -7,6 +9,9 @@ except ImportError:
     from urllib.request import urlopen
 
 from flask import url_for
+
+
+pytestmark = pytest.mark.skipif(not hasattr(os, 'fork'), reason='needs fork')
 
 
 class TestLiveServer:

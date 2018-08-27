@@ -14,7 +14,9 @@ the `PyPI <https://pypi.python.org/pypi/pytest-flask>`__ overview page or
 How to start?
 -------------
 
-Define your application fixture in ``conftest.py``::
+Define your application fixture in ``conftest.py``:
+
+.. code-block:: python
 
     from myapp import create_app
 

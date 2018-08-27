@@ -130,6 +130,6 @@ class TestLiveServer:
             def test_port(live_server):
                 assert live_server.port == %d
         ''' % port)
-        result = appdir.runpytest('-v', '--live-server-port', port)
+        result = appdir.runpytest('-v', '--live-server-port', str(port))
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0

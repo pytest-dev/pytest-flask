@@ -33,6 +33,19 @@ class TestJSONResponse:
         res = client.get(url_for('ping'), headers=accept_json)
         assert res.json == {'ping': 'pong'}
 
+    def test_json_response_compare_to_status_code(self, client, accept_json):
+        assert client.get(url_for('ping'), headers=accept_json) == 200
+        assert client.get('fake-route', headers=accept_json) == 404
+        res = client.get(url_for('ping'), headers=accept_json)
+        assert res == res
+
+    @pytest.mark.xfail(
+        strict=True,
+        reason='Assertion comparing result to non-matching int should fail',
+    )
+    def test_mismatching_eq_comparison(self, client, accept_json):
+        assert client.get('fake-route', headers=accept_json) == 200
+
     def test_dont_rewrite_existing_implementation(self, app, accept_json):
         class MyResponse(app.response_class):
             @property

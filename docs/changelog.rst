@@ -3,6 +3,17 @@
 Changelog
 =========
 
+
+Next Release
+------------
+
+- Add new ``--live-server-port`` option to select the port the live server will use (`#82`_).
+  Thanks `@RazerM`_ for the PR.
+
+.. _@RazerM: https://github.com/RazerM
+.. _#82: https://github.com/pytest-dev/pytest-flask/pull/82
+
+
 0.11.0 (compared to 0.10.0)
 ---------------------------
 

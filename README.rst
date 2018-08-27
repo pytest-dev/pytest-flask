@@ -1,7 +1,7 @@
 pytest-flask
 ============
 
-|PyPI version| |conda-forge version| |PyPI downloads| |Documentation status|
+|PyPI version| |conda-forge version| |Python versions| |Documentation status|
 
 An extension of `pytest <http://pytest.org/>`__ test runner which
 provides a set of useful tools to simplify testing and development
@@ -42,9 +42,8 @@ suggestion.
    :target: https://anaconda.org/conda-forge/pytest-flask
    :alt: conda-forge version
 
-
-.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pytest-flask.svg
-   :target: https://pypi.python.org/pypi/pytest-flask
+.. |Python versions| image:: https://img.shields.io/pypi/pyversions/pytest-flask.svg
+   :target: https://pypi.org/project/pytest-flask
    :alt: PyPi downloads
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest

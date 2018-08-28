@@ -121,3 +121,15 @@ class TestLiveServer:
         result = appdir.runpytest('-v', '--no-start-live-server')
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
+
+    @pytest.mark.parametrize('port', [5000, 5001])
+    def test_live_server_fixed_port(self, port, appdir):
+        appdir.create_test_module('''
+            import pytest
+
+            def test_port(live_server):
+                assert live_server.port == %d
+        ''' % port)
+        result = appdir.runpytest('-v', '--live-server-port', str(port))
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0

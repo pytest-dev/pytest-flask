@@ -7,6 +7,8 @@ Changelog
 Next Release
 ------------
 
+- ``pytest-flask`` now requires ``pytest>=3.6`` (`#84`_).
+
 - Add new ``--live-server-port`` option to select the port the live server will use (`#82`_).
   Thanks `@RazerM`_ for the PR.
 

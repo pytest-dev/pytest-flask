@@ -177,21 +177,25 @@ def mimetype(request):
     return request.param
 
 
-@pytest.fixture
-def accept_mimetype(mimetype):
+def _make_accept_header(mimetype):
     return [('Accept', mimetype)]
 
 
 @pytest.fixture
+def accept_mimetype(mimetype):
+    return _make_accept_header(mimetype)
+
+
+@pytest.fixture
 def accept_json(request):
-    return accept_mimetype('application/json')
+    return _make_accept_header('application/json')
 
 
 @pytest.fixture
 def accept_jsonp():
-    return accept_mimetype('application/json-p')
+    return _make_accept_header('application/json-p')
 
 
 @pytest.fixture(params=['*', '*/*'])
 def accept_any(request):
-    return accept_mimetype(request.param)
+    return _make_accept_header(request.param)

@@ -67,6 +67,55 @@ class TestLiveServer:
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
 
+    @pytest.mark.parametrize('clean_stop', [True, False])
+    def test_clean_stop_live_server(self, appdir, monkeypatch, clean_stop):
+        """Ensure the fixture is trying to cleanly stop the server.
+
+        Because this is tricky to test, we are checking that the _stop_cleanly() internal
+        function was called and reported success.
+        """
+        from pytest_flask.fixtures import LiveServer
+
+        original_stop_cleanly_func = LiveServer._stop_cleanly
+
+        stop_cleanly_result = []
+
+        def mocked_stop_cleanly(*args, **kwargs):
+            result = original_stop_cleanly_func(*args, **kwargs)
+            stop_cleanly_result.append(result)
+            return result
+
+        monkeypatch.setattr(LiveServer, '_stop_cleanly', mocked_stop_cleanly)
+
+        appdir.create_test_module('''
+            import pytest
+            try:
+                from urllib2 import urlopen
+            except ImportError:
+                from urllib.request import urlopen
+
+            from flask import url_for
+
+            def test_a(live_server):
+                @live_server.app.route('/')
+                def index():
+                    return 'got it', 200
+
+                live_server.start()
+
+                res = urlopen(url_for('index', _external=True))
+                assert res.code == 200
+                assert b'got it' in res.read()
+        ''')
+        args = [] if clean_stop else ['--no-live-server-clean-stop']
+        result = appdir.runpytest_inprocess('-v', '--no-start-live-server',
+                                            *args)
+        result.stdout.fnmatch_lines('*1 passed*')
+        if clean_stop:
+            assert stop_cleanly_result == [True]
+        else:
+            assert stop_cleanly_result == []
+
     def test_add_endpoint_to_live_server(self, appdir):
         appdir.create_test_module('''
             import pytest

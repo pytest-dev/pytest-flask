@@ -10,7 +10,15 @@ Next Release
 - Add new ``--live-server-port`` option to select the port the live server will use (`#82`_).
   Thanks `@RazerM`_ for the PR.
 
+- Now ``live_server`` will try to stop the server cleanly by emitting a ``SIGINT`` signal and
+  waiting 5 seconds for the server to shutdown. If the server is still running after 5 seconds,
+  it will be forcefully terminated. This behavior can be changed by passing
+  ``--no-live-server-clean-stop`` in the command-line (`#49`_).
+  Thanks `@jadkik`_ for the PR.
+
+.. _@jadkik: https://github.com/jadkik
 .. _@RazerM: https://github.com/RazerM
+.. _#49: https://github.com/pytest-dev/pytest-flask/issues/49
 .. _#82: https://github.com/pytest-dev/pytest-flask/pull/82
 
 

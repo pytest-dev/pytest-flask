@@ -124,6 +124,12 @@ def pytest_addoption(parser):
                     action="store_false", dest="start_live_server",
                     help="don't start server automatically when live_server "
                          "fixture is applied.")
+    group.addoption('--live-server-clean-stop',
+                    action="store_true", dest="live_server_clean_stop", default=True,
+                    help="attempt to kill the live server cleanly.")
+    group.addoption('--no-live-server-clean-stop',
+                    action="store_false", dest="live_server_clean_stop",
+                    help="terminate the server forcefully after stop.")
     group.addoption('--live-server-port', action='store', default=0, type=int,
                     help='use a fixed port for the live_server fixture.')
 

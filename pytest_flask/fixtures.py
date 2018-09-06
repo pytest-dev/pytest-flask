@@ -4,6 +4,9 @@ import time
 import multiprocessing
 import pytest
 import socket
+import signal
+import os
+import logging
 
 try:
     from urllib2 import URLError, urlopen
@@ -50,9 +53,10 @@ class LiveServer(object):
     :param port: The port to run application.
     """
 
-    def __init__(self, app, port):
+    def __init__(self, app, port, clean_stop=False):
         self.app = app
         self.port = port
+        self.clean_stop = clean_stop
         self._process = None
 
     def start(self):
@@ -83,7 +87,25 @@ class LiveServer(object):
     def stop(self):
         """Stop application process."""
         if self._process:
-            self._process.terminate()
+            if self.clean_stop and self._stop_cleanly():
+                return
+            if self._process.is_alive():
+                # If it's still alive, kill it
+                self._process.terminate()
+
+    def _stop_cleanly(self, timeout=5):
+        """Attempts to stop the server cleanly by sending a SIGINT signal and waiting for
+        ``timeout`` seconds.
+
+        :return: True if the server was cleanly stopped, False otherwise.
+        """
+        try:
+            os.kill(self._process.pid, signal.SIGINT)
+            self._process.join(timeout)
+            return True
+        except Exception as ex:
+            logging.error('Failed to join the live server process: %r', ex)
+            return False
 
     def __repr__(self):
         return '<LiveServer listening at %s>' % self.url()
@@ -127,7 +149,8 @@ def live_server(request, app, monkeypatch, pytestconfig):
     monkeypatch.setitem(app.config, 'SERVER_NAME',
                         _rewrite_server_name(server_name, str(port)))
 
-    server = LiveServer(app, port)
+    clean_stop = request.config.getvalue('live_server_clean_stop')
+    server = LiveServer(app, port, clean_stop)
     if request.config.getvalue('start_live_server'):
         server.start()
 

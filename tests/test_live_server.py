@@ -67,7 +67,8 @@ class TestLiveServer:
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
 
-    def test_clean_stop_live_server(self, appdir, monkeypatch):
+    @pytest.mark.parametrize('clean_stop', [True, False])
+    def test_clean_stop_live_server(self, appdir, monkeypatch, clean_stop):
         """Ensure the fixture is trying to cleanly stop the server.
 
         Because this is tricky to test, we are checking that the _stop_cleanly() internal
@@ -106,10 +107,14 @@ class TestLiveServer:
                 assert res.code == 200
                 assert b'got it' in res.read()
         ''')
+        args = [] if clean_stop else ['--no-live-server-clean-stop']
         result = appdir.runpytest_inprocess('-v', '--no-start-live-server',
-                                            '--live-server-clean-stop')
+                                            *args)
         result.stdout.fnmatch_lines('*1 passed*')
-        assert stop_cleanly_result == [True]
+        if clean_stop:
+            assert stop_cleanly_result == [True]
+        else:
+            assert stop_cleanly_result == []
 
     def test_add_endpoint_to_live_server(self, appdir):
         appdir.create_test_module('''

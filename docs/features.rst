@@ -157,7 +157,7 @@ example, in your project’s ``pytest.ini`` file)::
 
 .. note::
 
-    Your **should manually start** live server after you finish your application
+    You **should manually start** live server after you finish your application
     configuration and define all required routes:
 
     .. code:: python
@@ -172,6 +172,17 @@ example, in your project’s ``pytest.ini`` file)::
             res = urlopen(url_for('test_endpoint', _external=True))
             assert res.code == 200
             assert b'got it' in res.read()
+
+
+``--live-server-port`` - use a fixed port
+`````````````````````````````````````````
+
+By default the server uses a random port. In some cases it is desirable to run
+the server with a fixed port. You can use ``--live-server-port`` (for example,
+in your project's ``pytest.ini`` file)::
+
+    [pytest]
+    addopts = --live-server-port=5000
 
 
 ``request_ctx`` - request context

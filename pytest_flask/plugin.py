@@ -15,6 +15,7 @@ from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
     client_class, live_server, request_ctx
 )
+from .pytest_compat import getfixturevalue
 
 
 class JSONResponse(object):
@@ -58,7 +59,7 @@ def _monkeypatch_response_class(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
     monkeypatch.setattr(app, 'response_class',
                         _make_test_response_class(app.response_class))
 
@@ -75,14 +76,14 @@ def _push_request_context(request):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
 
     # Get application bound to the live server if ``live_server`` fixture
-    # is applyed. Live server application has an explicit ``SERVER_NAME``,
+    # is applied. Live server application has an explicit ``SERVER_NAME``,
     # so ``url_for`` function generates a complete URL for endpoint which
     # includes application port as well.
     if 'live_server' in request.fixturenames:
-        app = request.getfuncargvalue('live_server').app
+        app = getfixturevalue(request, 'live_server').app
 
     ctx = app.test_request_context()
     ctx.push()
@@ -106,7 +107,7 @@ def _configure_application(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
     options = request.keywords.get('options')
     if options is not None:
         for key, value in options.kwargs.items():
@@ -118,17 +119,19 @@ def pytest_addoption(parser):
     group.addoption('--start-live-server',
                     action="store_true", dest="start_live_server", default=True,
                     help="start server automatically when live_server "
-                         "fixture is applyed (enabled by default).")
+                         "fixture is applied (enabled by default).")
     group.addoption('--no-start-live-server',
                     action="store_false", dest="start_live_server",
                     help="don't start server automatically when live_server "
-                         "fixture is applyed.")
+                         "fixture is applied.")
     group.addoption('--live-server-clean-stop',
                     action="store_true", dest="live_server_clean_stop", default=True,
                     help="attempt to kill the live server cleanly.")
     group.addoption('--no-live-server-clean-stop',
                     action="store_false", dest="live_server_clean_stop",
                     help="terminate the server forcefully after stop.")
+    group.addoption('--live-server-port', action='store', default=0, type=int,
+                    help='use a fixed port for the live_server fixture.')
 
 
 def pytest_configure(config):

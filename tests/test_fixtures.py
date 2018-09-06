@@ -23,7 +23,7 @@ class TestFixtures:
         assert request_ctx.app is app
 
     def test_request_ctx_is_kept_around(self, client):
-        res = client.get(url_for('index'), headers=[('X-Something', '42')])
+        client.get(url_for('index'), headers=[('X-Something', '42')])
         assert request.headers['X-Something'] == '42'
 
 
@@ -37,7 +37,7 @@ class TestJSONResponse:
         class MyResponse(app.response_class):
             @property
             def json(self):
-                '''What is the meaning of life, the universe and everything?'''
+                """What is the meaning of life, the universe and everything?"""
                 return 42
 
         app.response_class = MyResponse

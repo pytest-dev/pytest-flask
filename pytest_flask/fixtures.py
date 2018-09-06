@@ -9,8 +9,9 @@ import os
 import logging
 
 try:
-    from urllib2 import urlopen
+    from urllib2 import URLError, urlopen
 except ImportError:
+    from urllib.error import URLError
     from urllib.request import urlopen
 
 from flask import _request_ctx_stack
@@ -37,7 +38,7 @@ def client_class(request, client):
                 return self.client.post(url_for('login'), data=credentials)
 
             def test_login(self):
-                assert self.login('vital@example.com', 'pass').status_code == 200
+                assert self.login('foo@example.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:
@@ -61,7 +62,7 @@ class LiveServer(object):
     def start(self):
         """Start application in a separate process."""
         def worker(app, port):
-            app.run(port=port, use_reloader=False)
+            app.run(port=port, use_reloader=False, threaded=True)
         self._process = multiprocessing.Process(
             target=worker,
             args=(self.app, self.port)
@@ -76,7 +77,7 @@ class LiveServer(object):
             try:
                 urlopen(self.url())
                 timeout = 0
-            except:
+            except URLError:
                 timeout -= 1
 
     def url(self, url=''):
@@ -114,10 +115,10 @@ def _rewrite_server_name(server_name, new_port):
 
 
 @pytest.fixture(scope='function')
-def live_server(request, app, monkeypatch):
+def live_server(request, app, monkeypatch, pytestconfig):
     """Run application in a separate process.
 
-    When the ``live_server`` fixture is applyed, the ``url_for`` function
+    When the ``live_server`` fixture is applied, the ``url_for`` function
     works as expected::
 
         def test_server_is_up_and_running(live_server):
@@ -128,11 +129,14 @@ def live_server(request, app, monkeypatch):
             assert res.code == 200
 
     """
-    # Bind to an open port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 0))
-    port = s.getsockname()[1]
-    s.close()
+    port = pytestconfig.getvalue('live_server_port')
+
+    if port == 0:
+        # Bind to an open port
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('', 0))
+        port = s.getsockname()[1]
+        s.close()
 
     # Explicitly set application ``SERVER_NAME`` for test suite
     # and restore original value on test teardown.

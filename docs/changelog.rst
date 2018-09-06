@@ -3,8 +3,24 @@
 Changelog
 =========
 
-Upcoming release
------------------
+
+Next Release
+------------
+
+- Add new ``--live-server-port`` option to select the port the live server will use (`#82`_).
+  Thanks `@RazerM`_ for the PR.
+
+.. _@RazerM: https://github.com/RazerM
+.. _#82: https://github.com/pytest-dev/pytest-flask/pull/82
+
+
+0.11.0 (compared to 0.10.0)
+---------------------------
+
+- Implement deployment using Travis, following in line with many other pytest plugins.
+
+- Allow live server to handle concurrent requests (`#56`_), thanks to
+  `@mattwbarry`_ for the PR.
 
 - Fix broken link to pytest documentation (`#50`_), thanks to
   `@jineshpaloor`_ for the PR.
@@ -21,8 +37,10 @@ Upcoming release
 .. _#43: https://github.com/vitalk/pytest-flask/issues/43
 .. _#48: https://github.com/pytest-dev/pytest-flask/pull/48
 .. _#50: https://github.com/pytest-dev/pytest-flask/pull/50
+.. _#56: https://github.com/pytest-dev/pytest-flask/pull/56
 .. _@danstender: https://github.com/danstender
 .. _@jineshpaloor: https://github.com/jineshpaloor
+.. _@mattwbarry: https://github.com/mattwbarry
 .. _@steenzout: https://github.com/steenzout
 
 

@@ -16,10 +16,13 @@ Next Release
   ``--no-live-server-clean-stop`` in the command-line (`#49`_).
   Thanks `@jadkik`_ for the PR.
 
+- Internal fixes silence pytest warnings, more visible now with ``pytest-3.8.0`` (`#84`_).
+
 .. _@jadkik: https://github.com/jadkik
 .. _@RazerM: https://github.com/RazerM
 .. _#49: https://github.com/pytest-dev/pytest-flask/issues/49
 .. _#82: https://github.com/pytest-dev/pytest-flask/pull/82
+.. _#84: https://github.com/pytest-dev/pytest-flask/pull/84
 
 
 0.11.0 (compared to 0.10.0)

@@ -108,8 +108,7 @@ def _configure_application(request, monkeypatch):
         return
 
     app = getfixturevalue(request, 'app')
-    options = request.keywords.get('options')
-    if options is not None:
+    for options in request.node.iter_markers('options'):
         for key, value in options.kwargs.items():
             monkeypatch.setitem(app.config, key.upper(), value)
 

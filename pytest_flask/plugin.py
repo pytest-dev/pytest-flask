@@ -42,6 +42,9 @@ class JSONResponse(object):
             else:
                 return super_eq(other)
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 def pytest_assertrepr_compare(op, left, right):
     if isinstance(left, JSONResponse) and op == '==':

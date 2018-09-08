@@ -4,8 +4,8 @@ Changelog
 =========
 
 
-Next Release
-------------
+0.12.0 (2018-09-06, compared to 0.10.0)
+---------------------------------------
 
 - ``pytest-flask`` now requires ``pytest>=3.6`` (`#84`_).
 

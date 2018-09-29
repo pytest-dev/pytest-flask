@@ -3,9 +3,22 @@
 Changelog
 =========
 
+0.13.0 (2018-09-29)
+-------------------
 
-0.12.0 (2018-09-06, compared to 0.10.0)
----------------------------------------
+- ``JSONReponse`` now supports comparison directly with status codes:
+
+  .. code-block:: python
+
+      assert client.get('invalid-route', headers=[('Accept', 'application/json')]) == 404
+
+  Thanks `@dusktreader`_ for the PR (`#86`_).
+
+.. _@dusktreader: https://github.com/dusktreader
+.. _#86: https://github.com/pytest-dev/pytest-flask/pull/86
+
+0.12.0 (2018-09-06)
+-------------------
 
 - ``pytest-flask`` now requires ``pytest>=3.6`` (`#84`_).
 

@@ -30,35 +30,23 @@ class JSONResponse(object):
         return json.loads(self.data)
 
     def __eq__(self, other):
-        try:
-            status_code = int(other)
-            return self.status_code == status_code
-        except:
-            super_class = super(JSONResponse, self)
-            try:
-                super_eq = getattr(super_class, '__eq__')
-            except AttributeError:
-                return self is other
-            else:
-                return super_eq(other)
+        if isinstance(other, int):
+            return self.status_code == other
+        return super(JSONResponse, self).__eq__(other)
 
     def __ne__(self, other):
-        return not self.__eq__(other)
+        return not self == other
 
 
 def pytest_assertrepr_compare(op, left, right):
-    if isinstance(left, JSONResponse) and op == '==':
-        try:
-            right = int(right)
-            return [
-                'Mismatch in status code for response: {} != {}'.format(
-                    left.status_code,
-                    right,
-                ),
-                'Response status: {}'.format(left.status),
-            ]
-        except:
-            pass
+    if isinstance(left, JSONResponse) and op == '==' and isinstance(right, int):
+        return [
+            'Mismatch in status code for response: {} != {}'.format(
+                left.status_code,
+                right,
+            ),
+            'Response status: {}'.format(left.status),
+        ]
     return None
 
 

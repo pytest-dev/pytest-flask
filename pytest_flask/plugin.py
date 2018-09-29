@@ -6,6 +6,8 @@
     :copyright: (c) by Vital Kudzelka
     :license: MIT
 """
+import sys
+
 import pytest
 
 from flask import json
@@ -28,6 +30,36 @@ class JSONResponse(object):
         :mod:`flask.json` module.
         """
         return json.loads(self.data)
+
+    def __eq__(self, other):
+        if isinstance(other, int):
+            return self.status_code == other
+        # even though the Python 2-specific code works on Python 3, keep the two versions
+        # separate so we can simplify the code once Python 2 support is dropped
+        if sys.version_info[0] == 2:
+            try:
+                super_eq = super(JSONResponse, self).__eq__
+            except AttributeError:
+                return NotImplemented
+            else:
+                return super_eq(other)
+        else:
+            return super(JSONResponse, self).__eq__(other)
+
+    def __ne__(self, other):
+        return not self == other
+
+
+def pytest_assertrepr_compare(op, left, right):
+    if isinstance(left, JSONResponse) and op == '==' and isinstance(right, int):
+        return [
+            'Mismatch in status code for response: {} != {}'.format(
+                left.status_code,
+                right,
+            ),
+            'Response status: {}'.format(left.status),
+        ]
+    return None
 
 
 def _make_test_response_class(response_class):

@@ -230,20 +230,20 @@ provides an easy way to test content negotiation in your application:
 
 
 ``accept_any`` - :mimetype:`*/*` accept header
-""""""""""""""""""""""""""""""""""""""""""""""
+``````````````````````````````````````````````
 
 :mimetype:`*/*` accept header suitable to use as parameter in ``client``.
 
 
 ``accept_json`` - :mimetype:`application/json` accept header
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+````````````````````````````````````````````````````````````
 
 :mimetype:`application/json` accept header suitable to use as parameter in
 ``client``.
 
 
 ``accept_jsonp`` - :mimetype:`application/json-p` accept header
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+```````````````````````````````````````````````````````````````
 
 :mimetype:`application/json-p` accept header suitable to use as parameter in
 ``client``.

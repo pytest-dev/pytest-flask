@@ -28,7 +28,7 @@ Define your application fixture in ``conftest.py``:
 Install the extension with dependencies and go::
 
     $ pip install pytest-flask
-    $ py.test
+    $ pytest
 
 Contributing
 ------------

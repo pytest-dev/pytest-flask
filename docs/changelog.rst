@@ -3,6 +3,17 @@
 Changelog
 =========
 
+0.14.0 (2018-10-15)
+-------------------
+
+- New ``--live-server-host`` command-line option to set the host name used by
+  the ``live_server`` fixture.
+
+  Thanks `@o1da`_ for the PR (`#90`_).
+
+.. _@o1da: https://github.com/o1da
+.. _#90: https://github.com/pytest-dev/pytest-flask/pull/90
+
 0.13.0 (2018-09-29)
 -------------------
 

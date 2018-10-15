@@ -161,6 +161,8 @@ def pytest_addoption(parser):
     group.addoption('--no-live-server-clean-stop',
                     action="store_false", dest="live_server_clean_stop",
                     help="terminate the server forcefully after stop.")
+    group.addoption('--live-server-host', action='store', default='localhost', type=str,
+                    help='use a host where to listen (default localhost).')
     group.addoption('--live-server-port', action='store', default=0, type=int,
                     help='use a fixed port for the live_server fixture.')
 

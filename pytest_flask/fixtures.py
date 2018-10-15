@@ -50,22 +50,24 @@ class LiveServer(object):
     stopping application in a separate process.
 
     :param app: The application to run.
+    :param host: The host where to listen (default localhost).
     :param port: The port to run application.
     """
 
-    def __init__(self, app, port, clean_stop=False):
+    def __init__(self, app, host, port, clean_stop=False):
         self.app = app
         self.port = port
+        self.host = host
         self.clean_stop = clean_stop
         self._process = None
 
     def start(self):
         """Start application in a separate process."""
-        def worker(app, port):
-            app.run(port=port, use_reloader=False, threaded=True)
+        def worker(app, host, port):
+            app.run(host=host, port=port, use_reloader=False, threaded=True)
         self._process = multiprocessing.Process(
             target=worker,
-            args=(self.app, self.port)
+            args=(self.app, self.host, self.port)
         )
         self._process.start()
 
@@ -82,7 +84,7 @@ class LiveServer(object):
 
     def url(self, url=''):
         """Returns the complete url based on server options."""
-        return 'http://localhost:%d%s' % (self.port, url)
+        return 'http://%s:%d%s' % (self.host, self.port, url)
 
     def stop(self):
         """Stop application process."""
@@ -143,6 +145,8 @@ def live_server(request, app, monkeypatch, pytestconfig):
         port = s.getsockname()[1]
         s.close()
 
+    host = pytestconfig.getvalue('live_server_host')
+
     # Explicitly set application ``SERVER_NAME`` for test suite
     # and restore original value on test teardown.
     server_name = app.config['SERVER_NAME'] or 'localhost'
@@ -150,7 +154,7 @@ def live_server(request, app, monkeypatch, pytestconfig):
                         _rewrite_server_name(server_name, str(port)))
 
     clean_stop = request.config.getvalue('live_server_clean_stop')
-    server = LiveServer(app, port, clean_stop)
+    server = LiveServer(app, host, port, clean_stop)
     if request.config.getvalue('start_live_server'):
         server.start()
 

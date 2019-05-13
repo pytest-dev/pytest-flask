@@ -171,3 +171,4 @@ def pytest_configure(config):
     config.addinivalue_line(
         'markers',
         'app(options): pass options to your application factory')
+    config.addinivalue_line('markers', 'options: app config manipulation')

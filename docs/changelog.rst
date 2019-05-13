@@ -3,6 +3,13 @@
 Changelog
 =========
 
+0.15.0 (2019-05-13)
+-------------------
+
+- Properly register the ``options`` marker (`#97`_).
+
+.. _#97: https://github.com/pytest-dev/pytest-flask/pull/97
+
 0.14.0 (2018-10-15)
 -------------------
 

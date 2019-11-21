@@ -277,9 +277,9 @@ on `what markers are`_ and for notes on `using them`_.
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
-.. _pytest documentation: http://pytest.org/latest/fixture.html
+.. _pytest documentation: https://pytest.org/en/latest/fixture.html
 .. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
 .. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org
-.. _what markers are: http://pytest.org/latest/mark.html
-.. _using them: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules
+.. _what markers are: https://pytest.org/en/latest/mark.html
+.. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules

@@ -11,7 +11,7 @@ import sys
 import pytest
 
 from flask import json
-from werkzeug import cached_property
+from werkzeug.utils import cached_property
 
 from .fixtures import (
     client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,

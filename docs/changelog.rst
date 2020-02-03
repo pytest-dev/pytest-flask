@@ -3,6 +3,13 @@
 Changelog
 =========
 
+0.15.1 (2020-02-03)
+-------------------
+
+- Fix ``ImportError`` with ``Werkzeug 1.0.0rc1`` (`#105`_).
+
+.. _#105: https://github.com/pytest-dev/pytest-flask/pull/105
+
 0.15.0 (2019-05-13)
 -------------------
 

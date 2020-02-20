@@ -8,14 +8,18 @@
 import sys
 
 import pytest
-
 from flask import json
 from werkzeug.utils import cached_property
 
-from .fixtures import (
-    client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class, live_server, request_ctx
-)
+from .fixtures import accept_any
+from .fixtures import accept_json
+from .fixtures import accept_jsonp
+from .fixtures import accept_mimetype
+from .fixtures import client
+from .fixtures import client_class
+from .fixtures import config
+from .fixtures import live_server
+from .fixtures import request_ctx
 from .pytest_compat import getfixturevalue
 
 

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-import time
-import multiprocessing
-import pytest
-import socket
-import signal
-import os
 import logging
+import multiprocessing
+import os
+import signal
+import socket
+import time
+
+import pytest
 
 try:
     from urllib2 import URLError, urlopen

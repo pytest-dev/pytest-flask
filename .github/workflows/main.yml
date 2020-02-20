@@ -32,7 +32,7 @@ jobs:
             python: "3.8"
           - tox_env: "pre"
             python: "3.7"
-        
+
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python
@@ -46,7 +46,7 @@ jobs:
     - name: Test
       run: |
         tox -e ${{ matrix.tox_env }}
-  
+
   deploy:
 
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')

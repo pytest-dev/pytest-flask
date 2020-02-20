@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 import os
-
-import pytest
 from urllib.request import urlopen
 
+import pytest
 from flask import url_for
 
 

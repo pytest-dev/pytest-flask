@@ -5,12 +5,10 @@ import os
 import signal
 import socket
 import time
-
-import pytest
-
 from urllib.error import URLError
 from urllib.request import urlopen
 
+import pytest
 from flask import _request_ctx_stack
 
 

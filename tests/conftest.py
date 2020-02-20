@@ -42,7 +42,7 @@ def appdir(testdir):
 
         from flask import Flask
 
-        @pytest.fixture
+        @pytest.fixture(scope='session')
         def app():
             app = Flask(__name__)
             return app

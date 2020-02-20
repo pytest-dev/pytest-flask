@@ -8,11 +8,8 @@ import time
 
 import pytest
 
-try:
-    from urllib2 import URLError, urlopen
-except ImportError:
-    from urllib.error import URLError
-    from urllib.request import urlopen
+from urllib.error import URLError
+from urllib.request import urlopen
 
 from flask import _request_ctx_stack
 

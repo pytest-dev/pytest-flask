@@ -121,7 +121,13 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-@pytest.fixture(scope='session')
+def determine_scope(fixture_name, config):
+    if fixture_name is 'live_server':
+        return config.getoption('--live-server-scope', 'function')
+    return "function"
+
+
+@pytest.fixture(scope=determine_scope)
 def live_server(request, app, pytestconfig):
     """Run application in a separate process.
 
@@ -151,9 +157,8 @@ def live_server(request, app, pytestconfig):
     host = pytestconfig.getvalue('live_server_host')
 
     # Explicitly set application ``SERVER_NAME`` for test suite
-    server_name = app.config['SERVER_NAME'] or 'localhost'
-
-    final_server_name = _rewrite_server_name(server_name, str(port))
+    original_server_name = app.config['SERVER_NAME'] or 'localhost'
+    final_server_name = _rewrite_server_name(original_server_name, str(port))
     app.config['SERVER_NAME'] = final_server_name
 
     clean_stop = request.config.getvalue('live_server_clean_stop')
@@ -162,7 +167,10 @@ def live_server(request, app, pytestconfig):
         server.start()
 
     request.addfinalizer(server.stop)
-    return server
+    yield server
+
+    if original_server_name is not None:
+        app.config['SERVER_NAME'] = original_server_name
 
 
 @pytest.fixture

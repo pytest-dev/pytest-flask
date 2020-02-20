@@ -11,17 +11,15 @@ jobs:
       fail-fast: false
       matrix:
         tox_env: [
-          "py27",
           "py35",
           "py36",
           "py37",
           "py38",
           "pre",
+          "linting",
         ]
 
         include:
-          - tox_env: "py27"
-            python: "2.7"
           - tox_env: "py35"
             python: "3.5"
           - tox_env: "py36"

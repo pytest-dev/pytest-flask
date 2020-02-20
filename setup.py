@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 pytest-flask
 ============
@@ -102,9 +101,7 @@ Don’t hesitate to create a `GitHub issue
 **suggestion**.
 
 """
-import io
 import os
-import re
 from setuptools import setup
 from setuptools import find_packages
 
@@ -112,8 +109,8 @@ from setuptools import find_packages
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        return io.open(os.path.join(*parts), 'r', encoding='utf-8').read()
-    except IOError:
+        return open(os.path.join(*parts), 'r', encoding='utf-8').read()
+    except OSError:
         return ''
 
 

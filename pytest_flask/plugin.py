@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
     A py.test plugin which helps testing Flask applications.
 
@@ -20,7 +19,7 @@ from .fixtures import (
 from .pytest_compat import getfixturevalue
 
 
-class JSONResponse(object):
+class JSONResponse:
     """Mixin with testing helper methods for JSON responses."""
 
     @cached_property
@@ -38,13 +37,13 @@ class JSONResponse(object):
         # separate so we can simplify the code once Python 2 support is dropped
         if sys.version_info[0] == 2:
             try:
-                super_eq = super(JSONResponse, self).__eq__
+                super_eq = super().__eq__
             except AttributeError:
                 return NotImplemented
             else:
                 return super_eq(other)
         else:
-            return super(JSONResponse, self).__eq__(other)
+            return super().__eq__(other)
 
     def __ne__(self, other):
         return not self == other

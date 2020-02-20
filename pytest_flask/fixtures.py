@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import time
 import multiprocessing
 import pytest
@@ -45,7 +44,7 @@ def client_class(request, client):
         request.cls.client = client
 
 
-class LiveServer(object):
+class LiveServer:
     """The helper class uses to manage live server. Handles creation and
     stopping application in a separate process.
 

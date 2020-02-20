@@ -1,19 +1,14 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import time
-import multiprocessing
-import pytest
-import socket
-import signal
-import os
 import logging
+import multiprocessing
+import os
+import signal
+import socket
+import time
+from urllib.error import URLError
+from urllib.request import urlopen
 
-try:
-    from urllib2 import URLError, urlopen
-except ImportError:
-    from urllib.error import URLError
-    from urllib.request import urlopen
-
+import pytest
 from flask import _request_ctx_stack
 
 
@@ -45,7 +40,7 @@ def client_class(request, client):
         request.cls.client = client
 
 
-class LiveServer(object):
+class LiveServer:
     """The helper class uses to manage live server. Handles creation and
     stopping application in a separate process.
 

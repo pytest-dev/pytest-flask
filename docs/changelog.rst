@@ -3,6 +3,11 @@
 Changelog
 =========
 
+1.0.0 (UNRELEASED)
+------------------
+
+- Python 2.7 is no longer supported.
+
 0.15.1 (2020-02-03)
 -------------------
 

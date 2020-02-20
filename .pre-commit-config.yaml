@@ -1,0 +1,22 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: fix-encoding-pragma
+        args: [--remove]
+    -   id: check-yaml
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v1.4.0
+    hooks:
+    -   id: reorder-python-imports
+        args: ['--application-directories=.:src', --py3-plus]
+-   repo: local
+    hooks:
+    -   id: rst
+        name: rst
+        entry: rst-lint --encoding utf-8
+        files: ^(HOWTORELEASE.rst|README.rst)$
+        language: python
+        additional_dependencies: [pygments, restructuredtext_lint]

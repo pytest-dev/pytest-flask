@@ -1,13 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
+from urllib.request import urlopen
 
 import pytest
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
-
 from flask import url_for
 
 
@@ -89,10 +84,7 @@ class TestLiveServer:
 
         appdir.create_test_module('''
             import pytest
-            try:
-                from urllib2 import urlopen
-            except ImportError:
-                from urllib.request import urlopen
+            from urllib.request import urlopen
 
             from flask import url_for
 
@@ -119,10 +111,7 @@ class TestLiveServer:
     def test_add_endpoint_to_live_server(self, appdir):
         appdir.create_test_module('''
             import pytest
-            try:
-                from urllib2 import urlopen
-            except ImportError:
-                from urllib.request import urlopen
+            from urllib.request import urlopen
 
             from flask import url_for
 
@@ -144,10 +133,7 @@ class TestLiveServer:
     def test_concurrent_requests_to_live_server(self, appdir):
         appdir.create_test_module('''
             import pytest
-            try:
-                from urllib2 import urlopen
-            except ImportError:
-                from urllib.request import urlopen
+            from urllib.request import urlopen
 
             from flask import url_for
 

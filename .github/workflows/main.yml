@@ -30,6 +30,8 @@ jobs:
             python: "3.8"
           - tox_env: "pre"
             python: "3.7"
+          - tox_env: "linting"
+            python: "3.7"
 
     steps:
     - uses: actions/checkout@v1

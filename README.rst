@@ -1,7 +1,7 @@
 pytest-flask
 ============
 
-|PyPI version| |PyPI downloads| |Documentation status|
+|PyPI version| |conda-forge version| |Python versions| |ci| |Documentation status|
 
 An extension of `pytest <http://pytest.org/>`__ test runner which
 provides a set of useful tools to simplify testing and development
@@ -14,7 +14,9 @@ the `PyPI <https://pypi.python.org/pypi/pytest-flask>`__ overview page or
 How to start?
 -------------
 
-Define your application fixture in ``conftest.py``::
+Define your application fixture in ``conftest.py``:
+
+.. code-block:: python
 
     from myapp import create_app
 
@@ -26,7 +28,7 @@ Define your application fixture in ``conftest.py``::
 Install the extension with dependencies and go::
 
     $ pip install pytest-flask
-    $ py.test
+    $ pytest
 
 Contributing
 ------------
@@ -38,8 +40,16 @@ suggestion.
    :target: https://pypi.python.org/pypi/pytest-flask
    :alt: PyPi version
 
-.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pytest-flask.svg
-   :target: https://pypi.python.org/pypi/pytest-flask
+.. |conda-forge version| image:: https://img.shields.io/conda/vn/conda-forge/pytest-flask.svg
+   :target: https://anaconda.org/conda-forge/pytest-flask
+   :alt: conda-forge version
+
+.. |ci| image:: https://github.com/pytest-dev/pytest-flask/workflows/build/badge.svg
+   :target: https://github.com/pytest-dev/pytest-flask/actions
+   :alt: CI status
+
+.. |Python versions| image:: https://img.shields.io/pypi/pyversions/pytest-flask.svg
+   :target: https://pypi.org/project/pytest-flask
    :alt: PyPi downloads
 
 .. |Documentation status| image:: https://readthedocs.org/projects/pytest-flask/badge/?version=latest

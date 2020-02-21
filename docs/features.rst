@@ -157,7 +157,7 @@ example, in your project’s ``pytest.ini`` file)::
 
 .. note::
 
-    Your **should manually start** live server after you finish your application
+    You **should manually start** live server after you finish your application
     configuration and define all required routes:
 
     .. code:: python
@@ -172,6 +172,17 @@ example, in your project’s ``pytest.ini`` file)::
             res = urlopen(url_for('test_endpoint', _external=True))
             assert res.code == 200
             assert b'got it' in res.read()
+
+
+``--live-server-port`` - use a fixed port
+`````````````````````````````````````````
+
+By default the server uses a random port. In some cases it is desirable to run
+the server with a fixed port. You can use ``--live-server-port`` (for example,
+in your project's ``pytest.ini`` file)::
+
+    [pytest]
+    addopts = --live-server-port=5000
 
 
 ``request_ctx`` - request context
@@ -219,20 +230,20 @@ provides an easy way to test content negotiation in your application:
 
 
 ``accept_any`` - :mimetype:`*/*` accept header
-""""""""""""""""""""""""""""""""""""""""""""""
+``````````````````````````````````````````````
 
 :mimetype:`*/*` accept header suitable to use as parameter in ``client``.
 
 
 ``accept_json`` - :mimetype:`application/json` accept header
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+````````````````````````````````````````````````````````````
 
 :mimetype:`application/json` accept header suitable to use as parameter in
 ``client``.
 
 
 ``accept_jsonp`` - :mimetype:`application/json-p` accept header
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+```````````````````````````````````````````````````````````````
 
 :mimetype:`application/json-p` accept header suitable to use as parameter in
 ``client``.
@@ -266,9 +277,9 @@ on `what markers are`_ and for notes on `using them`_.
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
-.. _pytest documentation: http://pytest.org/latest/fixture.html
+.. _pytest documentation: https://pytest.org/en/latest/fixture.html
 .. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
 .. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org
-.. _what markers are: http://pytest.org/latest/mark.html
-.. _using them: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules
+.. _what markers are: https://pytest.org/en/latest/mark.html
+.. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules

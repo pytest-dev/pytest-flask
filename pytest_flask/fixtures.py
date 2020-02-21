@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import time
+import logging
 import multiprocessing
-import pytest
+import os
+import signal
 import socket
+import time
+from urllib.error import URLError
+from urllib.request import urlopen
 
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
-
+import pytest
 from flask import _request_ctx_stack
 
 
@@ -34,33 +33,36 @@ def client_class(request, client):
                 return self.client.post(url_for('login'), data=credentials)
 
             def test_login(self):
-                assert self.login('vital@example.com', 'pass').status_code == 200
+                assert self.login('foo@example.com', 'pass').status_code == 200
 
     """
     if request.cls is not None:
         request.cls.client = client
 
 
-class LiveServer(object):
+class LiveServer:
     """The helper class uses to manage live server. Handles creation and
     stopping application in a separate process.
 
     :param app: The application to run.
+    :param host: The host where to listen (default localhost).
     :param port: The port to run application.
     """
 
-    def __init__(self, app, port):
+    def __init__(self, app, host, port, clean_stop=False):
         self.app = app
         self.port = port
+        self.host = host
+        self.clean_stop = clean_stop
         self._process = None
 
     def start(self):
         """Start application in a separate process."""
-        def worker(app, port):
-            app.run(port=port, use_reloader=False, threaded=True)
+        def worker(app, host, port):
+            app.run(host=host, port=port, use_reloader=False, threaded=True)
         self._process = multiprocessing.Process(
             target=worker,
-            args=(self.app, self.port)
+            args=(self.app, self.host, self.port)
         )
         self._process.start()
 
@@ -72,17 +74,35 @@ class LiveServer(object):
             try:
                 urlopen(self.url())
                 timeout = 0
-            except:
+            except URLError:
                 timeout -= 1
 
     def url(self, url=''):
         """Returns the complete url based on server options."""
-        return 'http://localhost:%d%s' % (self.port, url)
+        return 'http://%s:%d%s' % (self.host, self.port, url)
 
     def stop(self):
         """Stop application process."""
         if self._process:
-            self._process.terminate()
+            if self.clean_stop and self._stop_cleanly():
+                return
+            if self._process.is_alive():
+                # If it's still alive, kill it
+                self._process.terminate()
+
+    def _stop_cleanly(self, timeout=5):
+        """Attempts to stop the server cleanly by sending a SIGINT signal and waiting for
+        ``timeout`` seconds.
+
+        :return: True if the server was cleanly stopped, False otherwise.
+        """
+        try:
+            os.kill(self._process.pid, signal.SIGINT)
+            self._process.join(timeout)
+            return True
+        except Exception as ex:
+            logging.error('Failed to join the live server process: %r', ex)
+            return False
 
     def __repr__(self):
         return '<LiveServer listening at %s>' % self.url()
@@ -97,10 +117,10 @@ def _rewrite_server_name(server_name, new_port):
 
 
 @pytest.fixture(scope='session')
-def live_server(request, app):
+def live_server(request, app, pytestconfig):
     """Run application in a separate process.
 
-    When the ``live_server`` fixture is applyed, the ``url_for`` function
+    When the ``live_server`` fixture is applied, the ``url_for`` function
     works as expected::
 
         def test_server_is_up_and_running(live_server):
@@ -112,7 +132,7 @@ def live_server(request, app):
 
     """
     # Set or get a port
-    port = app.config.get('LIVESERVER_PORT', None)
+    port = app.config.get('LIVESERVER_PORT', None) or pytestconfig.getvalue('live_server_port')
     if not port:
         # Bind to an open port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -120,12 +140,16 @@ def live_server(request, app):
         port = s.getsockname()[1]
         s.close()
 
+    # Set the host name
+    host = pytestconfig.getvalue('live_server_host')
+
     # Explicitly set application ``SERVER_NAME`` for test suite
     server_name = app.config['SERVER_NAME'] or 'localhost'
     final_server_name = _rewrite_server_name(server_name, str(port))
     app.config['SERVER_NAME'] = final_server_name
 
-    server = LiveServer(app, port)
+    clean_stop = request.config.getvalue('live_server_clean_stop')
+    server = LiveServer(app, host, port, clean_stop)
     if request.config.getvalue('start_live_server'):
         server.start()
 
@@ -152,21 +176,25 @@ def mimetype(request):
     return request.param
 
 
-@pytest.fixture
-def accept_mimetype(mimetype):
+def _make_accept_header(mimetype):
     return [('Accept', mimetype)]
 
 
 @pytest.fixture
+def accept_mimetype(mimetype):
+    return _make_accept_header(mimetype)
+
+
+@pytest.fixture
 def accept_json(request):
-    return accept_mimetype('application/json')
+    return _make_accept_header('application/json')
 
 
 @pytest.fixture
 def accept_jsonp():
-    return accept_mimetype('application/json-p')
+    return _make_accept_header('application/json-p')
 
 
 @pytest.fixture(params=['*', '*/*'])
 def accept_any(request):
-    return accept_mimetype(request.param)
+    return _make_accept_header(request.param)

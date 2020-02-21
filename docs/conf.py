@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # pytest-flask documentation build configuration file, created by
 # sphinx-quickstart on Thu Feb 19 17:57:27 2015.
@@ -11,8 +10,9 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-
-import sys, os, datetime
+import datetime
+import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -132,7 +132,7 @@ else:
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+#html_static_path = ['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

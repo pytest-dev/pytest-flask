@@ -1,23 +1,29 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
     A py.test plugin which helps testing Flask applications.
 
     :copyright: (c) by Vital Kudzelka
     :license: MIT
 """
+import sys
+
 import pytest
-
 from flask import json
-from werkzeug import cached_property
+from werkzeug.utils import cached_property
 
-from .fixtures import (
-    client, config, accept_json, accept_jsonp, accept_any, accept_mimetype,
-    client_class, live_server, request_ctx
-)
+from .fixtures import accept_any
+from .fixtures import accept_json
+from .fixtures import accept_jsonp
+from .fixtures import accept_mimetype
+from .fixtures import client
+from .fixtures import client_class
+from .fixtures import config
+from .fixtures import live_server
+from .fixtures import request_ctx
+from .pytest_compat import getfixturevalue
 
 
-class JSONResponse(object):
+class JSONResponse:
     """Mixin with testing helper methods for JSON responses."""
 
     @cached_property
@@ -27,6 +33,36 @@ class JSONResponse(object):
         :mod:`flask.json` module.
         """
         return json.loads(self.data)
+
+    def __eq__(self, other):
+        if isinstance(other, int):
+            return self.status_code == other
+        # even though the Python 2-specific code works on Python 3, keep the two versions
+        # separate so we can simplify the code once Python 2 support is dropped
+        if sys.version_info[0] == 2:
+            try:
+                super_eq = super().__eq__
+            except AttributeError:
+                return NotImplemented
+            else:
+                return super_eq(other)
+        else:
+            return super().__eq__(other)
+
+    def __ne__(self, other):
+        return not self == other
+
+
+def pytest_assertrepr_compare(op, left, right):
+    if isinstance(left, JSONResponse) and op == '==' and isinstance(right, int):
+        return [
+            'Mismatch in status code for response: {} != {}'.format(
+                left.status_code,
+                right,
+            ),
+            'Response status: {}'.format(left.status),
+        ]
+    return None
 
 
 def _make_test_response_class(response_class):
@@ -58,7 +94,7 @@ def _monkeypatch_response_class(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
     monkeypatch.setattr(app, 'response_class',
                         _make_test_response_class(app.response_class))
 
@@ -75,14 +111,14 @@ def _push_request_context(request):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
+    app = getfixturevalue(request, 'app')
 
     # Get application bound to the live server if ``live_server`` fixture
-    # is applyed. Live server application has an explicit ``SERVER_NAME``,
+    # is applied. Live server application has an explicit ``SERVER_NAME``,
     # so ``url_for`` function generates a complete URL for endpoint which
     # includes application port as well.
     if 'live_server' in request.fixturenames:
-        app = request.getfuncargvalue('live_server').app
+        app = getfixturevalue(request, 'live_server').app
 
     ctx = app.test_request_context()
     ctx.push()
@@ -106,9 +142,8 @@ def _configure_application(request, monkeypatch):
     if 'app' not in request.fixturenames:
         return
 
-    app = request.getfuncargvalue('app')
-    options = request.keywords.get('options')
-    if options is not None:
+    app = getfixturevalue(request, 'app')
+    for options in request.node.iter_markers('options'):
         for key, value in options.kwargs.items():
             monkeypatch.setitem(app.config, key.upper(), value)
 
@@ -118,14 +153,25 @@ def pytest_addoption(parser):
     group.addoption('--start-live-server',
                     action="store_true", dest="start_live_server", default=True,
                     help="start server automatically when live_server "
-                         "fixture is applyed (enabled by default).")
+                         "fixture is applied (enabled by default).")
     group.addoption('--no-start-live-server',
                     action="store_false", dest="start_live_server",
                     help="don't start server automatically when live_server "
-                         "fixture is applyed.")
+                         "fixture is applied.")
+    group.addoption('--live-server-clean-stop',
+                    action="store_true", dest="live_server_clean_stop", default=True,
+                    help="attempt to kill the live server cleanly.")
+    group.addoption('--no-live-server-clean-stop',
+                    action="store_false", dest="live_server_clean_stop",
+                    help="terminate the server forcefully after stop.")
+    group.addoption('--live-server-host', action='store', default='localhost', type=str,
+                    help='use a host where to listen (default localhost).')
+    group.addoption('--live-server-port', action='store', default=0, type=int,
+                    help='use a fixed port for the live_server fixture.')
 
 
 def pytest_configure(config):
     config.addinivalue_line(
         'markers',
         'app(options): pass options to your application factory')
+    config.addinivalue_line('markers', 'options: app config manipulation')

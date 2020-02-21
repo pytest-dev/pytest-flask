@@ -117,9 +117,7 @@ def _rewrite_server_name(server_name, new_port):
 
 
 def determine_scope(fixture_name, config):
-    if fixture_name is 'live_server':
-        return config.getoption('--live-server-scope', 'function')
-    return "function"
+    return config.getoption('--live-server-scope', 'session')
 
 
 @pytest.fixture(scope=determine_scope)

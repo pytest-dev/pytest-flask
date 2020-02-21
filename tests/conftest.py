@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import pytest
-
 from textwrap import dedent
-from flask import Flask, jsonify
+
+import pytest
+from flask import Flask
+from flask import jsonify
 
 
 pytest_plugins = 'pytester'

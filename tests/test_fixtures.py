@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import pytest
-
-from flask import request, url_for
+from flask import request
+from flask import url_for
 
 
 class TestFixtures:

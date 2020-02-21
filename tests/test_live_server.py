@@ -167,7 +167,7 @@ class TestLiveServer:
                 assert live_server.port == %d
         ''' % port)
         result = appdir.runpytest('-v', '--live-server-port', str(port))
-        result.stdout.fnmatch_lines(['*PASSED*'])
+        result.stdout.fnmatch_lines(['*passed*'])
         assert result.ret == 0
 
     @pytest.mark.parametrize('host', ['127.0.0.1', '0.0.0.0'])
@@ -179,5 +179,5 @@ class TestLiveServer:
                 assert live_server.host == '%s'
         ''' % host)
         result = appdir.runpytest('-v', '--live-server-host', str(host))
-        result.stdout.fnmatch_lines(['*PASSED*'])
+        result.stdout.fnmatch_lines(['*passed*'])
         assert result.ret == 0

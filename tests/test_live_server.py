@@ -33,10 +33,18 @@ class TestLiveServer:
         assert live_server.app.config['SERVER_NAME'] == \
             'localhost:%d' % live_server.port
 
-    @pytest.mark.options(server_name='example.com:5000')
-    def test_rewrite_application_server_name(self, live_server):
-        assert live_server.app.config['SERVER_NAME'] == \
-            'example.com:%d' % live_server.port
+    def test_rewrite_application_server_name(self, appdir):
+        appdir.create_test_module('''
+            import pytest
+            @pytest.mark.options(server_name='example.com:5000')
+            def test_a(live_server):
+                assert live_server.app.config['SERVER_NAME'] == \\
+                    'example.com:%d' % live_server.port
+        ''')
+
+        result = appdir.runpytest('-v', '--live-server-scope=function')
+        result.stdout.fnmatch_lines(['*PASSED*'])
+        assert result.ret == 0
 
     def test_prevent_starting_live_server(self, appdir):
         appdir.create_test_module('''

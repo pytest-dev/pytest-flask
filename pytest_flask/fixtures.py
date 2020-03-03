@@ -116,8 +116,12 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-@pytest.fixture(scope='function')
-def live_server(request, app, monkeypatch, pytestconfig):
+def determine_scope(fixture_name, config):
+    return config.getoption('--live-server-scope', 'session')
+
+
+@pytest.fixture(scope=determine_scope)
+def live_server(request, app, pytestconfig):
     """Run application in a separate process.
 
     When the ``live_server`` fixture is applied, the ``url_for`` function
@@ -131,7 +135,10 @@ def live_server(request, app, monkeypatch, pytestconfig):
             assert res.code == 200
 
     """
-    port = pytestconfig.getvalue('live_server_port')
+    # Set or get a port
+    port = app.config.get('LIVESERVER_PORT', None)
+    if not port:
+        port = pytestconfig.getvalue('live_server_port')
 
     if port == 0:
         # Bind to an open port
@@ -143,10 +150,9 @@ def live_server(request, app, monkeypatch, pytestconfig):
     host = pytestconfig.getvalue('live_server_host')
 
     # Explicitly set application ``SERVER_NAME`` for test suite
-    # and restore original value on test teardown.
-    server_name = app.config['SERVER_NAME'] or 'localhost'
-    monkeypatch.setitem(app.config, 'SERVER_NAME',
-                        _rewrite_server_name(server_name, str(port)))
+    original_server_name = app.config['SERVER_NAME'] or 'localhost'
+    final_server_name = _rewrite_server_name(original_server_name, str(port))
+    app.config['SERVER_NAME'] = final_server_name
 
     clean_stop = request.config.getvalue('live_server_clean_stop')
     server = LiveServer(app, host, port, clean_stop)
@@ -154,7 +160,10 @@ def live_server(request, app, monkeypatch, pytestconfig):
         server.start()
 
     request.addfinalizer(server.stop)
-    return server
+    yield server
+
+    if original_server_name is not None:
+        app.config['SERVER_NAME'] = original_server_name
 
 
 @pytest.fixture

@@ -188,15 +188,17 @@ in your project's ``pytest.ini`` file)::
 ``request_ctx`` - request context
 `````````````````````````````````
 
-``--live-server-scope`` - set the scope of the live server
+``live_server_scope`` - set the scope of the live server
 ``````````````````````````````````````````````````````````````````
 
-By default, the server will be scoped to `session`. In some cases, you may want
-it to be fixed to a different scope. You can use ``--live-server-scope`` (for example,
-in your project's ``pytest.ini`` file)::
+By default, the server will be scoped to ``session`` for performance reasons, however
+if your server has global state and you want better test isolation, you can use the
+``live_server_scope`` ini option to change the fixture scope:
+
+.. code-block:: ini
 
     [pytest]
-    addopts = --live-server-scope=function
+    live_server_scope = function
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

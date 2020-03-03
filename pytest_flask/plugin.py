@@ -168,8 +168,8 @@ def pytest_addoption(parser):
                     help='use a host where to listen (default localhost).')
     group.addoption('--live-server-port', action='store', default=0, type=int,
                     help='use a fixed port for the live_server fixture.')
-    group.addoption('--live-server-scope', action='store', default='session', type=str,
-                    help='modify the scope of the live_server fixture.')
+    parser.addini('live_server_scope', 'modify the scope of the live_server fixture.',
+                  default='session')
 
 
 def pytest_configure(config):

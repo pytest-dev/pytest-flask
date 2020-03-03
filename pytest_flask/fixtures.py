@@ -116,8 +116,8 @@ def _rewrite_server_name(server_name, new_port):
     return sep.join((server_name, new_port))
 
 
-def determine_scope(fixture_name, config):
-    return config.getoption('--live-server-scope', 'session')
+def determine_scope(*, fixture_name, config):
+    return config.getini('live_server_scope')
 
 
 @pytest.fixture(scope=determine_scope)

@@ -3,10 +3,20 @@
 Changelog
 =========
 
-1.0.0 (UNRELEASED)
+1.0.0 (2020-03-03)
 ------------------
 
-- Python 2.7 is no longer supported.
+**Important**
+
+- ``live_server`` is now ``session``-scoped by default. This can be changed by using the ``live-server_scope`` option in your ``pytest.ini`` (`#113`_). Thanks `@havok2063`_ for the initial patch and `@TWood67`_ for finishing it up.
+
+- pytest 5.2 or later is now required.
+
+- Python 2.7 and 3.4 are no longer supported.
+
+.. _@havok2063: https://github.com/havok2063
+.. _@TWood67: https://github.com/TWood67
+.. _#113: https://github.com/pytest-dev/pytest-flask/pull/113
 
 0.15.1 (2020-02-03)
 -------------------

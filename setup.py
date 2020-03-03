@@ -115,7 +115,7 @@ def read(*parts):
         return ''
 
 
-requirements = read('requirements', 'main.txt').splitlines() + ['pytest']
+requirements = read('requirements', 'main.txt').splitlines()
 tests_require = []
 
 extras_require = {
@@ -154,26 +154,24 @@ setup(
     keywords='pytest flask testing',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
         'Environment :: Web Environment',
+        'Framework :: Pytest',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'Topic :: Software Development :: Testing',
+        'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: Testing',
     ],
+    python_requires=">=3.5",
 
-    # The following makes a plugin available to pytest
+    # The following makes the plugin available to pytest
     entry_points={
         'pytest11': [
             'flask = pytest_flask.plugin',

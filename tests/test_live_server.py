@@ -42,7 +42,7 @@ class TestLiveServer:
                     'example.com:%d' % live_server.port
         ''')
 
-        result = appdir.runpytest('-v', '-o=live_server_scope=function')
+        result = appdir.runpytest('-v', '-o', 'live_server_scope=function')
         result.stdout.fnmatch_lines(['*PASSED*'])
         assert result.ret == 0
 

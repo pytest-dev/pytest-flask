@@ -169,6 +169,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Testing',
     ],
+    python_requires=">=3.5",
 
     # The following makes the plugin available to pytest
     entry_points={

@@ -115,7 +115,7 @@ def read(*parts):
         return ''
 
 
-requirements = read('requirements', 'main.txt').splitlines() + ['pytest']
+requirements = read('requirements', 'main.txt').splitlines()
 tests_require = []
 
 extras_require = {

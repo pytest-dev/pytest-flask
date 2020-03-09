@@ -42,7 +42,7 @@ Extension provides some sugar for your tests, such as:
                 '''What is the meaning of life, the universe and everything?'''
                 return 42
 
-        @pytest.fixture
+        @pytest.fixture(scope="session")
         def app():
             app = create_app()
             app.response_class = MyResponse

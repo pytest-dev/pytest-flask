@@ -41,7 +41,7 @@ def client_class(request, client):
 
 
 class LiveServer:
-    """The helper class uses to manage live server. Handles creation and
+    """The helper class used to manage a live server. Handles creation and
     stopping application in a separate process.
 
     :param app: The application to run.

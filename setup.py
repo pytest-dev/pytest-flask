@@ -110,71 +110,65 @@ from setuptools import setup
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        return open(os.path.join(*parts), 'r', encoding='utf-8').read()
+        return open(os.path.join(*parts), "r", encoding="utf-8").read()
     except OSError:
-        return ''
+        return ""
 
 
-requirements = read('requirements', 'main.txt').splitlines()
+requirements = read("requirements", "main.txt").splitlines()
 tests_require = []
 
 extras_require = {
-    'docs': read('requirements', 'docs.txt').splitlines(),
-    'tests': tests_require
+    "docs": read("requirements", "docs.txt").splitlines(),
+    "tests": tests_require,
 }
 
 
 setup(
-    name='pytest-flask',
-
+    name="pytest-flask",
     # Versions should comply with PEP440, and automatically obtained from tags
     # thanks to setuptools_scm
     use_scm_version={"write_to": "pytest_flask/_version.py"},
     setup_requires=["setuptools-scm"],
-
-    author='Vital Kudzelka',
-    author_email='vital.kudzelka@gmail.com',
-
-    url='https://github.com/vitalk/pytest-flask',
+    author="Vital Kudzelka",
+    author_email="vital.kudzelka@gmail.com",
+    url="https://github.com/vitalk/pytest-flask",
     project_urls={
         "Source": "https://github.com/pytest-dev/pytest-flask",
         "Tracker": "https://github.com/pytest-dev/pytest-flask/issues",
     },
-    description='A set of py.test fixtures to test Flask applications.',
+    description="A set of py.test fixtures to test Flask applications.",
     long_description=__doc__,
-    license='MIT',
-
-    packages=find_packages(exclude=['docs', 'tests']),
+    license="MIT",
+    packages=find_packages(exclude=["docs", "tests"]),
     zip_safe=False,
-    platforms='any',
+    platforms="any",
     install_requires=requirements,
     tests_require=tests_require,
     extras_require=extras_require,
-
-    keywords='pytest flask testing',
+    keywords="pytest flask testing",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Plugins',
-        'Environment :: Web Environment',
-        'Framework :: Pytest',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: Testing',
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Plugins",
+        "Environment :: Web Environment",
+        "Framework :: Pytest",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Testing",
     ],
     python_requires=">=3.5",
-
     # The following makes the plugin available to pytest
     entry_points={
-        'pytest11': [
-            'flask = pytest_flask.plugin',
+        "pytest11": [
+            "flask = pytest_flask.plugin",
         ]
     },
 )

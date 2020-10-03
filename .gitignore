@@ -3,7 +3,7 @@
 *.egg-info
 build
 sdist
-
+.vscode
 __pycache__/
 
 # virtualenv

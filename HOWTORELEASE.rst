@@ -24,10 +24,6 @@ Steps
 
     $ pip install tox
 
-#. Update the necessary files with::
-
-    $ tox -e release -- X.Y.Z
-
 #. Commit and push the branch for review.
 
 #. Once PR is **green** and **approved**, create and push a tag::

@@ -16,15 +16,7 @@ Steps
 
 #. Create a new branch named ``release-X.Y.Z`` from the latest ``master``.
 
-#. Create and activate a virtualenv::
-
-    $ python -m venv venv && source venv/bin/activate
-
-#. Install ``tox``::
-
-    $ pip install tox
-
-#. Commit and push the branch for review.
+#. After making the necessary changes, commit and push the branch for review.
 
 #. Once PR is **green** and **approved**, create and push a tag::
 

@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 pytest-flask
 ============
 
-A set of `pytest <http://pytest.org>`_ fixtures to test Flask
+A set of `pytest <https://docs.pytest.org>`_ fixtures to test Flask
 extensions and applications.
 
 Features
@@ -102,86 +101,74 @@ Don’t hesitate to create a `GitHub issue
 **suggestion**.
 
 """
-import io
 import os
-import re
-from setuptools import setup
+
 from setuptools import find_packages
+from setuptools import setup
 
 
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
     try:
-        return io.open(os.path.join(*parts), 'r', encoding='utf-8').read()
-    except IOError:
-        return ''
+        return open(os.path.join(*parts), "r", encoding="utf-8").read()
+    except OSError:
+        return ""
 
 
-def get_version():
-    version_file = read('pytest_flask', '__init__.py')
-    version_match = re.search(r'^__version__ = [\'"]([^\'"]*)[\'"]',
-                              version_file, re.MULTILINE)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError('Unable to find version string.')
-
-
-version = get_version()
-requirements = read('requirements', 'main.txt').splitlines() + ['pytest']
+requirements = read("requirements", "main.txt").splitlines()
 tests_require = []
 
 extras_require = {
-    'docs': read('requirements', 'docs.txt').splitlines(),
-    'tests': tests_require
+    "docs": read("requirements", "docs.txt").splitlines(),
+    "tests": tests_require,
 }
 
 
 setup(
-    name='pytest-flask',
-
-    # Versions should comply with PEP440. For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # http://packaging.python.org/en/latest/tutorial.html#version
-    version=version,
-
-    author='Vital Kudzelka',
-    author_email='vital.kudzelka@gmail.com',
-
-    url='https://github.com/vitalk/pytest-flask',
-    download_url='https://github.com/vitalk/pytest-flask/tarball/%s' % version,
-    description='A set of py.test fixtures to test Flask applications.',
+    name="pytest-flask",
+    # Versions should comply with PEP440, and automatically obtained from tags
+    # thanks to setuptools_scm
+    use_scm_version={"write_to": "pytest_flask/_version.py"},
+    setup_requires=["setuptools-scm"],
+    author="Vital Kudzelka",
+    author_email="vital.kudzelka@gmail.com",
+    url="https://github.com/vitalk/pytest-flask",
+    project_urls={
+        "Source": "https://github.com/pytest-dev/pytest-flask",
+        "Tracker": "https://github.com/pytest-dev/pytest-flask/issues",
+    },
+    description="A set of py.test fixtures to test Flask applications.",
     long_description=__doc__,
-    license='MIT',
-
-    packages=find_packages(exclude=['docs', 'tests']),
+    license="MIT",
+    packages=find_packages(exclude=["docs", "tests"]),
     zip_safe=False,
-    platforms='any',
+    platforms="any",
     install_requires=requirements,
     tests_require=tests_require,
     extras_require=extras_require,
-
-    keywords='pytest flask testing',
+    keywords="pytest flask testing",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Environment :: Plugins',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Topic :: Software Development :: Testing',
-        'Topic :: Software Development :: Libraries :: Python Modules',
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Plugins",
+        "Environment :: Web Environment",
+        "Framework :: Pytest",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Testing",
     ],
-
-    # The following makes a plugin available to pytest
+    python_requires=">=3.5",
+    # The following makes the plugin available to pytest
     entry_points={
-        'pytest11': [
-            'flask = pytest_flask.plugin',
+        "pytest11": [
+            "flask = pytest_flask.plugin",
         ]
     },
 )

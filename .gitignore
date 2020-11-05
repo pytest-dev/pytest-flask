@@ -3,7 +3,7 @@
 *.egg-info
 build
 sdist
-
+.vscode
 __pycache__/
 
 # virtualenv
@@ -17,6 +17,10 @@ htmlcov/
 .tox/
 .coverage
 .coverage.*
-.cache
+.pytest_cache/
+.eggs/
 coverage.xml
 tests/junit.xml
+
+pytest_flask/_version.py
+.vscode

@@ -42,7 +42,7 @@ Extension provides some sugar for your tests, such as:
                 '''What is the meaning of life, the universe and everything?'''
                 return 42
 
-        @pytest.fixture
+        @pytest.fixture(scope="session")
         def app():
             app = create_app()
             app.response_class = MyResponse
@@ -157,7 +157,7 @@ example, in your project’s ``pytest.ini`` file)::
 
 .. note::
 
-    Your **should manually start** live server after you finish your application
+    You **should manually start** live server after you finish your application
     configuration and define all required routes:
 
     .. code:: python
@@ -174,13 +174,40 @@ example, in your project’s ``pytest.ini`` file)::
             assert b'got it' in res.read()
 
 
+<<<<<<< HEAD
 ``--live-server-wait`` - the live server wait timeout (5 seconds)
 `````````````````````````````````````````````````````````````````
 
 The timeout after which test case is aborted if live server is not started.
+=======
+``--live-server-port`` - use a fixed port
+`````````````````````````````````````````
+
+By default the server uses a random port. In some cases it is desirable to run
+the server with a fixed port. You can use ``--live-server-port`` (for example,
+in your project's ``pytest.ini`` file)::
+
+    [pytest]
+    addopts = --live-server-port=5000
+>>>>>>> f01e17da79d512ad7c0a410be4693f0652b73df1
 
 
 ``request_ctx`` - request context
+`````````````````````````````````
+
+``live_server_scope`` - set the scope of the live server
+``````````````````````````````````````````````````````````````````
+
+By default, the server will be scoped to ``session`` for performance reasons, however
+if your server has global state and you want better test isolation, you can use the
+``live_server_scope`` ini option to change the fixture scope:
+
+.. code-block:: ini
+
+    [pytest]
+    live_server_scope = function
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The request context which contains all request relevant information.
@@ -225,20 +252,20 @@ provides an easy way to test content negotiation in your application:
 
 
 ``accept_any`` - :mimetype:`*/*` accept header
-""""""""""""""""""""""""""""""""""""""""""""""
+``````````````````````````````````````````````
 
 :mimetype:`*/*` accept header suitable to use as parameter in ``client``.
 
 
 ``accept_json`` - :mimetype:`application/json` accept header
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+````````````````````````````````````````````````````````````
 
 :mimetype:`application/json` accept header suitable to use as parameter in
 ``client``.
 
 
 ``accept_jsonp`` - :mimetype:`application/json-p` accept header
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+```````````````````````````````````````````````````````````````
 
 :mimetype:`application/json-p` accept header suitable to use as parameter in
 ``client``.
@@ -272,9 +299,9 @@ on `what markers are`_ and for notes on `using them`_.
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
-.. _pytest documentation: http://pytest.org/latest/fixture.html
+.. _pytest documentation: https://pytest.org/en/latest/fixture.html
 .. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
 .. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
 .. _Selenium: http://www.seleniumhq.org
-.. _what markers are: http://pytest.org/latest/mark.html
-.. _using them: http://pytest.org/latest/example/markers.html#marking-whole-classes-or-modules
+.. _what markers are: https://pytest.org/en/latest/mark.html
+.. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules

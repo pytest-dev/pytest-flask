@@ -3,8 +3,87 @@
 Changelog
 =========
 
-Upcoming release
------------------
+1.0.0 (2020-03-03)
+------------------
+
+**Important**
+
+- ``live_server`` is now ``session``-scoped by default. This can be changed by using the ``live-server_scope`` option in your ``pytest.ini`` (`#113`_). Thanks `@havok2063`_ for the initial patch and `@TWood67`_ for finishing it up.
+
+- pytest 5.2 or later is now required.
+
+- Python 2.7 and 3.4 are no longer supported.
+
+.. _@havok2063: https://github.com/havok2063
+.. _@TWood67: https://github.com/TWood67
+.. _#113: https://github.com/pytest-dev/pytest-flask/pull/113
+
+0.15.1 (2020-02-03)
+-------------------
+
+- Fix ``ImportError`` with ``Werkzeug 1.0.0rc1`` (`#105`_).
+
+.. _#105: https://github.com/pytest-dev/pytest-flask/pull/105
+
+0.15.0 (2019-05-13)
+-------------------
+
+- Properly register the ``options`` marker (`#97`_).
+
+.. _#97: https://github.com/pytest-dev/pytest-flask/pull/97
+
+0.14.0 (2018-10-15)
+-------------------
+
+- New ``--live-server-host`` command-line option to set the host name used by
+  the ``live_server`` fixture.
+
+  Thanks `@o1da`_ for the PR (`#90`_).
+
+.. _@o1da: https://github.com/o1da
+.. _#90: https://github.com/pytest-dev/pytest-flask/pull/90
+
+0.13.0 (2018-09-29)
+-------------------
+
+- ``JSONReponse`` now supports comparison directly with status codes:
+
+  .. code-block:: python
+
+      assert client.get('invalid-route', headers=[('Accept', 'application/json')]) == 404
+
+  Thanks `@dusktreader`_ for the PR (`#86`_).
+
+.. _@dusktreader: https://github.com/dusktreader
+.. _#86: https://github.com/pytest-dev/pytest-flask/pull/86
+
+0.12.0 (2018-09-06)
+-------------------
+
+- ``pytest-flask`` now requires ``pytest>=3.6`` (`#84`_).
+
+- Add new ``--live-server-port`` option to select the port the live server will use (`#82`_).
+  Thanks `@RazerM`_ for the PR.
+
+- Now ``live_server`` will try to stop the server cleanly by emitting a ``SIGINT`` signal and
+  waiting 5 seconds for the server to shutdown. If the server is still running after 5 seconds,
+  it will be forcefully terminated. This behavior can be changed by passing
+  ``--no-live-server-clean-stop`` in the command-line (`#49`_).
+  Thanks `@jadkik`_ for the PR.
+
+- Internal fixes silence pytest warnings, more visible now with ``pytest-3.8.0`` (`#84`_).
+
+.. _@jadkik: https://github.com/jadkik
+.. _@RazerM: https://github.com/RazerM
+.. _#49: https://github.com/pytest-dev/pytest-flask/issues/49
+.. _#82: https://github.com/pytest-dev/pytest-flask/pull/82
+.. _#84: https://github.com/pytest-dev/pytest-flask/pull/84
+
+
+0.11.0 (compared to 0.10.0)
+---------------------------
+
+- Implement deployment using Travis, following in line with many other pytest plugins.
 
 - Speedup live server start time. Use `socket` instead of server
   pulling (`#58`_) to check server availability. Thanks to `@jadkik`_.

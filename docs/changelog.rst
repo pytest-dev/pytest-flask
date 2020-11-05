@@ -3,6 +3,15 @@
 Changelog
 =========
 
+1.1.0 (UNRELEASED)
+------------------
+
+- Speedup live server start time. Use `socket` instead of server
+  pulling (`#58`_) to check server availability and add new
+  ``--live-server-wait`` option to set the live server wait timeout.
+  Thanks to `@jadkik`_.
+
+
 1.0.0 (2020-03-03)
 ------------------
 
@@ -84,9 +93,6 @@ Changelog
 ---------------------------
 
 - Implement deployment using Travis, following in line with many other pytest plugins.
-
-- Speedup live server start time. Use `socket` instead of server
-  pulling (`#58`_) to check server availability. Thanks to `@jadkik`_.
 
 - Allow live server to handle concurrent requests (`#56`_), thanks to
   `@mattwbarry`_ for the PR.

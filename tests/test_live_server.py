@@ -10,6 +10,10 @@ pytestmark = pytest.mark.skipif(not hasattr(os, "fork"), reason="needs fork")
 
 
 class TestLiveServer:
+    def test_init(self, live_server):
+        assert live_server.port
+        assert live_server.host == "localhost"
+
     def test_server_is_alive(self, live_server):
         assert live_server._process
         assert live_server._process.is_alive()
@@ -18,7 +22,12 @@ class TestLiveServer:
         assert live_server.url() == "http://localhost:%d" % live_server.port
         assert live_server.url("/ping") == "http://localhost:%d/ping" % live_server.port
 
+    def test_server_url_is_deprecated(self, live_server):
+        assert pytest.deprecated_call(live_server.url)
+
     def test_server_listening(self, live_server):
+        # need to test both external and external? why external here?
+        # res = urlopen(url_for('ping', _external=True))
         res = urlopen(live_server.url("/ping"))
         assert res.code == 200
         assert b"pong" in res.read()
@@ -207,3 +216,16 @@ class TestLiveServer:
         result = appdir.runpytest("-v", "--live-server-host", str(host))
         result.stdout.fnmatch_lines(["*PASSED*"])
         assert result.ret == 0
+
+    def test_respect_wait_timeout(self, appdir):
+        appdir.create_test_module(
+            """
+            import pytest
+
+            def test_should_fail(live_server):
+                assert live_server._process.is_alive()
+        """
+        )
+        result = appdir.runpytest("-v", "--live-server-wait=0.00000001")
+        result.stdout.fnmatch_lines(["**ERROR**"])
+        assert result.ret == 1

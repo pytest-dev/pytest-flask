@@ -174,6 +174,10 @@ example, in your project’s ``pytest.ini`` file)::
             assert b'got it' in res.read()
 
 
+``--live-server-wait`` - the live server wait timeout (5 seconds)
+`````````````````````````````````````````````````````````````````
+
+The timeout after which test case is aborted if live server is not started.
 ``--live-server-port`` - use a fixed port
 `````````````````````````````````````````
 

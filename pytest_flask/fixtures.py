@@ -1,15 +1,33 @@
 #!/usr/bin/env python
+import functools
 import logging
 import multiprocessing
 import os
 import signal
 import socket
 import time
-from urllib.error import URLError
-from urllib.request import urlopen
+import warnings
 
 import pytest
 from flask import _request_ctx_stack
+
+
+def deprecated(reason):
+    """Decorator which can be used to mark function or method as deprecated.
+    It will result a warning being emmitted when the function is called.
+    """
+
+    def decorator(func):
+        @functools.wraps(func)
+        def deprecated_call(*args, **kwargs):
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn(reason, DeprecationWarning, stacklevel=2)
+            warnings.simplefilter("default", DeprecationWarning)
+            return func(*args, **kwargs)
+
+        return deprecated_call
+
+    return decorator
 
 
 @pytest.yield_fixture
@@ -47,12 +65,15 @@ class LiveServer:
     :param app: The application to run.
     :param host: The host where to listen (default localhost).
     :param port: The port to run application.
+    :param wait: The timeout after which test case is aborted if
+                 application is not started.
     """
 
-    def __init__(self, app, host, port, clean_stop=False):
+    def __init__(self, app, host, port, wait, clean_stop=False):
         self.app = app
         self.port = port
         self.host = host
+        self.wait = wait
         self.clean_stop = clean_stop
         self._process = None
 
@@ -65,22 +86,45 @@ class LiveServer:
         self._process = multiprocessing.Process(
             target=worker, args=(self.app, self.host, self.port)
         )
+        self._process.daemon = True
         self._process.start()
 
-        # We must wait for the server to start listening with a maximum
-        # timeout of 5 seconds.
-        timeout = 5
-        while timeout > 0:
-            time.sleep(1)
-            try:
-                urlopen(self.url())
-                timeout = 0
-            except URLError:
-                timeout -= 1
+        keep_trying = True
+        start_time = time.time()
+        while keep_trying:
+            elapsed_time = time.time() - start_time
+            if elapsed_time > self.wait:
+                pytest.fail(
+                    "Failed to start the server after {!s} "
+                    "seconds.".format(self.wait)
+                )
+            if self._is_ready():
+                keep_trying = False
 
+    def _is_ready(self):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            sock.connect((self.host, self.port))
+        except socket.error:
+            ret = False
+        else:
+            ret = True
+        finally:
+            sock.close()
+        return ret
+
+    @deprecated(
+        reason=(
+            'The "live_server.url" method is deprecated and will '
+            "be removed in the future. Please use "
+            'the "flask.url_for" function instead.',
+        )
+    )
     def url(self, url=""):
         """Returns the complete url based on server options."""
-        return "http://%s:%d%s" % (self.host, self.port, url)
+        return "http://{host!s}:{port!s}{url!s}".format(
+            host=self.host, port=self.port, url=url
+        )
 
     def stop(self):
         """Stop application process."""
@@ -155,8 +199,9 @@ def live_server(request, app, pytestconfig):
     final_server_name = _rewrite_server_name(original_server_name, str(port))
     app.config["SERVER_NAME"] = final_server_name
 
+    wait = request.config.getvalue("live_server_wait")
     clean_stop = request.config.getvalue("live_server_clean_stop")
-    server = LiveServer(app, host, port, clean_stop)
+    server = LiveServer(app, host, port, wait, clean_stop)
     if request.config.getvalue("start_live_server"):
         server.start()
 

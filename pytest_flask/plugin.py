@@ -166,6 +166,15 @@ def pytest_addoption(parser):
         help="don't start server automatically when live_server " "fixture is applied.",
     )
     group.addoption(
+        "--live-server-wait",
+        action="store",
+        dest="live_server_wait",
+        default=5,
+        type=float,
+        help="the timeout after which test case is aborted if live server is "
+        " not started.",
+    )
+    group.addoption(
         "--live-server-clean-stop",
         action="store_true",
         dest="live_server_clean_stop",

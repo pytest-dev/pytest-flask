@@ -3,6 +3,15 @@
 Changelog
 =========
 
+1.1.0 (UNRELEASED)
+------------------
+
+- Speedup live server start time. Use `socket` instead of server
+  pulling (`#58`_) to check server availability and add new
+  ``--live-server-wait`` option to set the live server wait timeout.
+  Thanks to `@jadkik`_.
+
+
 1.0.0 (2020-03-03)
 ------------------
 
@@ -104,7 +113,9 @@ Changelog
 .. _#48: https://github.com/pytest-dev/pytest-flask/pull/48
 .. _#50: https://github.com/pytest-dev/pytest-flask/pull/50
 .. _#56: https://github.com/pytest-dev/pytest-flask/pull/56
+.. _#58: steenzouthttps://github.com/pytest-dev/pytest-flask/pull/58
 .. _@danstender: https://github.com/danstender
+.. _@jadkik: https://github.com/jadkik
 .. _@jineshpaloor: https://github.com/jineshpaloor
 .. _@mattwbarry: https://github.com/mattwbarry
 .. _@steenzout: https://github.com/steenzout

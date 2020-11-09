@@ -3,7 +3,7 @@
 Changelog
 =========
 
-1.1.0 (UNRELEASED)
+1.1.0 (2020-11-08)
 ------------------
 
 - Speedup live server start time. Use `socket` instead of server

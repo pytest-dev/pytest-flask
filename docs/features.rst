@@ -39,7 +39,6 @@ Extension provides some sugar for your tests, such as:
             '''Implements custom deserialization method for response objects.'''
             @property
             def json(self):
-                '''What is the meaning of life, the universe and everything?'''
                 return 42
 
         @pytest.fixture(scope="session")
@@ -176,8 +175,9 @@ example, in your project’s ``pytest.ini`` file)::
 
 ``--live-server-wait`` - the live server wait timeout (5 seconds)
 `````````````````````````````````````````````````````````````````
-
 The timeout after which test case is aborted if live server is not started.
+
+
 ``--live-server-port`` - use a fixed port
 `````````````````````````````````````````
 
@@ -190,21 +190,6 @@ in your project's ``pytest.ini`` file)::
 
 
 ``request_ctx`` - request context
-`````````````````````````````````
-
-``live_server_scope`` - set the scope of the live server
-``````````````````````````````````````````````````````````````````
-
-By default, the server will be scoped to ``session`` for performance reasons, however
-if your server has global state and you want better test isolation, you can use the
-``live_server_scope`` ini option to change the fixture scope:
-
-.. code-block:: ini
-
-    [pytest]
-    live_server_scope = function
-
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The request context which contains all request relevant information.
@@ -222,6 +207,105 @@ The request context which contains all request relevant information.
         def test_request_headers(client):
             res = client.get(url_for('ping'), headers=[('X-Something', '42')])
             assert request.headers['X-Something'] == '42'
+
+
+``live_server_scope`` - set the scope of the live server
+``````````````````````````````````````````````````````````````````
+
+By default, the server will be scoped to ``session`` for performance reasons, however
+if your server has global state and you want better test isolation, you can use the
+``live_server_scope`` ini option to change the fixture scope:
+
+.. code-block:: ini
+
+    [pytest]
+    live_server_scope = function
+
+
+HTTP Request
+~~~~~~~~~~~~~~~~~~~
+
+Common request methods are available through the internals of the `Flask API`_.
+Specifically, the API creates the default `flask.Flask.test_client`_ instance,
+which works like a regular `Werkzeug test client`_.
+
+Example:
+
+.. code:: python
+
+    def test_post_request(client, live_server):
+        @live_server.app.route('/load-data')
+        def get_endpoint():
+            return url_for('name.load', _external=True)
+
+        live_server.start()
+
+        res = client.post(
+            get_endpoint(),
+            headers={'Content-Type': 'application/json'},
+            data={}
+        )
+
+        assert res.status_code == 200
+
+Example:
+
+.. code:: python
+
+    def test_get_request(client, live_server):
+        @live_server.app.route('/load-data')
+        def get_endpoint():
+            return url_for('name.load', _external=True)
+
+        live_server.start()
+
+        res = client.get(get_endpoint())
+
+        assert res.status_code == 200
+
+.. note::
+
+    The notation ``name.load_data``, corresponds to a ``endpoint='load'``
+    attribute, within a route decorator. The following is a route decorator
+    using the `blueprint`_ implementation:
+
+        .. code:: python
+
+            from flask import Blueprint, request
+
+            # local variables
+            blueprint = Blueprint(
+                'name',
+                __name__,
+                template_folder='interface/templates',
+                static_folder='interface/static'
+            )
+
+            @blueprint.route('/load-data', methods=['POST'], endpoint='load')
+            def load_data():
+                if request.method == 'POST':
+                    if request.get_json():
+                        pass
+
+Alternatively, the route function can be referenced directly from the
+``live_server`` implementation, rather than implementing an ``endpoint``:
+
+    .. code:: python
+
+        def test_load_data(live_server, client):
+            @live_server.app.route('/load-data', methods=['POST'])
+            def load_data():
+                pass
+
+            live_server.start()
+
+            res = client.post(url_for('load_data'), data={})
+            assert res.status_code == 200
+
+.. note::
+
+    Remember to explicitly define which ``methods`` are supported when
+    registering the above route function.
 
 
 Content negotiation
@@ -297,8 +381,11 @@ on `what markers are`_ and for notes on `using them`_.
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
 .. _pytest documentation: https://pytest.org/en/latest/fixture.html
-.. _flask.Flask.test_client: http://flask.pocoo.org/docs/latest/api/#flask.Flask.test_client
-.. _flask.Config: http://flask.pocoo.org/docs/latest/api/#flask.Config
-.. _Selenium: http://www.seleniumhq.org
-.. _what markers are: https://pytest.org/en/latest/mark.html
+.. _flask.Flask.test_client: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
+.. _flask.Config: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Config
+.. _Selenium: https://selenium-python.readthedocs.io/
+.. _what markers are: https://pytest.org/en/latest/mark.html	
 .. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules
+.. _Flask API: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
+.. _Werkzeug test client: https://werkzeug.palletsprojects.com/en/1.0.x/test/#werkzeug.test.Client
+.. _blueprint: https://flask.palletsprojects.com/en/1.1.x/blueprints/

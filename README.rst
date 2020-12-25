@@ -106,10 +106,11 @@ Contributing
 ------------
 
 Don’t hesitate to create a `GitHub issue`_ for any bug or
-suggestion.
+suggestion. For more information check our contribution `guidelines`_.
 
 .. _pytest: https://docs.pytest.org/en/stable/
 .. _PyPI: https://pypi.python.org/pypi/pytest-flask
 .. _Github issue: https://github.com/vitalk/pytest-flask/issues
 .. _package documentation: http://pytest-flask.readthedocs.org/en/latest/
+.. _guidelines: https://github.com/pytest-dev/pytest-flask/blob/master/CONTRIBUTING.rst
 .. _application factory: https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-
 import os
 
 from setuptools import find_packages
 from setuptools import setup
+
 
 def read(*parts):
     """Reads the content of the file located at path created from *parts*."""
@@ -11,6 +11,7 @@ def read(*parts):
         return open(os.path.join(*parts), "r", encoding="utf-8").read()
     except OSError:
         return ""
+
 
 requirements = read("requirements", "main.txt").splitlines()
 

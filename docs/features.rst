@@ -384,7 +384,7 @@ on `what markers are`_ and for notes on `using them`_.
 .. _flask.Flask.test_client: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
 .. _flask.Config: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Config
 .. _Selenium: https://selenium-python.readthedocs.io/
-.. _what markers are: https://pytest.org/en/latest/mark.html	
+.. _what markers are: https://pytest.org/en/latest/mark.html
 .. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules
 .. _Flask API: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
 .. _Werkzeug test client: https://werkzeug.palletsprojects.com/en/1.0.x/test/#werkzeug.test.Client

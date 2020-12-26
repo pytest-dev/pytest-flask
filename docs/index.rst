@@ -6,21 +6,6 @@ a set of useful tools to test `Flask <http://flask.pocoo.org>`_ applications
 and extensions.
 
 
-User’s Guide
-------------
-
-This part of the documentation will show you how to get started in using
-pytest-flask with your application.
-
-.. toctree::
-   :maxdepth: 4
-
-   tutorial
-   features
-   contributing
-   changelog
-
-
 Quickstart
 ----------
 
@@ -39,14 +24,22 @@ Define your application fixture in ``conftest.py``:
         app = create_app()
         return app
 
-And run your test suite::
+Now you can use the ``app`` fixture in your test suite. You can run your tests
+with::
 
-    py.test
+    pytest
 
 
-Contributing
+User’s Guide
 ------------
 
-Don’t hesitate to create a `GitHub issue
-<https://github.com/vitalk/pytest-flask/issues>`_ for any **bug** or
-**suggestion**.
+This part of the documentation will show you how to get started in using
+pytest-flask with your application.
+
+.. toctree::
+   :maxdepth: 4
+
+   tutorial
+   features
+   contributing
+   changelog

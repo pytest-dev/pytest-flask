@@ -13,10 +13,8 @@ def read(*parts):
         return ""
 
 
-requirements = read("requirements", "main.txt").splitlines()
-
 tests_require = []
-
+requirements = read("requirements", "main.txt").splitlines()
 extras_require = {
     "docs": read("requirements", "docs.txt").splitlines(),
     "tests": tests_require,

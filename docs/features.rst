@@ -61,7 +61,7 @@ Extension provides some sugar for your tests, such as:
 
   You can then run the tests by running::
 
-    py.test -n <number of processes>
+    pytest -n <number of processes>
 
 **Not enough pros?** See the full list of available fixtures and markers
 below.
@@ -376,7 +376,7 @@ on `what markers are`_ and for notes on `using them`_.
 
        @pytest.mark.options(debug=False)
        def test_app(app):
-           assert not app.debug, 'Ensure the app not in debug mode'
+           assert not app.debug, 'Ensure the app is not in debug mode'
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist

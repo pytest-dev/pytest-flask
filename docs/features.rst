@@ -180,7 +180,6 @@ The timeout after which test case is aborted if live server is not started.
 
 ``--live-server-port`` - use a fixed port
 `````````````````````````````````````````
-
 By default the server uses a random port. In some cases it is desirable to run
 the server with a fixed port. You can use ``--live-server-port`` (for example,
 in your project's ``pytest.ini`` file)::

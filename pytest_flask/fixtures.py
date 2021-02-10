@@ -4,23 +4,10 @@ import socket
 import pytest
 from flask import _request_ctx_stack
 
+from ._internal import _determine_scope
+from ._internal import _make_accept_header
+from ._internal import _rewrite_server_name
 from .live_server import LiveServer
-
-
-def _rewrite_server_name(server_name, new_port):
-    """Rewrite server port in ``server_name`` with ``new_port`` value."""
-    sep = ":"
-    if sep in server_name:
-        server_name, port = server_name.split(sep, 1)
-    return sep.join((server_name, new_port))
-
-
-def determine_scope(*, fixture_name, config):
-    return config.getini("live_server_scope")
-
-
-def _make_accept_header(mimetype):
-    return [("Accept", mimetype)]
 
 
 @pytest.fixture
@@ -51,7 +38,7 @@ def client_class(request, client):
         request.cls.client = client
 
 
-@pytest.fixture(scope=determine_scope)
+@pytest.fixture(scope=_determine_scope)
 def live_server(request, app, pytestconfig):
     """Run application in a separate process.
 

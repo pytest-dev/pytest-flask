@@ -99,11 +99,12 @@ Checking Test Coverage
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To get a complete report of code sections not being touched by the
-test suite run ``pytest`` using ``pytest-cov``.
+test suite run ``pytest`` using ``coverage``.
 
 .. code-block:: text
 
-    $ pytest --cov=pytest_flask/ --cov-report=html
+    $ coverage run -m pytest
+    $ coverage html
 
 Open ``htmlcov/index.html`` in your browser.
 

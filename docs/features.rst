@@ -61,7 +61,7 @@ Extension provides some sugar for your tests, such as:
 
   You can then run the tests by running::
 
-    py.test -n <number of processes>
+    pytest -n <number of processes>
 
 **Not enough pros?** See the full list of available fixtures and markers
 below.
@@ -180,7 +180,6 @@ The timeout after which test case is aborted if live server is not started.
 
 ``--live-server-port`` - use a fixed port
 `````````````````````````````````````````
-
 By default the server uses a random port. In some cases it is desirable to run
 the server with a fixed port. You can use ``--live-server-port`` (for example,
 in your project's ``pytest.ini`` file)::
@@ -376,7 +375,7 @@ on `what markers are`_ and for notes on `using them`_.
 
        @pytest.mark.options(debug=False)
        def test_app(app):
-           assert not app.debug, 'Ensure the app not in debug mode'
+           assert not app.debug, 'Ensure the app is not in debug mode'
 
 
 .. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
@@ -384,7 +383,7 @@ on `what markers are`_ and for notes on `using them`_.
 .. _flask.Flask.test_client: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
 .. _flask.Config: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Config
 .. _Selenium: https://selenium-python.readthedocs.io/
-.. _what markers are: https://pytest.org/en/latest/mark.html	
+.. _what markers are: https://pytest.org/en/latest/mark.html
 .. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules
 .. _Flask API: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
 .. _Werkzeug test client: https://werkzeug.palletsprojects.com/en/1.0.x/test/#werkzeug.test.Client

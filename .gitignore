@@ -23,4 +23,7 @@ coverage.xml
 tests/junit.xml
 
 pytest_flask/_version.py
+
+# Editors
 .vscode
+.code-workspace

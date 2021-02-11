@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import os
 from urllib.request import urlopen
 
@@ -21,9 +20,6 @@ class TestLiveServer:
     def test_server_url(self, live_server):
         assert live_server.url() == "http://localhost:%d" % live_server.port
         assert live_server.url("/ping") == "http://localhost:%d/ping" % live_server.port
-
-    def test_server_url_is_deprecated(self, live_server):
-        assert pytest.deprecated_call(live_server.url)
 
     def test_server_listening(self, live_server):
         # need to test both external and external? why external here?

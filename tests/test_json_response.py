@@ -24,7 +24,6 @@ class TestJSONResponse:
         class MyResponse(app.response_class):
             @property
             def json(self):
-                """What is the meaning of life, the universe and everything?"""
                 return 42
 
         app.response_class = MyResponse

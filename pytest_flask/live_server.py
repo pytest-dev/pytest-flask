@@ -65,19 +65,6 @@ class LiveServer:
             sock.close()
         return ret
 
-    @deprecated(
-        reason=(
-            'The "live_server.url" method is deprecated and will '
-            "be removed in the future. Please use "
-            'the "flask.url_for" function instead.',
-        )
-    )
-    def url(self, url=""):
-        """Returns the complete url based on server options."""
-        return "http://{host!s}:{port!s}{url!s}".format(
-            host=self.host, port=self.port, url=url
-        )
-
     def stop(self):
         """Stop application process."""
         if self._process:

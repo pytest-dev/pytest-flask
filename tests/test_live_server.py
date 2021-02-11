@@ -17,14 +17,8 @@ class TestLiveServer:
         assert live_server._process
         assert live_server._process.is_alive()
 
-    def test_server_url(self, live_server):
-        assert live_server.url() == "http://localhost:%d" % live_server.port
-        assert live_server.url("/ping") == "http://localhost:%d/ping" % live_server.port
-
     def test_server_listening(self, live_server):
-        # need to test both external and external? why external here?
-        # res = urlopen(url_for('ping', _external=True))
-        res = urlopen(live_server.url("/ping"))
+        res = urlopen(url_for("ping", _external=True))
         assert res.code == 200
         assert b"pong" in res.read()
 

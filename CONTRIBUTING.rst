@@ -102,8 +102,8 @@ To get a complete report of code sections not being touched by the
 test suite run ``pytest`` using ``coverage``.
 
 .. code-block:: text
-
-    $ coverage run -m pytest
+    $ coverage run --concurrency=multiprocessing -m pytest
+    $ coverage combine
     $ coverage html
 
 Open ``htmlcov/index.html`` in your browser.

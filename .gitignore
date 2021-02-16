@@ -4,6 +4,7 @@
 build
 sdist
 .vscode
+*.swp
 __pycache__/
 
 # virtualenv

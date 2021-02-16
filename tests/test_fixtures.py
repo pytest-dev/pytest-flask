@@ -23,6 +23,14 @@ class TestFixtures:
         client.get(url_for("index"), headers=[("X-Something", "42")])
         assert request.headers["X-Something"] == "42"
 
+    def test_accept_mimetype(self, accept_mimetype):
+        mimestrings = [[("Accept", "application/json")], [("Accept", "text/html")]]
+        assert accept_mimetype in mimestrings
+
+    def test_accept_any(self, accept_any):
+        mimestrings = [[("Accept", "*")], [("Accept", "*/*")]]
+        assert accept_any in mimestrings
+
 
 @pytest.mark.usefixtures("client_class")
 class TestClientClass:

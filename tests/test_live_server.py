@@ -76,6 +76,12 @@ class TestLiveServer:
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
 
+    def test_stop_cleanly_join_exception(self, appdir, live_server, caplog):
+        # timeout = 'a' here to force an exception when
+        # attempting to self._process.join()
+        assert not live_server._stop_cleanly(timeout="a")
+        assert "Failed to join" in caplog.text
+
     @pytest.mark.parametrize("clean_stop", [True, False])
     def test_clean_stop_live_server(self, appdir, monkeypatch, clean_stop):
         """Ensure the fixture is trying to cleanly stop the server.

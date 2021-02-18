@@ -1,4 +1,4 @@
 mock
 pylint
-pytest-cov
+coverage
 pytest-pep8

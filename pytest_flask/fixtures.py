@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import socket
+import warnings
 
 import pytest
 from flask import _request_ctx_stack
@@ -92,18 +93,20 @@ def config(app):
     return app.config
 
 
-@deprecated(
-    reason="In Werzeug 2.0.0, the Client request methods "
-    "(client.get, client.post) always return an instance of TestResponse. This "
-    "class provides a reference to the request object through 'response.request'"
-    "'request_ctx' will be removed in the future, using TestResponse.request is the"
-    "prefered way."
-)
 @pytest.fixture
 def request_ctx(app):
     """The request context which contains all request relevant information,
     e.g. `session`, `g`, `flashes`, etc.
     """
+    warnings.warn(
+        "In Werzeug 2.0.0, the Client request methods "
+        "(client.get, client.post) always return an instance of TestResponse. This "
+        "class provides a reference to the request object through 'response.request' "
+        "The fixture 'request_ctx' is deprecated and will be removed in the future, using TestResponse.request "
+        "is the prefered way.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return _request_ctx_stack.top
 
 

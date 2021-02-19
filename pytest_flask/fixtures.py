@@ -7,6 +7,7 @@ from flask import _request_ctx_stack
 from ._internal import _determine_scope
 from ._internal import _make_accept_header
 from ._internal import _rewrite_server_name
+from ._internal import deprecated
 from .live_server import LiveServer
 
 
@@ -91,6 +92,13 @@ def config(app):
     return app.config
 
 
+@deprecated(
+    reason="In Werzeug 2.0.0, the Client request methods "
+    "(client.get, client.post) always return an instance of TestResponse. This "
+    "class provides a reference to the request object through 'response.request'"
+    "'request_ctx' will be removed in the future, using TestResponse.request is the"
+    "prefered way."
+)
 @pytest.fixture
 def request_ctx(app):
     """The request context which contains all request relevant information,

@@ -20,8 +20,16 @@ class TestFixtures:
         assert request_ctx.app is app
 
     def test_request_ctx_is_kept_around(self, client):
-        client.get(url_for("index"), headers=[("X-Something", "42")])
-        assert request.headers["X-Something"] == "42"
+        res = client.get(url_for("index"), headers=[("X-Something", "42")])
+        """In werkzeug 2.0.0 the test Client provides a new attribute 'request'
+        in the response class wich holds a reference to the request object that
+        produced the respective response, making instrospection easier"""
+        try:
+            assert res.request.headers["X-Something"] == "42"
+        except AttributeError:
+            """This is the conventional (pre 2.0.0) way of reaching the
+            request object, using flask.request global."""
+            assert request.headers["X-Something"] == "42"
 
     def test_accept_mimetype(self, accept_mimetype):
         mimestrings = [[("Accept", "application/json")], [("Accept", "text/html")]]

@@ -3,11 +3,12 @@
 Changelog
 =========
 
-1.1.1 (2020-11-08)
+1.2.0 (2020-11-08)
 ------------------
 
 - Remove deprecated ``:meth:live_server.url``
-
+- fixture ``request_ctx is now deprecated`` use
+  ``:Attr:Werkzeug.test.TestResponse.request`` instead
 
 1.1.0 (2020-11-08)
 ------------------

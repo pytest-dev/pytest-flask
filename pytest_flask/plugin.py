@@ -37,17 +37,7 @@ class JSONResponse:
     def __eq__(self, other):
         if isinstance(other, int):
             return self.status_code == other
-        # even though the Python 2-specific code works on Python 3, keep the two versions
-        # separate so we can simplify the code once Python 2 support is dropped
-        if sys.version_info[0] == 2:
-            try:
-                super_eq = super().__eq__
-            except AttributeError:
-                return NotImplemented
-            else:
-                return super_eq(other)
-        else:
-            return super().__eq__(other)
+        return super().__eq__(other)
 
     def __ne__(self, other):
         return not self == other

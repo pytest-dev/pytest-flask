@@ -26,14 +26,6 @@ from .pytest_compat import getfixturevalue
 class JSONResponse:
     """Mixin with testing helper methods for JSON responses."""
 
-    @cached_property
-    def json(self):
-        """Try to deserialize response data (a string containing a valid JSON
-        document) to a Python object by passing it to the underlying
-        :mod:`flask.json` module.
-        """
-        return json.loads(self.data)
-
     def __eq__(self, other):
         if isinstance(other, int):
             return self.status_code == other
@@ -81,6 +73,7 @@ def _monkeypatch_response_class(request, monkeypatch):
             assert res.json == {'ping': 'pong'}
 
     """
+
     if "app" not in request.fixturenames:
         return
 

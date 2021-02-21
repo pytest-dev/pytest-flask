@@ -1,4 +1,5 @@
 import pytest
+from flask import Flask
 from flask import url_for
 
 
@@ -19,15 +20,3 @@ class TestJSONResponse:
             assert client.get("fake-route", headers=accept_json) == 200
         with pytest.raises(AssertionError, match=r"404 NOT FOUND"):
             assert client.get("fake-route", headers=accept_json) == "200"
-
-    def test_dont_rewrite_existing_implementation(self, app, accept_json):
-        class MyResponse(app.response_class):
-            @property
-            def json(self):
-                return 42
-
-        app.response_class = MyResponse
-        client = app.test_client()
-
-        res = client.get(url_for("ping"), headers=accept_json)
-        assert res.json == 42

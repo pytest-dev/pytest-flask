@@ -28,7 +28,7 @@ Extension provides some sugar for your tests, such as:
   .. note::
 
     User-defined ``json`` attribute/method in application response class will
-    no be overwritten So you can define your own response deserialization method:
+    not be overwritten. So you can define your own response deserialization method:
 
     .. code:: python
 
@@ -84,7 +84,7 @@ An instance of ``app.test_client``. Typically refers to
 .. hint::
 
     During test execution a request context will be automatically pushed
-    for you so context-bound methods can be conveniently called (e.g.
+    for you, so context-bound methods can be conveniently called (e.g.
     ``url_for``, ``session``.
 
 Example:
@@ -145,7 +145,7 @@ other headless browsers).
 ``--no-start-live-server`` - don’t start live server automatically
 ``````````````````````````````````````````````````````````````````
 
-By default the server will start  automatically whenever you reference
+By default the server will start automatically whenever you reference
 ``live_server`` fixture in your tests. But starting live server imposes some
 high costs on tests that need it when they may not be ready yet. To prevent
 that behaviour pass ``--no-start-live-server`` into your default options (for

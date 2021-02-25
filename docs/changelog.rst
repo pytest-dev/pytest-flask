@@ -3,12 +3,14 @@
 Changelog
 =========
 
-1.2.0 (UNRELEASED)
+1.2.0 (2021-02-26)
 ------------------
 
 - Remove deprecated ``:meth:live_server.url``
 - fixture ``request_ctx is now deprecated``
   and will be removed in the future
+- ``JSONReponse.json`` removed in favour of
+  ``Werkzeug.wrappers.Response.json``
 
 1.1.0 (2020-11-08)
 ------------------

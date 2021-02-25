@@ -3,6 +3,13 @@
 Changelog
 =========
 
+1.2.0 (UNRELEASED)
+------------------
+
+- Remove deprecated ``:meth:live_server.url``
+- fixture ``request_ctx is now deprecated``
+  and will be removed in the future
+
 1.1.0 (2020-11-08)
 ------------------
 

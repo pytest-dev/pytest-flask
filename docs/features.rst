@@ -27,8 +27,8 @@ Extension provides some sugar for your tests, such as:
 
   .. note::
 
-    User-defined ``json`` attribute/method in application response class does
-    not overrides. So you can define your own response deserialization method:
+    User-defined ``json`` attribute/method in application response class will
+    not be overwritten. So you can define your own response deserialization method:
 
     .. code:: python
 
@@ -83,9 +83,9 @@ An instance of ``app.test_client``. Typically refers to
 
 .. hint::
 
-    During tests execution the request context has been pushed, e.g.
-    ``url_for``, ``session`` and other context bound objects are available
-    without context managers.
+    During test execution a request context will be automatically pushed
+    for you, so context-bound methods can be conveniently called (e.g.
+    ``url_for``, ``session``.
 
 Example:
 
@@ -145,7 +145,7 @@ other headless browsers).
 ``--no-start-live-server`` - don’t start live server automatically
 ``````````````````````````````````````````````````````````````````
 
-By default the server is starting automatically whenever you reference
+By default the server will start automatically whenever you reference
 ``live_server`` fixture in your tests. But starting live server imposes some
 high costs on tests that need it when they may not be ready yet. To prevent
 that behaviour pass ``--no-start-live-server`` into your default options (for
@@ -188,8 +188,10 @@ in your project's ``pytest.ini`` file)::
     addopts = --live-server-port=5000
 
 
-``request_ctx`` - request context
+``request_ctx`` - request context (Deprecated)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**This fixture is deprecated and will be removed in the future.**
 
 The request context which contains all request relevant information.
 
@@ -228,7 +230,7 @@ Common request methods are available through the internals of the `Flask API`_.
 Specifically, the API creates the default `flask.Flask.test_client`_ instance,
 which works like a regular `Werkzeug test client`_.
 
-Example:
+Examples:
 
 .. code:: python
 
@@ -246,8 +248,6 @@ Example:
         )
 
         assert res.status_code == 200
-
-Example:
 
 .. code:: python
 

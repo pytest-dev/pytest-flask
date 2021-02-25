@@ -5,6 +5,7 @@ import pytest
 from flask import Flask
 from flask import jsonify
 
+from pytest_flask.fixtures import mimetype
 
 pytest_plugins = "pytester"
 

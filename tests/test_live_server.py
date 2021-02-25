@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import os
 from urllib.request import urlopen
 
@@ -18,17 +17,8 @@ class TestLiveServer:
         assert live_server._process
         assert live_server._process.is_alive()
 
-    def test_server_url(self, live_server):
-        assert live_server.url() == "http://localhost:%d" % live_server.port
-        assert live_server.url("/ping") == "http://localhost:%d/ping" % live_server.port
-
-    def test_server_url_is_deprecated(self, live_server):
-        assert pytest.deprecated_call(live_server.url)
-
     def test_server_listening(self, live_server):
-        # need to test both external and external? why external here?
-        # res = urlopen(url_for('ping', _external=True))
-        res = urlopen(live_server.url("/ping"))
+        res = urlopen(url_for("ping", _external=True))
         assert res.code == 200
         assert b"pong" in res.read()
 
@@ -85,6 +75,12 @@ class TestLiveServer:
         result = appdir.runpytest("-v", "--start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
+
+    def test_stop_cleanly_join_exception(self, appdir, live_server, caplog):
+        # timeout = 'a' here to force an exception when
+        # attempting to self._process.join()
+        assert not live_server._stop_cleanly(timeout="a")
+        assert "Failed to join" in caplog.text
 
     @pytest.mark.parametrize("clean_stop", [True, False])
     def test_clean_stop_live_server(self, appdir, monkeypatch, clean_stop):

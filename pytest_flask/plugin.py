@@ -26,28 +26,10 @@ from .pytest_compat import getfixturevalue
 class JSONResponse:
     """Mixin with testing helper methods for JSON responses."""
 
-    @cached_property
-    def json(self):
-        """Try to deserialize response data (a string containing a valid JSON
-        document) to a Python object by passing it to the underlying
-        :mod:`flask.json` module.
-        """
-        return json.loads(self.data)
-
     def __eq__(self, other):
         if isinstance(other, int):
             return self.status_code == other
-        # even though the Python 2-specific code works on Python 3, keep the two versions
-        # separate so we can simplify the code once Python 2 support is dropped
-        if sys.version_info[0] == 2:
-            try:
-                super_eq = super().__eq__
-            except AttributeError:
-                return NotImplemented
-            else:
-                return super_eq(other)
-        else:
-            return super().__eq__(other)
+        return super().__eq__(other)
 
     def __ne__(self, other):
         return not self == other
@@ -91,6 +73,7 @@ def _monkeypatch_response_class(request, monkeypatch):
             assert res.json == {'ping': 'pong'}
 
     """
+
     if "app" not in request.fixturenames:
         return
 

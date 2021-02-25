@@ -31,9 +31,9 @@ Define your application fixture in ``conftest.py``:
 Step 3. Run your test suite
 ---------------------------
 
-Use the ``py.test`` command to run your test suite::
+Use the ``pytest`` command to run your test suite::
 
-    py.test
+    pytest
 
 .. note:: Test discovery.
 

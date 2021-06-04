@@ -5,11 +5,7 @@
     :copyright: (c) by Vital Kudzelka
     :license: MIT
 """
-import sys
-
 import pytest
-from flask import json
-from werkzeug.utils import cached_property
 
 from .fixtures import accept_any
 from .fixtures import accept_json

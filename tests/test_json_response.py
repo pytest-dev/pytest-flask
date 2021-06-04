@@ -1,5 +1,4 @@
 import pytest
-from flask import Flask
 from flask import url_for
 
 

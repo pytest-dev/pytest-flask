@@ -1,13 +1,17 @@
 import logging
 import multiprocessing
 import os
+import platform
 import signal
 import socket
 import time
 
 import pytest
 
-from ._internal import deprecated
+
+# force 'fork' on macOS
+if platform.system() == "Darwin":
+    multiprocessing.set_start_method("fork")
 
 
 class LiveServer:

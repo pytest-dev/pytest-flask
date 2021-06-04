@@ -1,6 +1,7 @@
 import logging
 import multiprocessing
 import os
+import platform
 import signal
 import socket
 import time
@@ -28,6 +29,10 @@ class LiveServer:
         self.wait = wait
         self.clean_stop = clean_stop
         self._process = None
+
+        # force fork on macOS
+        if platform.system() == "Darwin":
+            multiprocessing.set_start_method("fork")
 
     def start(self):
         """Start application in a separate process."""

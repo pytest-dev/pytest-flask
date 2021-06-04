@@ -8,7 +8,6 @@ from flask import _request_ctx_stack
 from ._internal import _determine_scope
 from ._internal import _make_accept_header
 from ._internal import _rewrite_server_name
-from ._internal import deprecated
 from .live_server import LiveServer
 
 

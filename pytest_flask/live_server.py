@@ -8,8 +8,6 @@ import time
 
 import pytest
 
-from ._internal import deprecated
-
 
 class LiveServer:
     """The helper class used to manage a live server. Handles creation and

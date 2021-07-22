@@ -69,6 +69,12 @@ class LiveServer:
             sock.close()
         return ret
 
+    def url(self, url=""):
+        """Returns the complete url based on server options."""
+        return "http://{host!s}:{port!s}{url!s}".format(
+            host=self.host, port=self.port, url=url
+        )
+
     def stop(self):
         """Stop application process."""
         if self._process:

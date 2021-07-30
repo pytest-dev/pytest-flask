@@ -378,13 +378,13 @@ on `what markers are`_ and for notes on `using them`_.
            assert not app.debug, 'Ensure the app is not in debug mode'
 
 
-.. _pytest-xdist: https://pypi.python.org/pypi/pytest-xdist
+.. _pytest-xdist: https://pypi.org/project/pytest-xdist/
 .. _pytest documentation: https://pytest.org/en/latest/fixture.html
-.. _flask.Flask.test_client: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
-.. _flask.Config: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Config
+.. _flask.Flask.test_client: https://flask.palletsprojects.com/api/#flask.Flask.test_client
+.. _flask.Config: https://flask.palletsprojects.com/api/#flask.Config
 .. _Selenium: https://selenium-python.readthedocs.io/
 .. _what markers are: https://pytest.org/en/latest/mark.html
 .. _using them: https://pytest.org/en/latest/example/markers.html#marking-whole-classes-or-modules
-.. _Flask API: https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.test_client
-.. _Werkzeug test client: https://werkzeug.palletsprojects.com/en/1.0.x/test/#werkzeug.test.Client
-.. _blueprint: https://flask.palletsprojects.com/en/1.1.x/blueprints/
+.. _Flask API: https://flask.palletsprojects.com/api/
+.. _Werkzeug test client: https://werkzeug.palletsprojects.com/test/#werkzeug.test.Client
+.. _blueprint: https://flask.palletsprojects.com/blueprints/

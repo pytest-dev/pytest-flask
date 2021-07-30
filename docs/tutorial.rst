@@ -49,12 +49,12 @@ What’s next?
 The :ref:`features` section gives a more detailed view of available features, as
 well as test fixtures and markers.
 
-Consult the `pytest documentation <http://pytest.org/latest>`_ for more
+Consult the `pytest documentation <https://pytest.org/en/latest>`_ for more
 information about pytest itself.
 
 If you want to contribute to the project, see the :ref:`contributing` section.
 
 
-.. _PyPi: https://pypi.python.org/pypi/pytest-flask
+.. _PyPi: https://pypi.org/project/pytest-flask/
 .. _discovers your tests: http://docs.pytest.org/en/latest/goodpractices.html#test-discovery
 .. _official documentation: http://pytest.org/latest/usage.html

@@ -37,7 +37,7 @@ Setting up your development environment
 
     .. code-block:: text
 
-        git remote add fork https://github.com/{username}/pytest-flask
+        $ git remote add fork https://github.com/{username}/pytest-flask
 
 -   Using `Tox`_, create a virtual environment and install pytest-flask in editable mode with development dependencies.
 
@@ -53,7 +53,7 @@ Setting up your development environment
         $ pre-commit install
 
 .. _Fork: https://github.com/pytest-dev/pytest-flask/fork
-.. _Clone: https://help.github.com/en/articles/fork-a-repo#step-2-create-a-local-clone-of-your-fork
+.. _Clone: https://docs.github.com/en/get-started/quickstart/fork-a-repo#step-2-create-a-local-clone-of-your-fork
 .. _Tox: https://tox.readthedocs.io/en/latest/
 
 Start Coding
@@ -76,7 +76,7 @@ Start Coding
 
         $ git push --set-upstream fork your-branch-name
 
-.. _create a pull request: https://help.github.com/en/articles/creating-a-pull-request
+.. _create a pull request: https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 
 How to run tests
 ~~~~~~~~~~~~~~~~

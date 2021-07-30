@@ -1,7 +1,7 @@
 Welcome to pytest-flask’s documentation!
 ========================================
 
-Pytest-flask is a plugin for `pytest <https://docs.pytest.org>`_ that provides
+Pytest-flask is a plugin for `pytest <https://pytest.org/en/latest/>`_ that provides
 a set of useful tools to test `Flask <https://flask.palletsprojects.com/>`_ applications
 and extensions.
 

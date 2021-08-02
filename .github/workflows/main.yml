@@ -1,6 +1,20 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - '*.rst'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - '*.rst'
 jobs:
   build:
     runs-on: ${{ matrix.os }}

@@ -102,6 +102,7 @@ To get a complete report of code sections not being touched by the
 test suite run ``pytest`` using ``coverage``.
 
 .. code-block:: text
+
     $ coverage run --concurrency=multiprocessing -m pytest
     $ coverage combine
     $ coverage html

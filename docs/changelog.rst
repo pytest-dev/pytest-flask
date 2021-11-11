@@ -3,6 +3,13 @@
 Changelog
 =========
 
+1.2.1
+------------------
+- Fix bug in ``:meth:pytest_flask.fixtures.live_server``
+  where ``SESSION_COOKIE_DOMAIN`` was set to false due to
+  ``original_server_name`` defaulting to "localhost".
+  The new default is "localhost.localdomain".
+
 1.2.0 (2021-02-26)
 ------------------
 

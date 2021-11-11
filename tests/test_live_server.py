@@ -1,5 +1,4 @@
 import os
-from urllib.request import urlopen
 
 import pytest
 from flask import url_for
@@ -18,20 +17,21 @@ class TestLiveServer:
         assert live_server._process
         assert live_server._process.is_alive()
 
-    def test_server_listening(self, live_server):
-        res = urlopen(url_for("ping", _external=True))
-        assert res.code == 200
-        assert b"pong" in res.read()
+    def test_server_listening(self, client, live_server):
+        res = client.get(url_for("ping", _external=True))
+        assert res.status_code == 200
+        assert b"pong" in res.data
 
     def test_url_for(self, live_server):
         assert (
             url_for("ping", _external=True)
-            == "http://localhost:%s/ping" % live_server.port
+            == "http://localhost.localdomain:%s/ping" % live_server.port
         )
 
     def test_set_application_server_name(self, live_server):
         assert (
-            live_server.app.config["SERVER_NAME"] == "localhost:%d" % live_server.port
+            live_server.app.config["SERVER_NAME"]
+            == "localhost.localdomain:%d" % live_server.port
         )
 
     def test_rewrite_application_server_name(self, appdir):
@@ -106,20 +106,19 @@ class TestLiveServer:
         appdir.create_test_module(
             """
             import pytest
-            from urllib.request import urlopen
 
             from flask import url_for
 
-            def test_a(live_server):
+            def test_a(live_server, client):
                 @live_server.app.route('/')
                 def index():
                     return 'got it', 200
 
                 live_server.start()
 
-                res = urlopen(url_for('index', _external=True))
-                assert res.code == 200
-                assert b'got it' in res.read()
+                res = client.get(url_for('index', _external=True))
+                assert res.status_code == 200
+                assert b'got it' in res.data
         """
         )
         args = [] if clean_stop else ["--no-live-server-clean-stop"]
@@ -134,20 +133,19 @@ class TestLiveServer:
         appdir.create_test_module(
             """
             import pytest
-            from urllib.request import urlopen
 
             from flask import url_for
 
-            def test_a(live_server):
+            def test_a(live_server, client):
                 @live_server.app.route('/new-endpoint')
                 def new_endpoint():
                     return 'got it', 200
 
                 live_server.start()
 
-                res = urlopen(url_for('new_endpoint', _external=True))
-                assert res.code == 200
-                assert b'got it' in res.read()
+                res = client.get(url_for('new_endpoint', _external=True))
+                assert res.status_code == 200
+                assert b'got it' in res.data
         """
         )
         result = appdir.runpytest("-v", "--no-start-live-server")
@@ -159,15 +157,14 @@ class TestLiveServer:
         appdir.create_test_module(
             """
             import pytest
-            from urllib.request import urlopen
 
             from flask import url_for
 
-            def test_concurrent_requests(live_server):
+            def test_concurrent_requests(live_server, client):
                 @live_server.app.route('/one')
                 def one():
-                    res = urlopen(url_for('two', _external=True))
-                    return res.read()
+                    res = client.get(url_for('two', _external=True))
+                    return res.data
 
                 @live_server.app.route('/two')
                 def two():
@@ -175,9 +172,9 @@ class TestLiveServer:
 
                 live_server.start()
 
-                res = urlopen(url_for('one', _external=True))
-                assert res.code == 200
-                assert b'42' in res.read()
+                res = client.get(url_for('one', _external=True))
+                assert res.status_code == 200
+                assert b'42' in res.data
         """
         )
         result = appdir.runpytest("-v", "--no-start-live-server")

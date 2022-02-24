@@ -22,7 +22,7 @@ class TestFixtures:
     def test_request_ctx_is_kept_around(self, client):
         res = client.get(url_for("index"), headers=[("X-Something", "42")])
         """In werkzeug 2.0.0 the test Client provides a new attribute 'request'
-        in the response class wich holds a reference to the request object that
+        in the response class which holds a reference to the request object that
         produced the respective response, making instrospection easier"""
         try:
             assert res.request.headers["X-Something"] == "42"

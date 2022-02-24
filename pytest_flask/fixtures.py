@@ -102,7 +102,7 @@ def request_ctx(app):
         "(client.get, client.post) always return an instance of TestResponse. This "
         "class provides a reference to the request object through 'response.request' "
         "The fixture 'request_ctx' is deprecated and will be removed in the future, using TestResponse.request "
-        "is the prefered way.",
+        "is the preferred way.",
         DeprecationWarning,
         stacklevel=2,
     )

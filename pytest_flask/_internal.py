@@ -4,7 +4,7 @@ import warnings
 
 def deprecated(reason):
     """Decorator which can be used to mark function or method as deprecated.
-    It will result a warning being emmitted when the function is called."""
+    It will result a warning being emitted when the function is called."""
 
     def decorator(func):
         @functools.wraps(func)

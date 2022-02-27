@@ -68,7 +68,7 @@ the `PyPI`_ overview page or
 How to start?
 -------------
 
-Considering the minimal flask `application factory`_ bellow in ``myapp.py`` as an example:
+Considering the minimal flask `application factory`_ below in ``myapp.py`` as an example:
 
 .. code-block:: python
 

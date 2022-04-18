@@ -9,6 +9,7 @@ Changelog
   where ``SESSION_COOKIE_DOMAIN`` was set to false due to
   ``original_server_name`` defaulting to "localhost".
   The new default is "localhost.localdomain".
+- Drop support for python 3.6 and 3.5
 
 1.2.0 (2021-02-26)
 ------------------

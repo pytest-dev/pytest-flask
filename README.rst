@@ -74,10 +74,9 @@ Considering the minimal flask `application factory`_ below in ``myapp.py`` as an
 
    from flask import Flask
 
-   def create_app(config_filename):
+   def create_app():
       # create a minimal app
       app = Flask(__name__)
-      app.config.from_pyfile(config_filename)
 
       # simple hello world view
       @app.route('/hello')

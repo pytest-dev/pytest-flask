@@ -11,7 +11,7 @@ import pytest
 
 # force 'fork' on macOS
 if platform.system() == "Darwin":
-    multiprocessing.set_start_method("fork")
+    multiprocessing = multiprocessing.get_context("fork")
 
 
 class LiveServer:

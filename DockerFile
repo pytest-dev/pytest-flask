@@ -1,0 +1,15 @@
+FROM python:3.9-slim
+
+WORKDIR /PYTEST-FLASK
+
+COPY ..
+
+RUN pip install --no-cache-dir -r requirements
+
+COPY PYTEST-FLASK .
+
+EXPOSE 5000
+
+CMD ["python", "PYTEST-FLASK"]
+#docker build -t your-docker-image:tag .         to build a docker image, replace your-docker-image with the name you want and tag with version like v1.
+

@@ -15,7 +15,6 @@ from .fixtures import client
 from .fixtures import client_class
 from .fixtures import config
 from .fixtures import live_server
-from .fixtures import request_ctx
 from .pytest_compat import getfixturevalue
 
 

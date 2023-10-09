@@ -4,6 +4,3 @@ requires = [
   "setuptools-scm[toml]",
 ]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools_scm]
-write_to = "pytest_flask/_version.py"

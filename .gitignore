@@ -20,10 +20,11 @@ htmlcov/
 .coverage.*
 .pytest_cache/
 .eggs/
+dist/
 coverage.xml
 tests/junit.xml
 
-pytest_flask/_version.py
+src/pytest_flask/_version.py
 
 # Editors
 .vscode

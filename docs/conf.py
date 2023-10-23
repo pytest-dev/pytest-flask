@@ -12,7 +12,6 @@
 # serve to show the default.
 import datetime
 import os
-import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -42,8 +41,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"pytest-flask"
-copyright = u"%d, Vital Kudzelka and contributors" % datetime.date.today().year
+project = "pytest-flask"
+copyright = "%d, Vital Kudzelka and contributors" % datetime.date.today().year
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -203,8 +202,8 @@ latex_documents = [
     (
         "index",
         "pytest-flask.tex",
-        u"pytest-flask Documentation",
-        u"Vital Kudzelka",
+        "pytest-flask Documentation",
+        "Vital Kudzelka",
         "manual",
     ),
 ]
@@ -235,7 +234,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ("index", "pytest-flask", u"pytest-flask Documentation", [u"Vital Kudzelka"], 1)
+    ("index", "pytest-flask", "pytest-flask Documentation", ["Vital Kudzelka"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -251,8 +250,8 @@ texinfo_documents = [
     (
         "index",
         "pytest-flask",
-        u"pytest-flask Documentation",
-        u"Vital Kudzelka",
+        "pytest-flask Documentation",
+        "Vital Kudzelka",
         "pytest-flask",
         "One line description of project.",
         "Miscellaneous",

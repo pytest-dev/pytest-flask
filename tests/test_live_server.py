@@ -87,8 +87,8 @@ class TestLiveServer:
     def test_clean_stop_live_server(self, appdir, monkeypatch, clean_stop):
         """Ensure the fixture is trying to cleanly stop the server.
 
-        Because this is tricky to test, we are checking that the _stop_cleanly() internal
-        function was called and reported success.
+        Because this is tricky to test, we are checking that the
+        _stop_cleanly() internal function was called and reported success.
         """
         from pytest_flask.fixtures import LiveServer
 

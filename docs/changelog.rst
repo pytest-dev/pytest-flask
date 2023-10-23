@@ -3,8 +3,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+1.2.0 (2023-10-23)
+------------------
 
 - Fix compatibility with ``Flask 3.0`` -- the consequence is that the deprecated and incompatible ``request_ctx`` has been removed.
 

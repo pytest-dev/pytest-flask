@@ -3,6 +3,11 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+- Fix compatibility with ``Flask 3.0`` -- the consequence is that the deprecated and incompatible ``request_ctx`` has been removed.
+
 1.2.1
 ------------------
 - Fix bug in ``:meth:pytest_flask.fixtures.live_server``

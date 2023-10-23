@@ -40,7 +40,7 @@ def client_class(request, client):
 
 
 @pytest.fixture(scope=_determine_scope)
-def live_server(request, app, pytestconfig):
+def live_server(request, app, pytestconfig):  # pragma: no cover
     """Run application in a separate process.
 
     When the ``live_server`` fixture is applied, the ``url_for`` function

@@ -3,7 +3,6 @@ import socket
 import warnings
 
 import pytest
-from flask import _request_ctx_stack
 
 from ._internal import _determine_scope
 from ._internal import _make_accept_header
@@ -90,23 +89,6 @@ def live_server(request, app, pytestconfig):  # pragma: no cover
 def config(app):
     """An application config."""
     return app.config
-
-
-@pytest.fixture
-def request_ctx(app):
-    """The request context which contains all request relevant information,
-    e.g. `session`, `g`, `flashes`, etc.
-    """
-    warnings.warn(
-        "In Werzeug 2.0.0, the Client request methods "
-        "(client.get, client.post) always return an instance of TestResponse. This "
-        "class provides a reference to the request object through 'response.request' "
-        "The fixture 'request_ctx' is deprecated and will be removed in the future, using TestResponse.request "
-        "is the preferred way.",
-        DeprecationWarning,
-        stacklevel=2,
-    )
-    return _request_ctx_stack.top
 
 
 @pytest.fixture(params=["application/json", "text/html"])

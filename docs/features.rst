@@ -188,28 +188,6 @@ in your project's ``pytest.ini`` file)::
     addopts = --live-server-port=5000
 
 
-``request_ctx`` - request context (Deprecated)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**This fixture is deprecated and will be removed in the future.**
-
-The request context which contains all request relevant information.
-
-.. hint::
-
-    The request context has been pushed implicitly any time the ``app``
-    fixture is applied and is kept around during test execution, so it’s easy
-    to introspect the data:
-
-    .. code:: python
-
-        from flask import request, url_for
-
-        def test_request_headers(client):
-            res = client.get(url_for('ping'), headers=[('X-Something', '42')])
-            assert request.headers['X-Something'] == '42'
-
-
 ``live_server_scope`` - set the scope of the live server
 ``````````````````````````````````````````````````````````````````
 

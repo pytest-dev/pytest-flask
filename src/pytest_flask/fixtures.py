@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import socket
-import warnings
 
 import pytest
 

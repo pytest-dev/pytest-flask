@@ -85,8 +85,8 @@ class LiveServer:  # pragma: no cover
                 self._process.terminate()
 
     def _stop_cleanly(self, timeout=5):
-        """Attempts to stop the server cleanly by sending a SIGINT signal and waiting for
-        ``timeout`` seconds.
+        """Attempts to stop the server cleanly by sending a SIGINT
+        signal and waiting for ``timeout`` seconds.
 
         :return: True if the server was cleanly stopped, False otherwise.
         """

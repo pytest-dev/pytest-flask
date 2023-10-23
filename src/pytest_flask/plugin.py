@@ -37,7 +37,7 @@ def pytest_assertrepr_compare(op, left, right):
                 left.status_code,
                 right,
             ),
-            "Response status: {}".format(left.status),
+            f"Response status: {left.status}",
         ]
     return None
 

@@ -14,7 +14,7 @@ if platform.system() == "Darwin":
     multiprocessing = multiprocessing.get_context("fork")
 
 
-class LiveServer:
+class LiveServer:  # pragma: no cover
     """The helper class used to manage a live server. Handles creation and
     stopping application in a separate process.
 

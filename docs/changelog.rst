@@ -3,10 +3,16 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Added support for Python 3.10, 3.11, and 3.12.
+* Dropped support for EOL Python 3.7.
+
 1.3.0 (2023-10-23)
 ------------------
 
-- Fix compatibility with ``Flask 3.0`` -- the consequence is that the deprecated and incompatible ``request_ctx`` has been removed.
+- Fixed compatibility with ``Flask 3.0`` -- the consequence is that the deprecated and incompatible ``request_ctx`` has been removed.
 
 1.2.1
 ------------------

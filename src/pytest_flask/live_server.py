@@ -61,7 +61,7 @@ class LiveServer:  # pragma: no cover
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.connect((self.host, self.port))
-        except socket.error:
+        except OSError:
             ret = False
         else:
             ret = True

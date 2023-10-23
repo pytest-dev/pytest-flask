@@ -11,7 +11,7 @@ class TestLiveServer:
     def test_init(self, live_server):
         assert live_server.port
         assert live_server.host == "localhost"
-        assert live_server.url() == "http://localhost:{0}".format(live_server.port)
+        assert live_server.url() == f"http://localhost:{live_server.port}"
 
     def test_server_is_alive(self, live_server):
         assert live_server._process

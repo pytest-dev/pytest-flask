@@ -1,22 +1,13 @@
 #!/usr/bin/env python
-import os
+from pathlib import Path
 
 from setuptools import setup
 
-
-def read(*parts):
-    """Reads the content of the file located at path created from *parts*."""
-    try:
-        return open(os.path.join(*parts), "r", encoding="utf-8").read()
-    except OSError:
-        return ""
-
-
 tests_require = []
-requirements = read("requirements", "main.txt").splitlines()
+requirements = Path("requirements/main.txt").read_text(encoding="UTF-8").splitlines()
 extras_require = {
-    "docs": read("requirements", "docs.txt").splitlines(),
-    "tests": tests_require,
+    "docs": Path("requirements/docs.txt").read_text(encoding="UTF-8").splitlines(),
+    "tests": [tests_require],
 }
 
 setup(

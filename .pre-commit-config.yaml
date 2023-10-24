@@ -8,13 +8,13 @@ repos:
     -   id: fix-encoding-pragma
         args: [--remove]
     -   id: check-yaml
--   repo: https://github.com/asottile/reorder_python_imports
+-   repo: https://github.com/asottile/reorder-python-imports
     rev: v3.12.0
     hooks:
     -   id: reorder-python-imports
         args: ['--application-directories=.:src', --py3-plus]
--   repo: https://github.com/python/black
-    rev: 23.10.0
+-   repo: https://github.com/psf/black
+    rev: 23.10.1
     hooks:
       - id: black
 -   repo: https://github.com/PyCQA/flake8
@@ -30,7 +30,7 @@ repos:
         files: ^(RELEASING.rst|README.rst)$
         language: python
         additional_dependencies: [pygments, restructuredtext_lint]
--   repo: https://github.com/myint/autoflake.git
+-   repo: https://github.com/PyCQA/autoflake
     rev: v2.2.1
     hooks:
     -   id: autoflake

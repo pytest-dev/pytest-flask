@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 import socket
+from typing import Any
+from typing import cast
+from typing import Generator
 
+from flask import Flask as _FlaskApp
+from flask.config import Config as _FlaskAppConfig
+from flask.testing import FlaskClient as _FlaskTestClient
+from pytest import Config as _PytestConfig
+from pytest import FixtureRequest as _PytestFixtureRequest
 import pytest
 
 from ._internal import _determine_scope
@@ -10,7 +18,7 @@ from .live_server import LiveServer
 
 
 @pytest.fixture
-def client(app):
+def client(app: _FlaskApp) -> Generator[_FlaskTestClient, Any, Any]:
     """A Flask test client. An instance of :class:`flask.testing.TestClient`
     by default.
     """
@@ -19,7 +27,7 @@ def client(app):
 
 
 @pytest.fixture
-def client_class(request, client):
+def client_class(request: _PytestFixtureRequest, client: _FlaskTestClient) -> None:
     """Uses to set a ``client`` class attribute to current Flask test client::
 
     @pytest.mark.usefixtures('client_class')
@@ -37,8 +45,10 @@ def client_class(request, client):
         request.cls.client = client
 
 
-@pytest.fixture(scope=_determine_scope)
-def live_server(request, app, pytestconfig):  # pragma: no cover
+@pytest.fixture(scope=_determine_scope)  # type: ignore[arg-type]
+def live_server(
+    request: _PytestFixtureRequest, app: _FlaskApp, pytestconfig: _PytestConfig
+) -> Generator[LiveServer, Any, Any]:  # pragma: no cover
     """Run application in a separate process.
 
     When the ``live_server`` fixture is applied, the ``url_for`` function
@@ -64,20 +74,22 @@ def live_server(request, app, pytestconfig):  # pragma: no cover
         port = s.getsockname()[1]
         s.close()
 
-    host = pytestconfig.getvalue("live_server_host")
+    host = cast(str, pytestconfig.getvalue("live_server_host"))
 
     # Explicitly set application ``SERVER_NAME`` for test suite
     original_server_name = app.config["SERVER_NAME"] or "localhost.localdomain"
     final_server_name = _rewrite_server_name(original_server_name, str(port))
     app.config["SERVER_NAME"] = final_server_name
 
-    wait = request.config.getvalue("live_server_wait")
-    clean_stop = request.config.getvalue("live_server_clean_stop")
+    wait = cast(int, request.config.getvalue("live_server_wait"))
+    clean_stop = cast(bool, request.config.getvalue("live_server_clean_stop"))
+
     server = LiveServer(app, host, port, wait, clean_stop)
     if request.config.getvalue("start_live_server"):
         server.start()
 
     request.addfinalizer(server.stop)
+
     yield server
 
     if original_server_name is not None:
@@ -85,13 +97,13 @@ def live_server(request, app, pytestconfig):  # pragma: no cover
 
 
 @pytest.fixture
-def config(app):
+def config(app: _FlaskApp) -> _FlaskAppConfig:
     """An application config."""
     return app.config
 
 
 @pytest.fixture(params=["application/json", "text/html"])
-def mimetype(request):
+def mimetype(request) -> str:
     return request.param
 
 

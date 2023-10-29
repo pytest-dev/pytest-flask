@@ -5,6 +5,12 @@
     :copyright: (c) by Vital Kudzelka
     :license: MIT
 """
+from typing import Any
+from typing import Protocol
+from typing import Type
+from typing import TypeVar
+
+from _pytest.config import Config as _PytestConfig
 import pytest
 
 from .fixtures import accept_any
@@ -18,19 +24,36 @@ from .fixtures import live_server
 from .pytest_compat import getfixturevalue
 
 
+_Response = TypeVar("_Response")
+
+
+class _SupportsPytestFlaskEqual(Protocol):
+    status_code: int
+
+    def __eq__(self, other: Any) -> bool:
+        ...
+
+    def __ne__(self, other: Any) -> bool:
+        ...
+
+
 class JSONResponse:
     """Mixin with testing helper methods for JSON responses."""
 
-    def __eq__(self, other):
+    status_code: int
+
+    def __eq__(self, other) -> bool:
         if isinstance(other, int):
             return self.status_code == other
         return super().__eq__(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
 
-def pytest_assertrepr_compare(op, left, right):
+def pytest_assertrepr_compare(
+    op: str, left: _SupportsPytestFlaskEqual, right: int
+) -> list[str] | None:
     if isinstance(left, JSONResponse) and op == "==" and isinstance(right, int):
         return [
             "Mismatch in status code for response: {} != {}".format(
@@ -42,7 +65,7 @@ def pytest_assertrepr_compare(op, left, right):
     return None
 
 
-def _make_test_response_class(response_class):
+def _make_test_response_class(response_class: Type[_Response]) -> Type[_Response]:
     """Extends the response class with special attribute to test JSON
     responses. Don't override user-defined `json` attribute if any.
 
@@ -186,7 +209,7 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_configure(config):
+def pytest_configure(config: _PytestConfig) -> None:
     config.addinivalue_line(
         "markers", "app(options): pass options to your application factory"
     )

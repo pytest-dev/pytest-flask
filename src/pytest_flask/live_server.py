@@ -63,11 +63,8 @@ class LiveServer:  # pragma: no cover
         def worker(app: _SupportsFlaskAppRun, host: str, port: int) -> None:
             app.run(host=host, port=port, use_reloader=False, threaded=True)
 
-        self._process = cast(
-            Process,
-            multiprocessing.Process(
-                target=worker, args=(self.app, self.host, self.port)
-            ),
+        self._process = multiprocessing.Process(
+            target=worker, args=(self.app, self.host, self.port)
         )
         self._process.daemon = True
         self._process.start()

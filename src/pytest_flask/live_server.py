@@ -28,7 +28,7 @@ class _SupportsFlaskAppRun(Protocol):
 
 # force 'fork' on macOS
 if platform.system() == "Darwin":
-    multiprocessing = multiprocessing.get_context("fork")  # type: ignore
+    multiprocessing = multiprocessing.get_context("fork")  # type: ignore[assignment]
 
 
 class LiveServer:  # pragma: no cover

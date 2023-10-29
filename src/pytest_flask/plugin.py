@@ -60,7 +60,7 @@ def pytest_assertrepr_compare(
                 left.status_code,
                 right,
             ),
-            f"Response status: {left.status}",
+            f"Response status: {left.status_code}",
         ]
     return None
 

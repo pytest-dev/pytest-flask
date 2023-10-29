@@ -1,11 +1,11 @@
 import logging
 import multiprocessing
-from multiprocessing import Process
 import os
 import platform
 import signal
 import socket
 import time
+from multiprocessing import Process
 from typing import Any
 from typing import cast
 from typing import Protocol
@@ -17,9 +17,9 @@ import pytest
 class _SupportsFlaskAppRun(Protocol):
     def run(
         self,
-        host: str | None = None,
-        port: int | None = None,
-        debug: bool | None = None,
+        host: Union[str, None] = None,
+        port: Union[int, None] = None,
+        debug: Union[bool, None] = None,
         load_dotenv: bool = True,
         **options: Any,
     ) -> None:

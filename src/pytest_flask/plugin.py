@@ -6,12 +6,14 @@
     :license: MIT
 """
 from typing import Any
+from typing import List
 from typing import Protocol
 from typing import Type
 from typing import TypeVar
+from typing import Union
 
-from _pytest.config import Config as _PytestConfig
 import pytest
+from _pytest.config import Config as _PytestConfig
 
 from .fixtures import accept_any
 from .fixtures import accept_json
@@ -53,7 +55,7 @@ class JSONResponse:
 
 def pytest_assertrepr_compare(
     op: str, left: _SupportsPytestFlaskEqual, right: int
-) -> list[str] | None:
+) -> Union[List[str], None]:
     if isinstance(left, JSONResponse) and op == "==" and isinstance(right, int):
         return [
             "Mismatch in status code for response: {} != {}".format(

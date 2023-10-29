@@ -1,7 +1,7 @@
 import functools
+import warnings
 from typing import Callable
 from typing import Literal
-import warnings
 
 from pytest import Config as _PytestConfig
 

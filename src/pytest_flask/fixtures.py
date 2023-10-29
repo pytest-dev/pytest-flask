@@ -4,12 +4,12 @@ from typing import Any
 from typing import cast
 from typing import Generator
 
+import pytest
 from flask import Flask as _FlaskApp
 from flask.config import Config as _FlaskAppConfig
 from flask.testing import FlaskClient as _FlaskTestClient
 from pytest import Config as _PytestConfig
 from pytest import FixtureRequest as _PytestFixtureRequest
-import pytest
 
 from ._internal import _determine_scope
 from ._internal import _make_accept_header

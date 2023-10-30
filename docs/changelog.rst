@@ -6,8 +6,9 @@ Changelog
 UNRELEASED
 ----------
 
-* Added support for Python 3.10, 3.11, and 3.12.
-* Dropped support for EOL Python 3.7.
+* Add support for Python 3.10, 3.11, and 3.12.
+* Drop support for EOL Python 3.7.
+* Add type hints.
 
 1.3.0 (2023-10-23)
 ------------------

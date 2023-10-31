@@ -45,7 +45,7 @@ def client_class(request: _PytestFixtureRequest, client: _FlaskTestClient) -> No
         request.cls.client = client
 
 
-@pytest.fixture(scope=_determine_scope)  # type: ignore[arg-type]
+@pytest.fixture(scope=_determine_scope)
 def live_server(
     request: _PytestFixtureRequest, app: _FlaskApp, pytestconfig: _PytestConfig
 ) -> Generator[LiveServer, Any, Any]:  # pragma: no cover

@@ -34,3 +34,8 @@ repos:
     rev: v2.2.1
     hooks:
     -   id: autoflake
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.6.1
+    hooks:
+    -   id: mypy
+        files: ^(src/|tests/)

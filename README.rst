@@ -21,7 +21,7 @@ pytest-flask
    :target: https://pytest-flask.readthedocs.org/en/latest/
    :alt: Documentation status
 
-.. image:: https://img.shields.io/maintenance/yes/2022?color=blue
+.. image:: https://img.shields.io/maintenance/yes/2023?color=blue
     :target: https://github.com/pytest-dev/pytest-flask
     :alt: Maintenance
 

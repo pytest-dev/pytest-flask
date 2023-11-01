@@ -1,4 +1,3 @@
--r main.txt
 pytest>=5.2
 Flask
 Werkzeug

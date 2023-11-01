@@ -148,7 +148,7 @@ other headless browsers).
 By default the server will start automatically whenever you reference
 ``live_server`` fixture in your tests. But starting live server imposes some
 high costs on tests that need it when they may not be ready yet. To prevent
-that behaviour pass ``--no-start-live-server`` into your default options (for
+that behavior pass ``--no-start-live-server`` into your default options (for
 example, in your project’s ``pytest.ini`` file)::
 
     [pytest]
@@ -290,7 +290,7 @@ Content negotiation
 
 An important part of any :abbr:`REST (REpresentational State Transfer)`
 service is content negotiation. It allows you to implement behaviour such as
-selecting a different serialization schemes for different media types.
+selecting a different serialization scheme for different media types.
 
     HTTP has provisions for several mechanisms for "content negotiation" - the
     process of selecting the best representation for a given response
@@ -298,7 +298,7 @@ selecting a different serialization schemes for different media types.
 
     -- :rfc:`2616#section-12`. Fielding, et al.
 
-The most common way to select one of the multiple possible representation is
+The most common way to select one of the multiple possible representations is
 via ``Accept`` request header. The following series of ``accept_*`` fixtures
 provides an easy way to test content negotiation in your application:
 

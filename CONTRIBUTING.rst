@@ -11,7 +11,7 @@ increases the likelihood of your issue being solved quickly. The few extra
 steps listed below will help clarify problems you might be facing:
 
 -   Include a `minimal reproducible example`_ when possible.
--   Describe the expected behaviour and what actually happened including a full
+-   Describe the expected behavior and what actually happened including a full
     trace-back in case of exceptions.
 -   Make sure to list details about your environment, such as your platform,
     versions of pytest, pytest-flask and python release.

@@ -32,11 +32,9 @@ _Response = TypeVar("_Response")
 class _SupportsPytestFlaskEqual(Protocol):
     status_code: int
 
-    def __eq__(self, other: Any) -> bool:
-        ...
+    def __eq__(self, other: Any) -> bool: ...
 
-    def __ne__(self, other: Any) -> bool:
-        ...
+    def __ne__(self, other: Any) -> bool: ...
 
 
 class JSONResponse:

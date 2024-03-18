@@ -22,8 +22,7 @@ class _SupportsFlaskAppRun(Protocol):
         debug: Union[bool, None] = None,
         load_dotenv: bool = True,
         **options: Any,
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 # force 'fork' on macOS

@@ -1,6 +1,6 @@
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
     -   id: check-byte-order-marker
     -   id: trailing-whitespace
@@ -9,16 +9,16 @@ repos:
         args: [--remove]
     -   id: check-yaml
 -   repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.12.0
+    rev: v3.13.0
     hooks:
     -   id: reorder-python-imports
         args: ['--application-directories=.:src', --py3-plus]
 -   repo: https://github.com/psf/black
-    rev: 23.12.1
+    rev: 24.10.0
     hooks:
       - id: black
 -   repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+    rev: 7.1.1
     hooks:
     -   id: flake8
         additional_dependencies: [flake8-bugbear]
@@ -31,11 +31,11 @@ repos:
         language: python
         additional_dependencies: [pygments, restructuredtext_lint]
 -   repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.1
+    rev: v2.3.1
     hooks:
     -   id: autoflake
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.11.2
     hooks:
     -   id: mypy
         files: ^(src/|tests/)

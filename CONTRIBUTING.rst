@@ -76,7 +76,7 @@ Start Coding
 
         $ git push --set-upstream fork your-branch-name
 
-.. _create a pull request: https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
+.. _create a pull request: https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
 
 How to run tests
 ~~~~~~~~~~~~~~~~

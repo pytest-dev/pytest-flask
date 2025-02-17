@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """
-    A py.test plugin which helps testing Flask applications.
+A py.test plugin which helps testing Flask applications.
 
-    :copyright: (c) by Vital Kudzelka
-    :license: MIT
+:copyright: (c) by Vital Kudzelka
+:license: MIT
 """
 from typing import Any
 from typing import List

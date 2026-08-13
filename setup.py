@@ -14,6 +14,5 @@ setup(
     # Dependencies are here for GitHub's dependency graph.
     use_scm_version={"write_to": "src/pytest_flask/_version.py"},
     install_requires=requirements,
-    tests_require=tests_require,
     extras_require=extras_require,
 )

@@ -5,7 +5,6 @@ from typing import Literal
 
 from pytest import Config as _PytestConfig
 
-
 _PytestScopeName = Literal["session", "package", "module", "class", "function"]
 
 

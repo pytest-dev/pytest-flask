@@ -3,7 +3,6 @@ import os
 import pytest
 from flask import url_for
 
-
 pytestmark = pytest.mark.skipif(not hasattr(os, "fork"), reason="needs fork")
 
 
@@ -35,44 +34,38 @@ class TestLiveServer:
         )
 
     def test_rewrite_application_server_name(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
             @pytest.mark.options(server_name='example.com:5000')
             def test_a(live_server):
                 assert live_server.app.config['SERVER_NAME'] == \\
                     'example.com:%d' % live_server.port
-        """
-        )
+        """)
 
         result = appdir.runpytest("-v", "-o", "live_server_scope=function")
         result.stdout.fnmatch_lines(["*PASSED*"])
         assert result.ret == 0
 
     def test_prevent_starting_live_server(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             def test_a(live_server):
                 assert live_server._process is None
-        """
-        )
+        """)
 
         result = appdir.runpytest("-v", "--no-start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
 
     def test_start_live_server(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             def test_a(live_server):
                 assert live_server._process
                 assert live_server._process.is_alive()
-        """
-        )
+        """)
         result = appdir.runpytest("-v", "--start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
@@ -103,8 +96,7 @@ class TestLiveServer:
 
         monkeypatch.setattr(LiveServer, "_stop_cleanly", mocked_stop_cleanly)
 
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             from flask import url_for
@@ -119,8 +111,7 @@ class TestLiveServer:
                 res = client.get(url_for('index', _external=True))
                 assert res.status_code == 200
                 assert b'got it' in res.data
-        """
-        )
+        """)
         args = [] if clean_stop else ["--no-live-server-clean-stop"]
         result = appdir.runpytest_inprocess("-v", "--no-start-live-server", *args)
         result.stdout.fnmatch_lines("*1 passed*")
@@ -130,8 +121,7 @@ class TestLiveServer:
             assert stop_cleanly_result == []
 
     def test_add_endpoint_to_live_server(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             from flask import url_for
@@ -146,16 +136,14 @@ class TestLiveServer:
                 res = client.get(url_for('new_endpoint', _external=True))
                 assert res.status_code == 200
                 assert b'got it' in res.data
-        """
-        )
+        """)
         result = appdir.runpytest("-v", "--no-start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
 
     @pytest.mark.skip("this test hangs in the original code")
     def test_concurrent_requests_to_live_server(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             from flask import url_for
@@ -175,51 +163,42 @@ class TestLiveServer:
                 res = client.get(url_for('one', _external=True))
                 assert res.status_code == 200
                 assert b'42' in res.data
-        """
-        )
+        """)
         result = appdir.runpytest("-v", "--no-start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
 
     @pytest.mark.parametrize("port", [5000, 5001])
     def test_live_server_fixed_port(self, port, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             def test_port(live_server):
                 assert live_server.port == %d
-        """
-            % port
-        )
+        """ % port)
         result = appdir.runpytest("-v", "--live-server-port", str(port))
         result.stdout.fnmatch_lines(["*PASSED*"])
         assert result.ret == 0
 
     @pytest.mark.parametrize("host", ["127.0.0.1", "0.0.0.0"])
     def test_live_server_fixed_host(self, host, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             def test_port(live_server):
                 assert live_server.host == '%s'
-        """
-            % host
-        )
+        """ % host)
         result = appdir.runpytest("-v", "--live-server-host", str(host))
         result.stdout.fnmatch_lines(["*PASSED*"])
         assert result.ret == 0
 
     def test_respect_wait_timeout(self, appdir):
-        appdir.create_test_module(
-            """
+        appdir.create_test_module("""
             import pytest
 
             def test_should_fail(live_server):
                 assert live_server._process.is_alive()
-        """
-        )
+        """)
         result = appdir.runpytest("-v", "--live-server-wait=0.00000001")
         result.stdout.fnmatch_lines(["**ERROR**"])
         assert result.ret == 1

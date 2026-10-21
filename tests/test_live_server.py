@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 
 import pytest
@@ -76,6 +77,38 @@ class TestLiveServer:
         result = appdir.runpytest("-v", "--start-live-server")
         result.stdout.fnmatch_lines(["*passed*"])
         assert result.ret == 0
+
+    def test_non_fork_start_method(self, appdir):
+        appdir.create_test_module(
+            """
+            import multiprocessing
+            from urllib.request import urlopen
+
+            import pytest
+
+            @pytest.mark.parametrize("start_method", [
+                method for method in multiprocessing.get_all_start_methods()
+                if method != "fork"
+            ])
+            def test_a(live_server, start_method):
+                multiprocessing.set_start_method(start_method, force=True)
+                message = "response from a local route"
+
+                @live_server.app.route("/" + start_method, endpoint=start_method)
+                def closure():
+                    return message
+
+                live_server.start()
+                url = live_server.url("/" + start_method)
+                with urlopen(url, timeout=5) as response:
+                    assert response.read() == message.encode()
+                assert multiprocessing.get_start_method() == start_method
+            """
+        )
+        result = appdir.runpytest_subprocess(
+            "--no-start-live-server", "-o", "live_server_scope=function"
+        )
+        result.assert_outcomes(passed=len(multiprocessing.get_all_start_methods()) - 1)
 
     def test_stop_cleanly_join_exception(self, appdir, live_server, caplog):
         # timeout = 'a' here to force an exception when

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import socket
 from typing import Any
-from typing import cast
 from typing import Generator
+from typing import cast
 
 import pytest
 from flask import Flask as _FlaskApp

@@ -7,9 +7,9 @@ import socket
 import time
 from multiprocessing import Process
 from typing import Any
-from typing import cast
 from typing import Protocol
 from typing import Union
+from typing import cast
 
 import pytest
 

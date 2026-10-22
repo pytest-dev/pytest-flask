@@ -1,5 +1,4 @@
 mock
 pylint
 coverage
-pytest-pep8
 mypy

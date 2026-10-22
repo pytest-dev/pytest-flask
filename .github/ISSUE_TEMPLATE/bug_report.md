@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
  - OS: [e.g. macOS Catalina]
- - Python Version [e.g. 3.8.5]
+ - Python Version [e.g. 3.13.1]
  - pytest-flask version [e.g. 0.15.0]
 
 **Additional context**

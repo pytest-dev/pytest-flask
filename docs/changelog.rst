@@ -6,8 +6,10 @@ Changelog
 UNRELEASED
 ----------
 
-* Add support for Python 3.10, 3.11, and 3.12.
-* Drop support for EOL Python 3.7.
+* Add support for Python 3.11, 3.12, 3.13, 3.14, and 3.15.
+* Drop support for EOL Python 3.7, 3.8, 3.9, and 3.10.
+* Fix ``live_server`` on Python 3.14+ on Linux, where the new
+  ``forkserver`` default start method could not pickle the application.
 * Add type hints.
 
 1.3.0 (2023-10-23)

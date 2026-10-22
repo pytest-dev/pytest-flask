@@ -1,7 +1,6 @@
 import logging
 import multiprocessing
 import os
-import platform
 import signal
 import socket
 import time
@@ -25,8 +24,9 @@ class _SupportsFlaskAppRun(Protocol):
     ) -> None: ...
 
 
-# force 'fork' on macOS
-if platform.system() == "Darwin":
+# force 'fork' where available: macOS defaults to 'spawn' and Python 3.14+
+# defaults to 'forkserver' on Linux, both of which cannot pickle the app
+if hasattr(os, "fork"):
     multiprocessing = multiprocessing.get_context("fork")  # type: ignore[assignment]
 
 

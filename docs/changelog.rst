@@ -6,6 +6,10 @@ Changelog
 UNRELEASED
 ----------
 
+* Fix live server startup on POSIX with non-fork multiprocessing defaults,
+  including Python 3.14, without changing the application's start method
+  (`#206 <https://github.com/pytest-dev/pytest-flask/issues/206>`_).
+
 * Add support for Python 3.10, 3.11, and 3.12.
 * Drop support for EOL Python 3.7.
 * Add type hints.

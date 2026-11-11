@@ -30,8 +30,7 @@ class TestLiveServer:
 
     def test_set_application_server_name(self, live_server):
         assert (
-            live_server.app.config["SERVER_NAME"]
-            == "localhost:%d" % live_server.port
+            live_server.app.config["SERVER_NAME"] == "localhost:%d" % live_server.port
         )
 
     def test_live_server_url_is_reachable(self, live_server):

@@ -1,7 +1,6 @@
 import logging
 import multiprocessing
 import os
-import platform
 import signal
 import socket
 import time
@@ -25,8 +24,9 @@ class _SupportsFlaskAppRun(Protocol):
     ) -> None: ...
 
 
-# force 'fork' on macOS
-if platform.system() == "Darwin":
+# Flask applications and local worker functions cannot be pickled.
+# Use a private context without changing the application's start method.
+if "fork" in multiprocessing.get_all_start_methods():
     multiprocessing = multiprocessing.get_context("fork")  # type: ignore[assignment]
 
 

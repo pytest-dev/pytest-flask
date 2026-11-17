@@ -1,4 +1,5 @@
 import os
+from urllib.request import urlopen
 
 import pytest
 from flask import url_for
@@ -24,14 +25,17 @@ class TestLiveServer:
     def test_url_for(self, live_server):
         assert (
             url_for("ping", _external=True)
-            == "http://localhost.localdomain:%s/ping" % live_server.port
+            == "http://localhost:%s/ping" % live_server.port
         )
 
     def test_set_application_server_name(self, live_server):
         assert (
-            live_server.app.config["SERVER_NAME"]
-            == "localhost.localdomain:%d" % live_server.port
+            live_server.app.config["SERVER_NAME"] == "localhost:%d" % live_server.port
         )
+
+    def test_live_server_url_is_reachable(self, live_server):
+        with urlopen(live_server.url("/ping")) as response:
+            assert response.status == 200
 
     def test_rewrite_application_server_name(self, appdir):
         appdir.create_test_module("""

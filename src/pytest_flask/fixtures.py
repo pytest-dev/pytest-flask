@@ -77,7 +77,7 @@ def live_server(
     host = cast(str, pytestconfig.getvalue("live_server_host"))
 
     # Explicitly set application ``SERVER_NAME`` for test suite
-    original_server_name = app.config["SERVER_NAME"] or "localhost.localdomain"
+    original_server_name = app.config["SERVER_NAME"] or host
     final_server_name = _rewrite_server_name(original_server_name, str(port))
     app.config["SERVER_NAME"] = final_server_name
 
